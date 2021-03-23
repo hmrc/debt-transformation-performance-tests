@@ -22,16 +22,21 @@ import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
 
 import scala.concurrent.duration._
 
-class Simulation extends PerformanceTestRunner{
+class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
-
-    setup("back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service", "Back-end-processes for Statement of Liability Service Hello World test")
+  setup(
+    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
+    "Back-end-processes for Statement of Liability Service Hello World test"
+  )
     .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
 
-      setup("back-end-processes-retrieve-hello-world-response-from-interest-forecasting-Service", "Back-end-processes for interest-forecasting Service Hello World test")
-      .withChainedActions(InterestForecastingRequests.InterestForecastingRequestsHelloWorld(interestForecostingApiUrl))
+  setup(
+    "back-end-processes-retrieve-hello-world-response-from-interest-forecasting-Service",
+    "Back-end-processes for interest-forecasting Service Hello World test"
+  )
+    .withChainedActions(InterestForecastingRequests.InterestForecastingRequestsHelloWorld(interestForecostingApiUrl))
 
   runSimulation()
 }

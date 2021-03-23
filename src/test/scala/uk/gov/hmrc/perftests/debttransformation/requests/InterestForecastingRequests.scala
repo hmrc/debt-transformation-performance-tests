@@ -23,11 +23,10 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object InterestForecastingRequests extends ServicesConfiguration {
 
-  val bearerToken = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
-  print("created bearerToken ::::::::   "+ bearerToken)
+  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map("Authorization" -> s"Bearer $bearerToken", "Accept" -> "application/vnd.hmrc.1.0+json")
 
-  def InterestForecastingRequestsHelloWorld(baseUri:String): HttpRequestBuilder =
+  def InterestForecastingRequestsHelloWorld(baseUri: String): HttpRequestBuilder =
     http("GET Interest Forecasting")
       .get(s"$baseUri/interest-forecasting/hello-world")
       .headers(requestHeaders)

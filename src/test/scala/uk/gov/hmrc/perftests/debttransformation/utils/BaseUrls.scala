@@ -19,13 +19,13 @@ package uk.gov.hmrc.perftests.debttransformation.utils
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object BaseUrls extends ServicesConfiguration {
-  val authLoginApiUri:                            String = baseUrlFor("auth-login-api")
-  val auth:                                       String = baseUrlFor("auth")
-  val authLoginStubUri:                           String = baseUrlFor("auth-login-stub")
-  val apiSubscriptionFieldsUri:                   String = baseUrlFor("api-subscription-fields")
-  val pushPullNotificationsUri:                   String = baseUrlFor("push-pull-notifications-api")
-  val strideIdpStubUrl:                           String = baseUrlFor("stride-idp-stub")
-  val strideAuthFrontendUrl:                      String = baseUrlFor("stride-auth-frontend")
+  val authLoginApiUri: String                = baseUrlFor("auth-login-api")
+  val auth: String                           = baseUrlFor("auth")
+  val authLoginStubUri: String               = baseUrlFor("auth-login-stub")
+  val apiSubscriptionFieldsUri: String       = baseUrlFor("api-subscription-fields")
+  val pushPullNotificationsUri: String       = baseUrlFor("push-pull-notifications-api")
+  val strideIdpStubUrl: String               = baseUrlFor("stride-idp-stub")
+  val strideAuthFrontendUrl: String          = baseUrlFor("stride-auth-frontend")
   val statementOfLiabilityApiBaseUrl: String = baseUrlFor("statement-of-liability")
-  val interestForecostingApiUrl: String  = baseUrlFor("interest-forecasting")
+  val interestForecostingApiUrl: String      = baseUrlFor("interest-forecasting")
 }

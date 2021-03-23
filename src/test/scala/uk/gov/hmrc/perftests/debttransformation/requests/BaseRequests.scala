@@ -21,29 +21,29 @@ import scalaj.http.Http
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.authLoginApiUri
 import uk.gov.hmrc.perftests.debttransformation.utils.RandomValues
 
-object BaseRequests extends RandomValues{
+object BaseRequests extends RandomValues {
 
   def creatAuthorizationBearerToken(
-                                     enrolments: Seq[String] = Seq(),
-                                     userType: String = getRandomAffinityGroup,
-                                     utr: String = "123456789012"
-                                   ): String = {
-    val json =
+    enrolments: Seq[String] = Seq(),
+    userType: String = getRandomAffinityGroup,
+    utr: String = "123456789012"
+  ): String = {
+    val json     =
       Json.obj(
-        "affinityGroup" -> userType,
+        "affinityGroup"      -> userType,
         "credentialStrength" -> "strong",
-        "confidenceLevel" -> 50,
-        "credId" -> "test",
-        "enrolments" -> enrolments.map(key =>
+        "confidenceLevel"    -> 50,
+        "credId"             -> "test",
+        "enrolments"         -> enrolments.map(key =>
           Json.obj(
-            "key" -> key,
+            "key"         -> key,
             "identifiers" -> Json.arr(
               Json.obj(
-                "key" -> "UTRNumber",
+                "key"   -> "UTRNumber",
                 "value" -> utr
               )
             ),
-            "state" -> "Activated"
+            "state"       -> "Activated"
           )
         )
       )
@@ -51,9 +51,11 @@ object BaseRequests extends RandomValues{
       .header("Content-Type", "application/json")
       .postData(Json.stringify(json))
       .execute()
-    response.headers.filter(header => header._1.equalsIgnoreCase("Authorization")).values
-      .flatMap(_.collect { case s if (s.contains("Bearer")) => s.replace("Bearer ", "") }).head
+    response.headers
+      .filter(header => header._1.equalsIgnoreCase("Authorization"))
+      .values
+      .flatMap(_.collect { case s if s.contains("Bearer") => s.replace("Bearer ", "") })
+      .head
   }
-
 
 }
