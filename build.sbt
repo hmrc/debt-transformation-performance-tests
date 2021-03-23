@@ -8,9 +8,9 @@ enablePlugins(JvmPlugin)
 enablePlugins(IvyPlugin)
 
 organization := "uk.gov.hmrc"
-scalaVersion := "2.12.12"
+scalaVersion := "2.11.12"
 
-val gatlingDependencies = "3.4.2"
+val gatlingDependencies = "2.2.5"
 scalacOptions ++= Seq(
     "-unchecked",
     "-deprecation",

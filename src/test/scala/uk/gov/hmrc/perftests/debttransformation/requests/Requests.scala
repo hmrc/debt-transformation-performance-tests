@@ -8,8 +8,6 @@ import uk.gov.hmrc.performance.simulation.JourneyPart
 
 package object requests extends Configuration {
 
-  def chainOf(seq: Seq[ActionBuilder]*): ChainBuilder =
-    ChainBuilder(seq.flatten.toList)
   implicit def convertChainToActions(chain: ChainBuilder): Seq[ActionBuilder] = chain.actionBuilders
 
   implicit def convertHttpActionToSeq(act: HttpRequestBuilder): Seq[ActionBuilder] = Seq(HttpRequestBuilder.toActionBuilder(act))
