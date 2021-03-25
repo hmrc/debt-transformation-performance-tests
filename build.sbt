@@ -31,7 +31,7 @@ libraryDependencies ++= Seq(
   "io.gatling"              % "gatling-test-framework"    % gatlingDependencies,
   "io.gatling.highcharts"   % "gatling-charts-highcharts" % gatlingDependencies,
   "com.typesafe"            % "config"                    % "1.4.0",
-  "uk.gov.hmrc"            %% "performance-test-runner"   % "4.6.0",
+  "uk.gov.hmrc"            %% "performance-test-runner"   % "3.5.0",
   "com.github.mifmif"       % "generex"                   % "1.0.2",
   "org.scalaj"             %% "scalaj-http"               % "2.4.2",
   "io.circe"               %% "circe-core"                % "0.11.2",
