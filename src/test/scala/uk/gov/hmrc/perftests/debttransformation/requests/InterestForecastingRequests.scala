@@ -23,21 +23,6 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object InterestForecastingRequests extends ServicesConfiguration {
 
-//  Assumptions
-//  1 Debt item
-//  Initial amount and date
-//    REGIME == DRIERd
-//  Where charge type is DRIER NI, then interest bearing is assumed to be true
-//  Where charge type is DRIER HiPG, then interest bearing is assumed to be false
-//  NO repayments
-//    NO suppression period
-//  NO breathing space
-//  Date Amount  == Interest start date
-//    No outstanding interests to pay
-//  When bearing the interest rate is 1%
-//
-//  DTD-191: IFS Amounts to be in pennies. Is outstanding
-
   val bearerToken = BaseRequests.creatAuthorizationBearerToken(
     enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map("Authorization" -> s"Bearer $bearerToken",
