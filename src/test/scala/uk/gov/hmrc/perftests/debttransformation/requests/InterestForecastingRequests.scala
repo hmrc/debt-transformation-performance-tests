@@ -38,27 +38,27 @@ object InterestForecastingRequests extends ServicesConfiguration {
 //
 //  DTD-191: IFS Amounts to be in pennies. Is outstanding
 
+  val bearerToken = BaseRequests.creatAuthorizationBearerToken(
+    enrolments = Seq("read:interest-forecasting"))
+  val requestHeaders = Map("Authorization" -> s"Bearer $bearerToken",
+                           "Accept" -> "application/vnd.hmrc.1.0+json",
+                           "Content-Type" -> "application/json")
 
-  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
-  val requestHeaders = Map("Authorization" -> s"Bearer $bearerToken", "Accept" -> "application/vnd.hmrc.1.0+json","Content-Type"-> "application/json")
-
-  def InterestForecastingRequestsHelloWorld(baseUri: String): HttpRequestBuilder =
-    http("GET Interest Forecasting")
-      .get(s"$baseUri/interest-forecasting/hello-world")
-      .headers(requestHeaders)
-      .check(status.is(200))
-
-  def InterestBearingdrierdebtForChargeTypeNino(baseUri: String): HttpRequestBuilder =
+  def InterestBearingdrierdebtForChargeTypeNino(
+      baseUri: String): HttpRequestBuilder =
     http("Interest bearing drier debt -MVP")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody("{\"amount\": 500000, \"chargeType\": \"NI\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"))
+      .body(StringBody(
+        "{\"amount\": 500000, \"chargeType\": \"NI\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"))
       .check(status.is(200))
 
-  def nonInterestBearingDrierdebtForChargeTypeHIPG(baseUri: String): HttpRequestBuilder =
+  def nonInterestBearingDrierdebtForChargeTypeHIPG(
+      baseUri: String): HttpRequestBuilder =
     http("Non Interest bearing drier debt -MVP")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody("{\"amount\": 500000, \"chargeType\": \"HIPG\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"))
+      .body(StringBody(
+        "{\"amount\": 500000, \"chargeType\": \"HIPG\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"))
       .check(status.is(200))
 }

@@ -26,8 +26,16 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
+
+
   setup(
-    "back-end-interest-forecasting-drier-debt-MVP",
+    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
+    "Back-end-processes for Statement of Liability Service Hello World test"
+  )
+    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
+
+  setup(
+    "back-end-interest-bearing-drier-debt-MVP",
     "Back end interest bearing DRIER debt -MVP"
   )
     .withChainedActions(InterestForecastingRequests.InterestBearingdrierdebtForChargeTypeNino(interestForecostingApiUrl))
