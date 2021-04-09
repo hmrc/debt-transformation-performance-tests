@@ -23,12 +23,11 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object InterestForecastingRequests extends ServicesConfiguration {
 
-  val bearerToken = BaseRequests.creatAuthorizationBearerToken(
-    enrolments = Seq("read:interest-forecasting"))
+  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",
-    "Accept" -> "application/vnd.hmrc.1.0+json",
-    "Content-Type" -> "application/json"
+    "Accept"        -> "application/vnd.hmrc.1.0+json",
+    "Content-Type"  -> "application/json"
   )
 
   def createDebtCalculationRule(baseUri: String): HttpRequestBuilder =
@@ -42,26 +41,29 @@ object InterestForecastingRequests extends ServicesConfiguration {
       )
       .check(status.is(200))
 
-  def InterestBearingdrierdebtForChargeTypeNino(
-      baseUri: String): HttpRequestBuilder =
+  def InterestBearingdrierdebtForChargeTypeNino(baseUri: String): HttpRequestBuilder =
     http("Interest bearing drier debt -MVP")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(
-        "{\"amount\": 500000, \"chargeType\": \"NI\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"))
+      .body(
+        StringBody(
+          "{\"amount\": 500000, \"chargeType\": \"NI\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"
+        )
+      )
       .check(status.is(200))
 
-  def nonInterestBearingDrierdebtForChargeTypeHIPG(
-      baseUri: String): HttpRequestBuilder =
+  def nonInterestBearingDrierdebtForChargeTypeHIPG(baseUri: String): HttpRequestBuilder =
     http("Non Interest bearing drier debt -MVP")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(
-        "{\"amount\": 500000, \"chargeType\": \"HIPG\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"))
+      .body(
+        StringBody(
+          "{\"amount\": 500000, \"chargeType\": \"HIPG\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"
+        )
+      )
       .check(status.is(200))
 
-  def InterestBearingDebtCalculationForASinglePayment(
-      baseUri: String): HttpRequestBuilder =
+  def InterestBearingDebtCalculationForASinglePayment(baseUri: String): HttpRequestBuilder =
     http("Interest bearing drier single payment")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
@@ -72,31 +74,37 @@ object InterestForecastingRequests extends ServicesConfiguration {
       )
       .check(status.is(200))
 
-  def InterestBearingDebtCalculationForMultiplePayment(
-      baseUri: String): HttpRequestBuilder =
+  def InterestBearingDebtCalculationForMultiplePayment(baseUri: String): HttpRequestBuilder =
     http("Interest bearing drier multiple payments")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(
-        "{\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"NI\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t},\n        {\n      \t\t  \"amountPaid\": 50000,\n      \t\t  \"dateOfPayment\": \"2021-02-05\"\n      \t}\n      ]\n    }\n  ]\n}"))
+      .body(
+        StringBody(
+          "{\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"NI\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t},\n        {\n      \t\t  \"amountPaid\": 50000,\n      \t\t  \"dateOfPayment\": \"2021-02-05\"\n      \t}\n      ]\n    }\n  ]\n}"
+        )
+      )
       .check(status.is(200))
 
-  def nonInterestBearingDebtCalculationForASinglePayment(
-      baseUri: String): HttpRequestBuilder =
-    http("Interest bearing drier single payment")
+  def nonInterestBearingDebtCalculationForASinglePayment(baseUri: String): HttpRequestBuilder =
+    http("non interest bearing drier single payment")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(
-        "{\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"HIPG\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t}\n      ]\n    }\n  ]\n}"))
+      .body(
+        StringBody(
+          "{\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"HIPG\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t}\n      ]\n    }\n  ]\n}"
+        )
+      )
       .check(status.is(200))
 
-  def nonInterestBearingDebtCalculationForMultiplePayment(
-      baseUri: String): HttpRequestBuilder =
-    http("Interest bearing drier multiple payments")
+  def nonInterestBearingDebtCalculationForMultiplePayment(baseUri: String): HttpRequestBuilder =
+    http("non interest bearing drier multiple payments")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(
-        "\n    {\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"HIPG\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t},\n        {\n      \t\t  \"amountPaid\": 50000,\n      \t\t  \"dateOfPayment\": \"2021-02-05\"\n      \t}\n      ]\n    }\n  ]\n}"))
+      .body(
+        StringBody(
+          "\n    {\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"HIPG\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t},\n        {\n      \t\t  \"amountPaid\": 50000,\n      \t\t  \"dateOfPayment\": \"2021-02-05\"\n      \t}\n      ]\n    }\n  ]\n}"
+        )
+      )
       .check(status.is(200))
 
 }

@@ -49,24 +49,23 @@ class Simulation extends PerformanceTestRunner {
 //    )
 
   setup(
-    "back-end-interest-bearing-drier-multiple-debt-items-nino-charge-type",
-    "Back end interest bearing DRIER multiple debt item nino"
+    "interest-bearing-and-non-interest-bearing-single-debt-item-calculation",
+    "interest bearing and non interest bearing single item debt calculation"
   )
     .withChainedActions(
       InterestForecastingRequests.createDebtCalculationRule(interestForecostingApiUrl),
       InterestForecastingRequests.InterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl),
-      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl))
-
-
+      InterestForecastingRequests.nonInterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl)
+    )
 
   setup(
-    "back-end-non-interest-bearing-drier-multiple-debt-items",
-    "Back end non interest bearing DRIER multiple debt item HIPG"
+    "interest-bearing-and-non-interest-bearing-multiple-debt-item-calcultions",
+    "interest bearing and non interest bearing multiple item debt calculation"
   )
     .withChainedActions(
       InterestForecastingRequests.createDebtCalculationRule(interestForecostingApiUrl),
-      InterestForecastingRequests.nonInterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl),
-      InterestForecastingRequests.nonInterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl)
+      InterestForecastingRequests.nonInterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl),
+      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl)
     )
 
   runSimulation()

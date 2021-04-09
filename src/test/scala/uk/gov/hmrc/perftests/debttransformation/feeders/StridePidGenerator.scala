@@ -4,7 +4,6 @@ import scala.util.Random
 
 object StridePidGenerator {
 
-  val reviewerPidGenerator: Iterator[Map[String, String]] = {
+  val reviewerPidGenerator: Iterator[Map[String, String]] =
     Iterator.continually(Map("reviewerStridePID" -> Random.nextInt().toString))
-  }
 }
