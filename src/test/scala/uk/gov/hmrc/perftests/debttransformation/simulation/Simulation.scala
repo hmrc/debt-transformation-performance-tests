@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.perftests.debttransformation.simulation
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.debttransformation.requests._
+import uk.gov.hmrc.perftests.debttransformation.requests.{InterestForecastingRequests, _}
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
 
@@ -26,25 +26,47 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
-
+//  setup(
+//    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
+//    "Back-end-processes for Statement of Liability Service Hello World test"
+//  )
+//    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
+//
+//  setup(
+//    "back-end-interest-bearing-drier-debt-MVP",
+//    "Back end interest bearing DRIER debt -MVP"
+//  )
+//    .withChainedActions(
+//      InterestForecastingRequests.InterestBearingdrierdebtForChargeTypeNino(interestForecostingApiUrl)
+//    )
+//
+//  setup(
+//    "backend-non-interest-bearing-drier-debt-MVP",
+//    "backend non interest bearing drier debt MVP"
+//  )
+//    .withChainedActions(
+//      InterestForecastingRequests.nonInterestBearingDrierdebtForChargeTypeHIPG(interestForecostingApiUrl)
+//    )
 
   setup(
-    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
-    "Back-end-processes for Statement of Liability Service Hello World test"
+    "interest-bearing-and-non-interest-bearing-single-debt-item-calculation",
+    "interest bearing and non interest bearing single item debt calculation"
   )
-    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
+    .withChainedActions(
+      InterestForecastingRequests.createDebtCalculationRule(interestForecostingApiUrl),
+      InterestForecastingRequests.InterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl),
+      InterestForecastingRequests.nonInterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl)
+    )
 
   setup(
-    "back-end-interest-bearing-drier-debt-MVP",
-    "Back end interest bearing DRIER debt -MVP"
+    "interest-bearing-and-non-interest-bearing-multiple-debt-item-calcultions",
+    "interest bearing and non interest bearing multiple item debt calculation"
   )
-    .withChainedActions(InterestForecastingRequests.InterestBearingdrierdebtForChargeTypeNino(interestForecostingApiUrl))
-
-  setup(
-    "backend-non-interest-bearing-drier-debt-MVP",
-    "backend non interest bearing drier debt MVP"
-  )
-    .withChainedActions(InterestForecastingRequests.nonInterestBearingDrierdebtForChargeTypeHIPG(interestForecostingApiUrl))
+    .withChainedActions(
+      InterestForecastingRequests.createDebtCalculationRule(interestForecostingApiUrl),
+      InterestForecastingRequests.nonInterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl),
+      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl)
+    )
 
   runSimulation()
 }
