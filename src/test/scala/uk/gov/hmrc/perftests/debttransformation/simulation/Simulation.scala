@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.perftests.debttransformation.simulation
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.debttransformation.requests._
+import uk.gov.hmrc.perftests.debttransformation.requests.{InterestForecastingRequests, _}
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
 
@@ -26,25 +26,48 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
+//  setup(
+//    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
+//    "Back-end-processes for Statement of Liability Service Hello World test"
+//  )
+//    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
+//
+//  setup(
+//    "back-end-interest-bearing-drier-debt-MVP",
+//    "Back end interest bearing DRIER debt -MVP"
+//  )
+//    .withChainedActions(
+//      InterestForecastingRequests.InterestBearingdrierdebtForChargeTypeNino(interestForecostingApiUrl)
+//    )
+//
+//  setup(
+//    "backend-non-interest-bearing-drier-debt-MVP",
+//    "backend non interest bearing drier debt MVP"
+//  )
+//    .withChainedActions(
+//      InterestForecastingRequests.nonInterestBearingDrierdebtForChargeTypeHIPG(interestForecostingApiUrl)
+//    )
+
+  setup(
+    "back-end-interest-bearing-drier-multiple-debt-items-nino-charge-type",
+    "Back end interest bearing DRIER multiple debt item nino"
+  )
+    .withChainedActions(
+      InterestForecastingRequests.createDebtCalculationRule(interestForecostingApiUrl),
+      InterestForecastingRequests.InterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl),
+      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl))
+
 
 
   setup(
-    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
-    "Back-end-processes for Statement of Liability Service Hello World test"
+    "back-end-non-interest-bearing-drier-multiple-debt-items",
+    "Back end non interest bearing DRIER multiple debt item HIPG"
   )
-    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
-
-  setup(
-    "back-end-interest-bearing-drier-debt-MVP",
-    "Back end interest bearing DRIER debt -MVP"
-  )
-    .withChainedActions(InterestForecastingRequests.InterestBearingdrierdebtForChargeTypeNino(interestForecostingApiUrl))
-
-  setup(
-    "backend-non-interest-bearing-drier-debt-MVP",
-    "backend non interest bearing drier debt MVP"
-  )
-    .withChainedActions(InterestForecastingRequests.nonInterestBearingDrierdebtForChargeTypeHIPG(interestForecostingApiUrl))
+    .withChainedActions(
+      InterestForecastingRequests.createDebtCalculationRule(interestForecostingApiUrl),
+      InterestForecastingRequests.nonInterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl),
+      InterestForecastingRequests.nonInterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl)
+    )
 
   runSimulation()
 }
