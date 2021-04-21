@@ -26,12 +26,12 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
-//  setup(
-//    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
-//    "Back-end-processes for Statement of Liability Service Hello World test"
-//  )
-//    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
-//
+  setup(
+    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
+    "Back-end-processes for Statement of Liability Service Hello World test"
+  )
+    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
+
 //  setup(
 //    "back-end-interest-bearing-drier-debt-MVP",
 //    "Back end interest bearing DRIER debt -MVP"
@@ -53,19 +53,26 @@ class Simulation extends PerformanceTestRunner {
     "interest bearing and non interest bearing single item debt calculation"
   )
     .withChainedActions(
-      InterestForecastingRequests.createDebtCalculationRule(interestForecostingApiUrl),
       InterestForecastingRequests.InterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl),
-      InterestForecastingRequests.nonInterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl)
-    )
+      InterestForecastingRequests.nonInterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl))
 
   setup(
     "interest-bearing-and-non-interest-bearing-multiple-debt-item-calcultions",
     "interest bearing and non interest bearing multiple item debt calculation"
   )
     .withChainedActions(
-      InterestForecastingRequests.createDebtCalculationRule(interestForecostingApiUrl),
-      InterestForecastingRequests.nonInterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl),
-      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl)
+      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl),
+      InterestForecastingRequests.debtItemInterestrateChangeWithNoPaymentHistory(interestForecostingApiUrl))
+
+  setup(
+    "reference-data-interest-bearing-tpss-maintrans-subtrans",
+    "reference data interest bearing tpss maintrans subtran"
+  )
+    .withChainedActions(
+      InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1530SubTrans1000(interestForecostingApiUrl),
+      InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1535SubTrans1000(interestForecostingApiUrl),
+      InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1540SubTrans1000(interestForecostingApiUrl)
+
     )
 
   runSimulation()
