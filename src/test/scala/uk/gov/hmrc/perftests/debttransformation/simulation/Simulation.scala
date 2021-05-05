@@ -27,37 +27,33 @@ class Simulation extends PerformanceTestRunner {
   implicit val patience: Patience = Patience(15.minutes)
 
   setup(
-    "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
-    "Back-end-processes for Statement of Liability Service Hello World test")
+    "hello-world-response-from-statement-of-liability-service",
+    "hello world response from statement of liability service"
+  )
     .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
 
+  setup("request-Statement-of-Liability-for-multiple-debts", "request statement of liability for multiple debts")
+    .withChainedActions(
+      StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
+    )
+
+  setup("Multiple-debt-items-with-payments", "Multiple debt items with payments")
+    .withChainedActions(
+      InterestForecastingRequests.InterestBearingForMultipleDebtsAndPayment(interestForecostingApiUrl)
+    )
 
   setup(
-    "request-Statement-of-Liability-for-multiple-debts",
-    "request statement of liability for multiple debts")
-    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl))
-
-
-  setup(
-    "Interest-start-date-before-debt-created-multiple-payment-for-a-debt",
-    "Interest start date before debt created multiple payment for a debt"
+    "debt-item-touching-two-leap-years-with-payment-history",
+    "debt item touching two leap years with payment history"
   )
     .withChainedActions(
-      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl))
-  setup(
-    "interest-bearing-with-multiple-debt-item-calcultions-and-breathing-space",
-    "interest bearing with multiple debt item calculation and breathing space")
-    .withChainedActions(
-      InterestForecastingRequests.debtItemInterestRateChangeWithPaymentHistory(interestForecostingApiUrl),
-      InterestForecastingRequests.debtItemInterestrateChangeWithNoPaymentHistory(interestForecostingApiUrl))
+      InterestForecastingRequests.debtItemInterestRateChangeWithPaymentHistory(interestForecostingApiUrl)
+    )
 
-  setup(
-    "reference-data-interest-bearing-tpss-maintrans-subtrans",
-    "reference data interest bearing tpss maintrans subtran")
+  setup("Debt-touching-two-leap-years-with-no-payment-history", "Debt touching two leap years with no payment history")
     .withChainedActions(
-      InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1530SubTrans1000(interestForecostingApiUrl),
-      InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1535SubTrans1000(interestForecostingApiUrl),
-      InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1540SubTrans1000(interestForecostingApiUrl))
+      InterestForecastingRequests.debtItemInterestRateChangeWithNoPaymentHistory(interestForecostingApiUrl)
+    )
 
   runSimulation()
 }
