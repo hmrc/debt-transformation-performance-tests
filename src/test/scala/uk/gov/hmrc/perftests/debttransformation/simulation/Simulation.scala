@@ -28,52 +28,36 @@ class Simulation extends PerformanceTestRunner {
 
   setup(
     "back-end-processes-retrieve-hello-world-response-from-Statement-of-Liability-Service",
-    "Back-end-processes for Statement of Liability Service Hello World test"
-  )
+    "Back-end-processes for Statement of Liability Service Hello World test")
     .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
 
-//  setup(
-//    "back-end-interest-bearing-drier-debt-MVP",
-//    "Back end interest bearing DRIER debt -MVP"
-//  )
-//    .withChainedActions(
-//      InterestForecastingRequests.InterestBearingdrierdebtForChargeTypeNino(interestForecostingApiUrl)
-//    )
-//
-//  setup(
-//    "backend-non-interest-bearing-drier-debt-MVP",
-//    "backend non interest bearing drier debt MVP"
-//  )
-//    .withChainedActions(
-//      InterestForecastingRequests.nonInterestBearingDrierdebtForChargeTypeHIPG(interestForecostingApiUrl)
-//    )
 
   setup(
-    "interest-bearing-and-non-interest-bearing-single-debt-item-calculation",
-    "interest bearing and non interest bearing single item debt calculation"
-  )
-    .withChainedActions(
-      InterestForecastingRequests.InterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl),
-      InterestForecastingRequests.nonInterestBearingDebtCalculationForASinglePayment(interestForecostingApiUrl))
+    "request-Statement-of-Liability-for-multiple-debts",
+    "request statement of liability for multiple debts")
+    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl))
+
 
   setup(
-    "interest-bearing-and-non-interest-bearing-multiple-debt-item-calcultions",
-    "interest bearing and non interest bearing multiple item debt calculation"
+    "Interest-start-date-before-debt-created-multiple-payment-for-a-debt",
+    "Interest start date before debt created multiple payment for a debt"
   )
     .withChainedActions(
-      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl),
+      InterestForecastingRequests.InterestBearingDebtCalculationForMultiplePayment(interestForecostingApiUrl))
+  setup(
+    "interest-bearing-with-multiple-debt-item-calcultions-and-breathing-space",
+    "interest bearing with multiple debt item calculation and breathing space")
+    .withChainedActions(
+      InterestForecastingRequests.debtItemInterestRateChangeWithPaymentHistory(interestForecostingApiUrl),
       InterestForecastingRequests.debtItemInterestrateChangeWithNoPaymentHistory(interestForecostingApiUrl))
 
   setup(
     "reference-data-interest-bearing-tpss-maintrans-subtrans",
-    "reference data interest bearing tpss maintrans subtran"
-  )
+    "reference data interest bearing tpss maintrans subtran")
     .withChainedActions(
       InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1530SubTrans1000(interestForecostingApiUrl),
       InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1535SubTrans1000(interestForecostingApiUrl),
-      InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1540SubTrans1000(interestForecostingApiUrl)
-
-    )
+      InterestForecastingRequests.referenceDataInterestBearingTPSSMainTrans1540SubTrans1000(interestForecostingApiUrl))
 
   runSimulation()
 }

@@ -30,61 +30,31 @@ object InterestForecastingRequests extends ServicesConfiguration {
     "Content-Type"  -> "application/json"
   )
 
-  def InterestBearingDebtCalculationForASinglePayment(baseUri: String): HttpRequestBuilder =
-    http("Interest Bearing: 1 Payment of 1 debt")
-      .post(s"$baseUri/interest-forecasting/debt-calculation")
-      .headers(requestHeaders)
-      .body(StringBody("{\n\t\"debtItems\": [{\n\t\t\"uniqueItemReference\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": \"1525\",\n\t\t\"dateCreated\": \"2020-12-16\",\n\t\t\"interestStartDate\": \"2020-12-16\",\n\t\t\"dateCalculationTo\": \"2021-04-14\",\n\t\t\"paymentHistory\": [{\n\t\t\t\"amountPaid\": 100000,\n\t\t\t\"dateOfPayment\": \"2021-02-03\"\n\t\t}]\n\t}]\n}"))
-      .check(status.is(200))
 
   def InterestBearingDebtCalculationForMultiplePayment(baseUri: String): HttpRequestBuilder =
-    http("Interest Bearing: 2 Payments of 1 debt")
+    http("Interest start date before debt created multiple payment for a debt")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody("{\n\t\"debtItems\": [{\n\t\t\"uniqueItemReference\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": \"1525\",\n\t\t\"dateCreated\": \"2020-12-16\",\n\t\t\"interestStartDate\": \"2020-12-16\",\n\t\t\"dateCalculationTo\": \"2021-04-14\",\n\t\t\"paymentHistory\": [{\n\t\t\t\"amountPaid\": 100000,\n\t\t\t\"dateOfPayment\": \"2021-02-23\"\n\t\t}, {\n\t\t\t\"amountPaid\": 100000,\n\t\t\t\"dateOfPayment\": \"2021-03-05\"\n\t\t}]\n\t}]\n\n\n\n\n}"))
+      .body(StringBody("{\n  \"debtItems\": [\n{\n\"uniqueItemReference\": \"123\",\n\"originalAmount\": 500000,\n\"subTrans\": \"1000\",\n\"mainTrans\": \"1525\",\n\"dateCreated\": \"2016-01-01\",\n\"interestStartDate\": \"2015-01-01\",\n\"dateCalculationTo\": \"2020-05-31\",\n\"paymentHistory\": [\n{\"amountPaid\" : 100000,\n\"dateOfPayment\" : \"2020-02-23\"},\n{\"amountPaid\" : 200000,\n\"dateOfPayment\" : \"2020-03-20\"}]\n }\n  ],\n  \"breathingSpaces\": [\n  ]\n}"))
       .check(status.is(200))
 
-  def nonInterestBearingDebtCalculationForASinglePayment(baseUri: String): HttpRequestBuilder =
-    http("Non Interest Bearing: 1 Payment of 1 debt.")
+
+
+  def debtItemInterestRateChangeWithPaymentHistory(baseUri: String): HttpRequestBuilder =
+    http("Debt touching 2 leap years with Interest rate changes from 3.25%, 3%, 2.75% to 2.6%")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody("{\n\t\"debtItems\":\n\n\t\t[{\n\t\t\t\"uniqueItemReference\": \"123\",\n\t\t\t\"originalAmount\": 500000,\n\t\t\t\"subTrans\": \"1000\",\n\t\t\t\"mainTrans\": \"1525\",\n\t\t\t\"dateCreated\": \"2018-06-01\",\n\t\t\t\"interestStartDate\": \"2018-06-01\",\n\t\t\t\"dateCalculationTo\": \"2021-03-31\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\"amountPaid\": 100000,\n\t\t\t\t\"dateOfPayment\": \"2019-03-15\"\n\t\t\t}]\n\t\t}]\n}"))
+      .body(StringBody("{\n  \"debtItems\": [\n{\n\"uniqueItemReference\": \"123\",\n\"originalAmount\": 500000,\n\"subTrans\": \"1000\",\n\"mainTrans\": \"1525\",\n\"dateCreated\": \"2016-01-01\",\n\"interestStartDate\": \"2016-01-01\",\n\"dateCalculationTo\": \"2020-05-31\",\n\"paymentHistory\": [\n{\"amountPaid\" : 100000,\n\"dateOfPayment\" : \"2020-02-23\"},\n{\"amountPaid\" : 200000,\n\"dateOfPayment\" : \"2020-03-20\"}]\n}\n],\n \"breathingSpaces\": [\n  ]\n}"))
       .check(status.is(200))
 
-//  def InterestBearingDebtCalculationForTwoDebtItemsWithAPaymentButNoTForSecondDebt(baseUri: String): HttpRequestBuilder =
-//    http("Interest Bearing. 2 debts. 1 debt with payment the second debt with no payment")
-//      .post(s"$baseUri/interest-forecasting/debt-calculation")
-//      .headers(requestHeaders)
-//      .body(StringBody(""))
-//      .check(status.is(200))
 
-
-  def debtItemInterestrateChangeWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
-  http("Interest rate changes from 2.75% to 2.6%")
+  def debtItemInterestRateChangeWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
+  http("Debt starting in a leap year and Interest rate changes from 3.25%, 2.75% to 2.6%")
     .post(s"$baseUri/interest-forecasting/debt-calculation")
     .headers(requestHeaders)
-    .body(StringBody("{\n\t\"debtItems\": [{\n\t\t\"uniqueItemReference\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": \"1525\",\n\t\t\"dateCreated\": \"2020-01-01\",\n\t\t\"interestStartDate\": \"2020-01-01\",\n\t\t\"dateCalculationTo\": \"2021-03-31\",\n\t\t\"paymentHistory\": []\n\t}]\n}"))
+    .body(StringBody("{\n  \"debtItems\": [\n {\n\"uniqueItemReference\": \"123\",\n \"originalAmount\": 500000,\n\"subTrans\": \"1000\",\n\"mainTrans\": \"1525\",\n\"dateCreated\": \"2020-01-01\",\n\"interestStartDate\": \"2020-01-01\",\n\"dateCalculationTo\": \"2021-03-31\",\n\"paymentHistory\": [\n]\n}\n  ],\n  \"breathingSpaces\": [\n  ]\n}"))
     .check(status.is(200))
 
-def referenceDataInterestBearingTPSSMainTrans1530SubTrans1000(baseUri: String): HttpRequestBuilder =
-  http("Interest Bearing TPSS MainTrans 1530 debt SubTrans 1000")
-  .post(s"$baseUri/interest-forecasting/debt-calculation")
-  .headers(requestHeaders)
-  .body(StringBody("{\n\t\"debtItems\": [{\n\t\t\"uniqueItemReference\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": \"1530\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\": \"2021-03-01\",\n\t\t\"dateCalculationTo\": \"2021-03-08\",\n\t\t\"paymentHistory\": []\n\n\n\n\t}]\n}"))
-  .check(status.is(200))
 
-  def referenceDataInterestBearingTPSSMainTrans1535SubTrans1000(baseUri: String): HttpRequestBuilder =
-    http("Interest Bearing TPSS MainTrans (1535) debt SubTrans (1000)")
-      .post(s"$baseUri/interest-forecasting/debt-calculation")
-      .headers(requestHeaders)
-      .body(StringBody("{\n\t\"debtItems\": [{\n\t\t\"uniqueItemReference\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": \"1535\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\": \"2021-03-01\",\n\t\t\"dateCalculationTo\": \"2021-03-08\",\n\t\t\"paymentHistory\": []\n\n\n\n\t}]\n}"))
-      .check(status.is(200))
-
-  def referenceDataInterestBearingTPSSMainTrans1540SubTrans1000(baseUri: String): HttpRequestBuilder =
-    http("Interest Bearing TPSS MainTrans (1540) debt SubTrans (1000)")
-      .post(s"$baseUri/interest-forecasting/debt-calculation")
-      .headers(requestHeaders)
-      .body(StringBody("{\n\t\"debtItems\": [{\n\t\t\"uniqueItemReference\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": \"1540\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\": \"2021-03-01\",\n\t\t\"dateCalculationTo\": \"2021-03-08\",\n\t\t\"paymentHistory\": []\n\n\n\n\t}]\n}"))
-      .check(status.is(200))
 
   }
