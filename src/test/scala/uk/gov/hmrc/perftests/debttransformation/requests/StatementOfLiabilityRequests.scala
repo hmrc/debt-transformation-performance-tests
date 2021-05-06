@@ -34,4 +34,15 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
       .get(s"$baseUri/statement-of-liability/hello-world")
       .headers(requestHeaders)
       .check(status.is(200))
+
+  def statementOfLiabilityRequestFormultipleDebts(baseUri: String): HttpRequestBuilder =
+    http("get statement of liability for multiple debts")
+      .post(s"$baseUri/statement-of-liability/sol")
+      .headers(requestHeaders)
+      .body(
+        StringBody(
+          "{\n  \"solType\" : \"UI\",\n  \"debts\" : [ {\n    \"uniqueItemReference\" : \"debt005\",\n    \"debtItemChargeIDs\" : [ \"duty05\" ]\n  }]\n}"
+        )
+      )
+      .check(status.is(200))
 }

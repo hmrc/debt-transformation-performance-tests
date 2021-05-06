@@ -30,79 +30,35 @@ object InterestForecastingRequests extends ServicesConfiguration {
     "Content-Type"  -> "application/json"
   )
 
-  def createDebtCalculationRule(baseUri: String): HttpRequestBuilder =
-    http("create debt calculator rules")
-      .post(s"$baseUri/interest-forecasting/settings")
-      .headers(requestHeaders)
-      .body(
-        StringBody(
-          "{\"settings\": \"IF regime == 'DRIER' AND chargeType == 'NI' -> intRate = 1% OTHERWISE -> intRate = 0%\"}"
-        )
-      )
-      .check(status.is(200))
-
-  def InterestBearingdrierdebtForChargeTypeNino(baseUri: String): HttpRequestBuilder =
-    http("Interest bearing drier debt -MVP")
+  def InterestBearingForMultipleDebtsAndPayment(baseUri: String): HttpRequestBuilder =
+    http("Multiple debt items with payments")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
       .body(
         StringBody(
-          "{\"amount\": 500000, \"chargeType\": \"NI\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"
+          "{\n  \"debtItems\": [\n{\n\"uniqueItemReference\": \"123\",\n\"originalAmount\": 500000,\n\"subTrans\": \"1000\",\n\"mainTrans\": \"1525\",\n\"dateCreated\": \"2016-01-01\",\n\"interestStartDate\": \"2015-01-01\",\n\"dateCalculationTo\": \"2020-05-31\",\n\"paymentHistory\": [\n{\"amountPaid\" : 100000,\n\"dateOfPayment\" : \"2020-02-23\"},\n{\"amountPaid\" : 200000,\n\"dateOfPayment\" : \"2020-03-20\"}]\n }\n  ],\n  \"breathingSpaces\": [\n  ]\n}"
         )
       )
       .check(status.is(200))
 
-  def nonInterestBearingDrierdebtForChargeTypeHIPG(baseUri: String): HttpRequestBuilder =
-    http("Non Interest bearing drier debt -MVP")
+  def debtItemInterestRateChangeWithPaymentHistory(baseUri: String): HttpRequestBuilder =
+    http("debt item touching 2 leap years with payment history")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
       .body(
         StringBody(
-          "{\"amount\": 500000, \"chargeType\": \"HIPG\", \"regime\": \"DRIER\", \"dateAmount\": \"2021-01-01\", \"dateCalculationTo\": \"2021-05-01\"}"
+          "{\n  \"debtItems\": [\n{\n\"uniqueItemReference\": \"123\",\n\"originalAmount\": 500000,\n\"subTrans\": \"1000\",\n\"mainTrans\": \"1525\",\n\"dateCreated\": \"2016-01-01\",\n\"interestStartDate\": \"2016-01-01\",\n\"dateCalculationTo\": \"2020-05-31\",\n\"paymentHistory\": [\n{\"amountPaid\" : 100000,\n\"dateOfPayment\" : \"2020-02-23\"},\n{\"amountPaid\" : 200000,\n\"dateOfPayment\" : \"2020-03-20\"}]\n}\n],\n \"breathingSpaces\": [\n  ]\n}"
         )
       )
       .check(status.is(200))
 
-  def InterestBearingDebtCalculationForASinglePayment(baseUri: String): HttpRequestBuilder =
-    http("Interest bearing drier single payment")
+  def debtItemInterestRateChangeWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
+    http("debt starting in a leap year and Interest rate changes from 3.25%, 2.75% to 2.6%")
       .post(s"$baseUri/interest-forecasting/debt-calculation")
       .headers(requestHeaders)
       .body(
         StringBody(
-          "\n    {\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"NI\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t}\n      ]\n    }\n  ]\n}"
-        )
-      )
-      .check(status.is(200))
-
-  def InterestBearingDebtCalculationForMultiplePayment(baseUri: String): HttpRequestBuilder =
-    http("Interest bearing drier multiple payments")
-      .post(s"$baseUri/interest-forecasting/debt-calculation")
-      .headers(requestHeaders)
-      .body(
-        StringBody(
-          "{\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"NI\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t},\n        {\n      \t\t  \"amountPaid\": 50000,\n      \t\t  \"dateOfPayment\": \"2021-02-05\"\n      \t}\n      ]\n    }\n  ]\n}"
-        )
-      )
-      .check(status.is(200))
-
-  def nonInterestBearingDebtCalculationForASinglePayment(baseUri: String): HttpRequestBuilder =
-    http("non interest bearing drier single payment")
-      .post(s"$baseUri/interest-forecasting/debt-calculation")
-      .headers(requestHeaders)
-      .body(
-        StringBody(
-          "{\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"HIPG\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t}\n      ]\n    }\n  ]\n}"
-        )
-      )
-      .check(status.is(200))
-
-  def nonInterestBearingDebtCalculationForMultiplePayment(baseUri: String): HttpRequestBuilder =
-    http("non interest bearing drier multiple payments")
-      .post(s"$baseUri/interest-forecasting/debt-calculation")
-      .headers(requestHeaders)
-      .body(
-        StringBody(
-          "\n    {\"debtItems\": [\n    {\n      \"uniqueItemReference\": \"123\",\n      \"amount\": 500000,\n      \"chargeType\": \"HIPG\",\n      \"regime\": \"DRIER\",\n      \"dateAmount\": \"2020-12-16\",\n      \"dateCalculationTo\": \"2021-04-14\",\n      \"paymentHistory\": [\n      \t\t         {\n      \t\t  \"amountPaid\": 100000,\n      \t\t  \"dateOfPayment\": \"2021-02-03\"\n      \t},\n        {\n      \t\t  \"amountPaid\": 50000,\n      \t\t  \"dateOfPayment\": \"2021-02-05\"\n      \t}\n      ]\n    }\n  ]\n}"
+          "{\n  \"debtItems\": [\n {\n\"uniqueItemReference\": \"123\",\n \"originalAmount\": 500000,\n\"subTrans\": \"1000\",\n\"mainTrans\": \"1525\",\n\"dateCreated\": \"2020-01-01\",\n\"interestStartDate\": \"2020-01-01\",\n\"dateCalculationTo\": \"2021-03-31\",\n\"paymentHistory\": [\n]\n}\n  ],\n  \"breathingSpaces\": [\n  ]\n}"
         )
       )
       .check(status.is(200))
