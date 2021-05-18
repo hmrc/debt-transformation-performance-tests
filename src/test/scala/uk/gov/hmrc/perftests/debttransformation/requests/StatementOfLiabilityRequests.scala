@@ -19,6 +19,7 @@ package uk.gov.hmrc.perftests.debttransformation.requests
 import io.gatling.core.Predef._
 import io.gatling.http.Predef.{http, status, _}
 import io.gatling.http.request.builder.HttpRequestBuilder
+import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object StatementOfLiabilityRequests extends ServicesConfiguration {
   val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:statement-of-liability"))
