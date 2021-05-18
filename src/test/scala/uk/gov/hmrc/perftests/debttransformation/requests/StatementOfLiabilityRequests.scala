@@ -35,14 +35,58 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .check(status.is(200))
 
-  def statementOfLiabilityRequestFormultipleDebts(baseUri: String): HttpRequestBuilder =
-    http("get statement of liability for multiple debts")
+
+  val solAPIRequestWithSingleDebt =
+    s"""
+       |{
+       |  "solType" : "CO",
+       |  "solRequestedDate": "2021-05-18",
+       |  "debts" : [ {
+       |    "debtID" : "debt001",
+       |    "dutyID" : [ "duty01", "duty02" ],
+       |    "interestRequestedTo": "2021-08-10"
+       |  }]
+       |}
+       |""".stripMargin
+
+  def solAPIRequestWithSingleDebtRequest(baseUri: String): HttpRequestBuilder =
+    http("POST Single Debt SOL Statement of Liability")
       .post(s"$baseUri/statement-of-liability/sol")
       .headers(requestHeaders)
-      .body(
-        StringBody(
-          "{\n  \"solType\" : \"UI\",\n  \"debts\" : [ {\n    \"uniqueItemReference\" : \"debt005\",\n    \"debtItemChargeIDs\" : [ \"duty05\" ]\n  }]\n}"
-        )
-      )
+      .body(StringBody(solAPIRequestWithSingleDebt))
       .check(status.is(200))
+
+
+  val solAPIRequestWithMultipleDebts =
+    s"""
+       |{
+       |  "solType": "UI",
+       |  "solRequestedDate": "2021-05-17",
+       |  "debts": [
+       |    {
+       |      "debtID": "debt001",
+       |      "dutyID": [
+       |        "duty01",
+       |        "duty02"
+       |      ],
+       |      "interestRequestedTo": "2021-08-10"
+       |    },
+       |    {
+       |      "debtID": "debt004",
+       |      "dutyID": [
+       |        "duty04"
+       |      ],
+       |      "interestRequestedTo": "2021-08-10"
+       |    }
+       |  ]
+       |}
+       |""".stripMargin
+
+  def statementOfLiabilityRequestFormultipleDebts(baseUri: String): HttpRequestBuilder =
+    http("POST Multiple Debts SOL Statement of Liability")
+      .post(s"$baseUri/statement-of-liability/sol")
+      .headers(requestHeaders)
+      .body(StringBody(solAPIRequestWithMultipleDebts))
+      .check(status.is(200))
+
 }
