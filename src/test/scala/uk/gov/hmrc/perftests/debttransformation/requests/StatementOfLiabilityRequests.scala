@@ -74,8 +74,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |    {
        |      "debtID": "debt004",
        |      "dutyID": [
-       |        "duty01",
-       |        "duty02"
+       |        "duty04"
        |      ],
        |      "interestRequestedTo": "2021-08-10"
        |    }
