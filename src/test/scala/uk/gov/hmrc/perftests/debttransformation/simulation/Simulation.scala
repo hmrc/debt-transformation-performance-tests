@@ -25,61 +25,37 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
- setup("statement-of-liability-service-hello-world-request", "statement of liability service hello world request")
-   .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
+  setup("statement-of-liability-service-hello-world-request", "statement of liability service hello world request")
+    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
 
-  setup(
-    "request-Statement-of-Liability-for-a-single-debts",
-    "request Statement of Liability for a single debts"
-  )
+  setup("request-Statement-of-Liability-for-a-single-debts", "request Statement of Liability for a single debts")
     .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityRequestForASingleDebt(statementOfLiabilityApiBaseUrl))
 
   setup("request-Statement-of-Liability-for-multiple-debts", "request statement of liability for multiple debts")
-    .withChainedActions(
-      StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
-    )
+    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl))
 
   setup("Multiple-debt-items-with-no-payments-breathing-space", "Multiple debt items with no payments breathing space")
-    .withChainedActions(
-      InterestForecastingRequests.multipleDebtsWithNoPaymentHistory(interestForecostingApiUrl)
-    )
+    .withChainedActions(InterestForecastingRequests.multipleDebtsWithNoPaymentHistory(interestForecostingApiUrl))
 
-  setup("open-ended-breathingSpaces-for-a-single-debt-no-payments","open ended breathingSpaces for a single debt no payments")
-    .withChainedActions(
-      InterestForecastingRequests.debtItemWithOpenEndedBreathingSpace(interestForecostingApiUrl)
-    )
+  setup("open-ended-breathingSpaces-for-a-single-debt-no-payments", "open ended breathingSpaces for a single debt no payments")
+    .withChainedActions(InterestForecastingRequests.debtItemWithOpenEndedBreathingSpace(interestForecostingApiUrl))
 
-  setup("breathing-space-applied-to-a-single-debt-with-no-payments","Breathing Space applied to a single debt no payments")
-    .withChainedActions(
-      InterestForecastingRequests.breathingSpaceAppliedToAsingleDebtWithNoPayments(interestForecostingApiUrl)
-    )
-  setup("non-interest-bearing-debt-Item-with-no-breathing-space","non interest bearing debt Item with no breathing space")
-    .withChainedActions(
-      InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
-    )
+  setup("breathing-space-applied-to-a-single-debt-with-no-payments", "Breathing Space applied to a single debt no payments")
+    .withChainedActions(InterestForecastingRequests.breathingSpaceAppliedToAsingleDebtWithNoPayments(interestForecostingApiUrl))
+
+  setup(
+    "non-interest-bearing-debt-Item-with-no-breathing-space",
+    "non interest bearing debt Item with no breathing space")
+    .withChainedActions(InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl))
 
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
-    .withChainedActions(
-      InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
+    .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
 
   setup("debt-items-with-five-payments-on-one-debt", "debt items with payments one one debt")
-    .withChainedActions(
-      InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
+    .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
 
-  setup("multiple-debt-items-with-payments-no-breathing-space", "multiple debt items with payments no breathing space")
-    .withChainedActions(
-      InterestForecastingRequests.multipleDebtsItemsWithPaymentsNoBreathingSpace(interestForecostingApiUrl))
-
-//  setup("debt-touching-two-leap-years-with-no-payment-history", "debt touching two leap years with no payment history")
-//    .withChainedActions(
-//      InterestForecastingRequests.debtItemInterestRateChangeWithNoPaymentHistory(interestForecostingApiUrl)
-//    )
-//
-  setup(
-    "two-leap-year-debt-items-with-payment-history",
-    "two leap year debt items with payment history")
-    .withChainedActions(
-      InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl))
+  setup("two-leap-year-debt-items-with-payment-history", "two leap year debt items with payment history")
+    .withChainedActions(InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl))
 
   runSimulation()
 }
