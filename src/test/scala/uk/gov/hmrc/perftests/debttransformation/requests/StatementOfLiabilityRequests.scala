@@ -36,13 +36,19 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
       .check(status.is(200))
 
   def statementOfLiabilityRequestFormultipleDebts(baseUri: String): HttpRequestBuilder =
-    http("get statement of liability for multiple debts")
+    http("statement of liability for multiple debts")
       .post(s"$baseUri/statement-of-liability/sol")
       .headers(requestHeaders)
-      .body(
-        StringBody(
-          "{\n  \"solType\" : \"UI\",\n  \"debts\" : [ {\n    \"uniqueItemReference\" : \"debt005\",\n    \"debtItemChargeIDs\" : [ \"duty05\" ]\n  }]\n}"
-        )
-      )
+      .body(StringBody("{\n  \"solType\" : \"CO\",\n  \"solRequestedDate\": \"2021-05-13\",\n  \"debts\" : [ {\n    \"debtID\" : \"debt001\",\n    \"dutyID\" : " +
+        "[ \"duty01\", \"duty02\" ],\n    \"interestRequestedTo\": \"2021-08-10\"\n  },\n  {\n    \"debtID\" : \"debt002\",\n " +
+        " \"dutyID\" : [ \"duty01\", \"duty02\" ],\n    \"interestRequestedTo\": \"2021-08-10\"\n  }\n  ]\n}"))
+      .check(status.is(200))
+
+  def statementOfLiabilityRequestForASingleDebt(baseUri: String): HttpRequestBuilder =
+    http("statement of liability for a single debt")
+      .post(s"$baseUri/statement-of-liability/sol")
+      .headers(requestHeaders)
+      .body(StringBody("{\n  \"solType\" : \"CO\",\n  \"solRequestedDate\": \"2021-05-13\",\n  \"debts\" : [ {\n    \"debtID\" : \"debt001\",\n    \"dutyID\" : [ \"duty01\", \"duty02\" ],\n   " +
+        " \"interestRequestedTo\": \"2021-08-10\"\n  }]\n}"))
       .check(status.is(200))
 }
