@@ -32,6 +32,11 @@ class Simulation extends PerformanceTestRunner {
   )
     .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
 
+  setup("request-Statement-of-Liability-for-single-debts", "request statement of liability for single debt")
+    .withChainedActions(
+      StatementOfLiabilityRequests.solAPIRequestWithSingleDebtRequest(statementOfLiabilityApiBaseUrl)
+    )
+
   setup("request-Statement-of-Liability-for-multiple-debts", "request statement of liability for multiple debts")
     .withChainedActions(
       StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
