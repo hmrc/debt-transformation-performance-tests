@@ -29,12 +29,12 @@ object InterestForecastingRequests extends ServicesConfiguration {
     "Accept"        -> "application/vnd.hmrc.1.0+json",
     "Content-Type"  -> "application/json"
   )
+
   def multipleDebtsWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
     http("Multiple debt items with no paymentHistory and breathing space")
       .post(s"$baseUri/debt-calculation")
       .headers(requestHeaders)
-      .body(
-        StringBody(
+      .body(StringBody(
           "{\n\t\"debtItems\": [{\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": 500000,\n\t\t\t\"subTrans\":" +
             " \"1000\",\n\t\t\t\"mainTrans\": \"1525\",\n\t\t\t\"dateCreated\": \"2018-01-01\",\n\t\t\t\"interestStartDate\": " +
             "\"2018-01-01\",\n\t\t\t\"interestRequestedTo\": \"2018-10-30\",\n\t\t\t\"paymentHistory\": [\n\n\t\t\t]\n\t\t}\n\n\t\t, " +
