@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.perftests.debttransformation.simulation
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.debttransformation.requests.{InterestForecastingRequests, _}
+import uk.gov.hmrc.perftests.debttransformation.requests._
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
 
@@ -42,23 +42,28 @@ class Simulation extends PerformanceTestRunner {
       StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
     )
 
-  setup("Multiple-debt-items-with-payments", "Multiple debt items with payments")
-    .withChainedActions(
-      InterestForecastingRequests.InterestBearingForMultipleDebtsAndPayment(interestForecostingApiUrl)
-    )
+  setup("Multiple-debt-items-with-no-payments-breathing-space", "Multiple debt items with no payments breathing space")
+    .withChainedActions(InterestForecastingRequests.multipleDebtsWithNoPaymentHistory(interestForecostingApiUrl))
+
+  setup("open-ended-breathingSpaces-for-a-single-debt-no-payments", "open ended breathingSpaces for a single debt no payments")
+    .withChainedActions(InterestForecastingRequests.debtItemWithOpenEndedBreathingSpace(interestForecostingApiUrl))
+
+  setup("breathing-space-applied-to-a-single-debt-with-no-payments", "Breathing Space applied to a single debt no payments")
+    .withChainedActions(InterestForecastingRequests.breathingSpaceAppliedToAsingleDebtWithNoPayments(interestForecostingApiUrl))
 
   setup(
-    "debt-item-touching-two-leap-years-with-payment-history",
-    "debt item touching two leap years with payment history"
-  )
-    .withChainedActions(
-      InterestForecastingRequests.debtItemInterestRateChangeWithPaymentHistory(interestForecostingApiUrl)
-    )
+    "non-interest-bearing-debt-item-with-no-breathing-space",
+    "non interest bearing debt item with no breathing space")
+    .withChainedActions(InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl))
 
-  setup("Debt-touching-two-leap-years-with-no-payment-history", "Debt touching two leap years with no payment history")
-    .withChainedActions(
-      InterestForecastingRequests.debtItemInterestRateChangeWithNoPaymentHistory(interestForecostingApiUrl)
-    )
+  setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
+    .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
+
+  setup("debt-items-with-five-payments-on-one-debt", "debt items with payments one one debt")
+    .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
+
+  setup("two-leap-year-debt-items-with-payment-history", "two leap year debt items with payment history")
+    .withChainedActions(InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl))
 
   runSimulation()
 }
