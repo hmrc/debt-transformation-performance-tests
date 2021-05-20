@@ -29,13 +29,6 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
     "Content-Type"  -> "application/json"
   )
 
-  def statementOfLiabilityHelloWorld(baseUri: String): HttpRequestBuilder =
-    http("GET Statement of Liability")
-      .get(s"$baseUri/hello-world")
-      .headers(requestHeaders)
-      .check(status.is(200))
-
-
   val solAPIRequestWithSingleDebt =
     s"""
        |{
