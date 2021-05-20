@@ -31,7 +31,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
 
   def statementOfLiabilityHelloWorld(baseUri: String): HttpRequestBuilder =
     http("GET Statement of Liability")
-      .get(s"$baseUri/statement-of-liability/hello-world")
+      .get(s"$baseUri/hello-world")
       .headers(requestHeaders)
       .check(status.is(200))
 
@@ -51,7 +51,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
 
   def solAPIRequestWithSingleDebtRequest(baseUri: String): HttpRequestBuilder =
     http("POST Single Debt SOL Statement of Liability")
-      .post(s"$baseUri/statement-of-liability/sol")
+      .post(s"$baseUri/sol")
       .headers(requestHeaders)
       .body(StringBody(solAPIRequestWithSingleDebt))
       .check(status.is(200))
@@ -84,7 +84,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
 
   def statementOfLiabilityRequestFormultipleDebts(baseUri: String): HttpRequestBuilder =
     http("POST Multiple Debts SOL Statement of Liability")
-      .post(s"$baseUri/statement-of-liability/sol")
+      .post(s"$baseUri/sol")
       .headers(requestHeaders)
       .body(StringBody(solAPIRequestWithMultipleDebts))
       .check(status.is(200))
