@@ -44,7 +44,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |  "solRequestedDate": "2021-05-18",
        |  "debts" : [ {
        |    "debtId" : "debt001",
-       |    "dutyId" : [ "duty01", "duty02" ],
+       |    "dutyIds" : [ "duty01", "duty02" ],
        |    "interestRequestedTo": "2021-08-10"
        |  }]
        |}
@@ -67,7 +67,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |  "debts": [
        |    {
        |      "debtId": "debt001",
-       |      "dutyId": [
+       |      "dutyIds": [
        |        "duty01",
        |        "duty02"
        |      ],
@@ -75,7 +75,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |    },
        |    {
        |      "debtId": "debt004",
-       |      "dutyId": [
+       |      "dutyIds": [
        |        "duty04"
        |      ],
        |      "interestRequestedTo": "2021-08-10"
