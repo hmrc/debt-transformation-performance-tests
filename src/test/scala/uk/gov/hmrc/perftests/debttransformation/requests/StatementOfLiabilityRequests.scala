@@ -29,21 +29,15 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
     "Content-Type"  -> "application/json"
   )
 
-  def statementOfLiabilityHelloWorld(baseUri: String): HttpRequestBuilder =
-    http("GET Statement of Liability")
-      .get(s"$baseUri/statement-of-liability/hello-world")
-      .headers(requestHeaders)
-      .check(status.is(200))
-
-
   val solAPIRequestWithSingleDebt =
     s"""
        |{
        |  "solType" : "CO",
+       |  "customerUniqueRef": "customer-1",
        |  "solRequestedDate": "2021-05-18",
        |  "debts" : [ {
-       |    "debtID" : "debt001",
-       |    "dutyID" : [ "duty01", "duty02" ],
+       |    "debtId" : "debt001",
+       |    "dutyIds" : [ "duty01", "duty02" ],
        |    "interestRequestedTo": "2021-08-10"
        |  }]
        |}
@@ -51,7 +45,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
 
   def solAPIRequestWithSingleDebtRequest(baseUri: String): HttpRequestBuilder =
     http("POST Single Debt SOL Statement of Liability")
-      .post(s"$baseUri/statement-of-liability/sol")
+      .post(s"$baseUri/sol")
       .headers(requestHeaders)
       .body(StringBody(solAPIRequestWithSingleDebt))
       .check(status.is(200))
@@ -62,18 +56,19 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |{
        |  "solType": "UI",
        |  "solRequestedDate": "2021-05-17",
+       |  "customerUniqueRef": "customer-1",
        |  "debts": [
        |    {
-       |      "debtID": "debt001",
-       |      "dutyID": [
+       |      "debtId": "debt001",
+       |      "dutyIds": [
        |        "duty01",
        |        "duty02"
        |      ],
        |      "interestRequestedTo": "2021-08-10"
        |    },
        |    {
-       |      "debtID": "debt004",
-       |      "dutyID": [
+       |      "debtId": "debt004",
+       |      "dutyIds": [
        |        "duty04"
        |      ],
        |      "interestRequestedTo": "2021-08-10"
@@ -84,7 +79,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
 
   def statementOfLiabilityRequestFormultipleDebts(baseUri: String): HttpRequestBuilder =
     http("POST Multiple Debts SOL Statement of Liability")
-      .post(s"$baseUri/statement-of-liability/sol")
+      .post(s"$baseUri/sol")
       .headers(requestHeaders)
       .body(StringBody(solAPIRequestWithMultipleDebts))
       .check(status.is(200))

@@ -26,12 +26,6 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
-  setup(
-    "hello-world-response-from-statement-of-liability-service",
-    "hello world response from statement of liability service"
-  )
-    .withChainedActions(StatementOfLiabilityRequests.statementOfLiabilityHelloWorld(statementOfLiabilityApiBaseUrl))
-
   setup("request-Statement-of-Liability-for-single-debts", "request statement of liability for single debt")
     .withChainedActions(
       StatementOfLiabilityRequests.solAPIRequestWithSingleDebtRequest(statementOfLiabilityApiBaseUrl)
