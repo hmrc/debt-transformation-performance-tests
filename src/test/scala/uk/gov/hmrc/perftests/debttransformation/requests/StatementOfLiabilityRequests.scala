@@ -40,6 +40,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
     s"""
        |{
        |  "solType" : "CO",
+       |  "customerUniqueRef": "customer-1",
        |  "solRequestedDate": "2021-05-18",
        |  "debts" : [ {
        |    "debtID" : "debt001",
@@ -62,6 +63,7 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |{
        |  "solType": "UI",
        |  "solRequestedDate": "2021-05-17",
+       |  "customerUniqueRef": "customer-1",
        |  "debts": [
        |    {
        |      "debtID": "debt001",
