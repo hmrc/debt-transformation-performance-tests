@@ -43,8 +43,8 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |  "customerUniqueRef": "customer-1",
        |  "solRequestedDate": "2021-05-18",
        |  "debts" : [ {
-       |    "debtID" : "debt001",
-       |    "dutyID" : [ "duty01", "duty02" ],
+       |    "debtId" : "debt001",
+       |    "dutyId" : [ "duty01", "duty02" ],
        |    "interestRequestedTo": "2021-08-10"
        |  }]
        |}
@@ -66,16 +66,16 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |  "customerUniqueRef": "customer-1",
        |  "debts": [
        |    {
-       |      "debtID": "debt001",
-       |      "dutyID": [
+       |      "debtId": "debt001",
+       |      "dutyId": [
        |        "duty01",
        |        "duty02"
        |      ],
        |      "interestRequestedTo": "2021-08-10"
        |    },
        |    {
-       |      "debtID": "debt004",
-       |      "dutyID": [
+       |      "debtId": "debt004",
+       |      "dutyId": [
        |        "duty04"
        |      ],
        |      "interestRequestedTo": "2021-08-10"
