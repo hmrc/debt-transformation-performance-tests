@@ -17,6 +17,8 @@
 package uk.gov.hmrc.perftests.debttransformation.simulation
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
+import uk.gov.hmrc.perftests.debttransformation.requests.ifs.InterestForecastingRequests
+import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
 
