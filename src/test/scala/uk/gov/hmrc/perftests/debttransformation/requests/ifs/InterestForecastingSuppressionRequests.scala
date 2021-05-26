@@ -5,15 +5,9 @@ import io.gatling.http.Predef.{http, status}
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
-import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests.solAPIRequestWithSingleDebt
 
 object InterestForecastingSuppressionRequests extends ServicesConfiguration {
 
-
-//  #Scenario: Suppression, payment before suppression
-//  #Scenario: Suppression, payment after suppression
-
-//  #Scenario: Suppression, open ended suppression
   val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",

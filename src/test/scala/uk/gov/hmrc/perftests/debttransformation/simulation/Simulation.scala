@@ -17,7 +17,7 @@
 package uk.gov.hmrc.perftests.debttransformation.simulation
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
-import uk.gov.hmrc.perftests.debttransformation.requests.ifs.InterestForecastingRequests
+import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{InterestForecastingRequests, InterestForecastingSuppressionRequests}
 import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
@@ -60,6 +60,15 @@ class Simulation extends PerformanceTestRunner {
 
   setup("two-leap-year-debt-items-with-payment-history", "two leap year debt items with payment history")
     .withChainedActions(InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl))
+
+  setup("debt-items-with-suppression", "debt items with suppression")
+    .withChainedActions(
+      InterestForecastingSuppressionRequests.interestRateChangeBeforeSuppression(interestForecostingApiUrl),
+  InterestForecastingSuppressionRequests.interestRateChangeAfterSuppression(interestForecostingApiUrl),
+  InterestForecastingSuppressionRequests.interestRateChangeADuringSuppression(interestForecostingApiUrl),
+  InterestForecastingSuppressionRequests.openEndedSuppression(interestForecostingApiUrl),
+  InterestForecastingSuppressionRequests.paymentBeforeSuppression(interestForecostingApiUrl))
+
 
   runSimulation()
 }
