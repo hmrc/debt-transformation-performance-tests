@@ -17,7 +17,7 @@
 package uk.gov.hmrc.perftests.debttransformation.simulation
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
-import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{InterestForecastingRequests, InterestForecastingSuppressionRequests}
+import uk.gov.hmrc.perftests.debttransformation.requests.ifs._
 import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
@@ -61,14 +61,32 @@ class Simulation extends PerformanceTestRunner {
   setup("two-leap-year-debt-items-with-payment-history", "two leap year debt items with payment history")
     .withChainedActions(InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl))
 
+  setup("add-suppression-data", "add suppression data")
+    .withChainedActions(
+      SuppressionsRequests.deleteSuppressionData(interestForecostingApiUrl),
+      SuppressionsRequests.addSuppressionData(interestForecostingApiUrl),
+      SuppressionsRequests.getSuppressionData(interestForecostingApiUrl))
+
+
+  setup("add-suppression-rules", "add suppression rules")
+    .withChainedActions(
+      SuppressionsRequests.deleteSuppressionRules(interestForecostingApiUrl),
+      SuppressionsRequests.addSuppressionRules(interestForecostingApiUrl),
+      SuppressionsRequests.retrieveSuppressionRules(interestForecostingApiUrl))
+
+
   setup("debt-items-with-suppression", "debt items with suppression")
     .withChainedActions(
-      InterestForecastingSuppressionRequests.interestRateChangeBeforeSuppression(interestForecostingApiUrl),
-  InterestForecastingSuppressionRequests.interestRateChangeAfterSuppression(interestForecostingApiUrl),
-  InterestForecastingSuppressionRequests.interestRateChangeADuringSuppression(interestForecostingApiUrl),
-  InterestForecastingSuppressionRequests.openEndedSuppression(interestForecostingApiUrl),
-  InterestForecastingSuppressionRequests.paymentBeforeSuppression(interestForecostingApiUrl))
+      SuppressionsRequests.interestRateChangeBeforeSuppression(interestForecostingApiUrl),
+      SuppressionsRequests.interestRateChangeAfterSuppression(interestForecostingApiUrl),
+      SuppressionsRequests.interestRateChangeADuringSuppression(interestForecostingApiUrl),
+      SuppressionsRequests.openEndedSuppression(interestForecostingApiUrl),
+      SuppressionsRequests.paymentBeforeSuppression(interestForecostingApiUrl))
 
+  setup("subTrans-applied-to-suppression-rules", "sunTrans applied to suppression rules")
+    .withChainedActions(
+      SuppressionsRequests.deleteSuppressionRules(interestForecostingApiUrl),
+      SuppressionsRequests.sunTransAppliedToSuppressionRules(interestForecostingApiUrl))
 
   runSimulation()
 }
