@@ -77,11 +77,13 @@ class Simulation extends PerformanceTestRunner {
 
   setup("debt-items-with-suppression", "debt items with suppression")
     .withChainedActions(
-      SuppressionsRequests.interestRateChangeBeforeSuppression(interestForecostingApiUrl),
-      SuppressionsRequests.interestRateChangeAfterSuppression(interestForecostingApiUrl),
+      SuppressionsRequests.deleteSuppressionRules(interestForecostingApiUrl),
+      SuppressionsRequests.sunTransAppliedToSuppressionRules(interestForecostingApiUrl),
+      SuppressionsRequests.twoOverlappingSuppression(interestForecostingApiUrl),
+      SuppressionsRequests.TwoPaymentsDuringSuppression(interestForecostingApiUrl),
       SuppressionsRequests.interestRateChangeADuringSuppression(interestForecostingApiUrl),
       SuppressionsRequests.openEndedSuppression(interestForecostingApiUrl),
-      SuppressionsRequests.paymentBeforeSuppression(interestForecostingApiUrl))
+      SuppressionsRequests.TwoDutiesTwoPaymentsOnSameDaySuppression(interestForecostingApiUrl))
 
   setup("subTrans-applied-to-suppression-rules", "sunTrans applied to suppression rules")
     .withChainedActions(

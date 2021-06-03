@@ -183,39 +183,99 @@ object SuppressionsRequests extends ServicesConfiguration {
       .body(StringBody(ifsInterestRateChangeBeforeSuppression))
       .check(status.is(200))
 
-  val ifsinterestRateChangeAfterSuppression =
-    s"""{\n\t\"debtItems\": [{\n\t\t\"debtID\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": " +
-       |"\"1525\",\n\t\t\"dateCreated\": \"2018-06-01\",\n\t\t\"interestStartDate\": \"2018-06-01\",\n\t\t\"interestRequestedTo\": " +
-       |"\"2021-03-31\",\n\t\t\"paymentHistory\": [{\n\t\t\t\"paymentAmount\": 100000,\n\t\t\t\"paymentDate\": \"2019-03-15\"\n\t\t}, {\n\t\t\t\"paymentAmount\": " +
-       |"100000,\n\t\t\t\"paymentDate\": \"2020-04-15\"\n\t\t}]\n\t}, {\n\t\t\"debtID\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": " +
-       |"\"1090\",\n\t\t\"mainTrans\": \"1545\",\n\t\t\"dateCreated\": \"2009-01-01\",\n\t\t\"interestStartDate\": \"2009-01-01\",\n\t\t\"interestRequestedTo\": " +
-       |"\"2010-01-01\",\n\t\t\"paymentHistory\": []\n\t}],\n\t\"breathingSpaces\": []\n}""".stripMargin
+  val ifsOverlappingSuppression =
+    s"""{
+       |	"debtItems": [{
+       |		"debtID": "123",
+       |		"originalAmount": 500000,
+       |		"subTrans": "1000",
+       |		"mainTrans": "1535",
+       |		"dateCreated": "2021-01-01",
+       |		"interestStartDate": "2021-02-01",
+       |		"interestRequestedTo": "2021-07-06",
+       |		"paymentHistory": []
+       |	}],
+       |
+       |	"breathingSpaces": [],
+       |
+       |	"customerPostCodes": [{
+       |		"postCode": "TW3 4QQ",
+       |		"postCodeDate": "2019-07-06"
+       |	}]
+       |
+       |}""".stripMargin
 
-  def interestRateChangeAfterSuppression(baseUri: String): HttpRequestBuilder =
-    http("interest rate change after suppression")
+  def twoOverlappingSuppression(baseUri: String): HttpRequestBuilder =
+    http("1 duty, 2 overlapping suppressions")
       .post(s"$baseUri/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(ifsinterestRateChangeAfterSuppression))
+      .body(StringBody(ifsOverlappingSuppression))
       .check(status.is(200))
 
-  val ifsPaymentBeforeSuppression                                   =
-    s""" {\n\t\"debtItems\": [{\n\t\t\"debtID\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\":
-       | \"1090\",\n\t\t\"mainTrans\": \"1520\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\":
-       | \"2021-03-01\",\n\t\t\"interestRequestedTo\": \"2021-03-08\",\n\t\t\"paymentHistory\": []\n\t}],\n\t\"breathingSpaces\": []\n}"
+  val ifsTwoDutiesTwoPaymentsOnSameDay  =
+    s""" {
+       |	"debtItems": [{
+       |			"debtID": "123",
+       |			"originalAmount": 400000,
+       |			"subTrans": "1000",
+       |			"mainTrans": "1535",
+       |			"dateCreated": "2020-01-01",
+       |			"interestStartDate": "2021-02-01",
+       |			"interestRequestedTo": "2021-07-06",
+       |			"paymentHistory": [{
+       |				"paymentAmount": 100000,
+       |				"paymentDate": "2021-02-20"
+       |			}, {
+       |				"paymentAmount": 50000,
+       |				"paymentDate": "2021-02-20"
+       |			}]
+       |		}
        |
+       |		, {
+       |			"debtID": "123",
+       |			"originalAmount": 400000,
+       |			"subTrans": "1000",
+       |			"mainTrans": "1535",
+       |			"dateCreated": "2020-01-01",
+       |			"interestStartDate": "2021-02-01",
+       |			"interestRequestedTo": "2021-07-06",
+       |			"paymentHistory": []
+       |		}
+       |	],
+       |
+       |	"breathingSpaces": [],
+       |
+       |	"customerPostCodes": [{
+       |		"postCode": "TW3 4QQ",
+       |		"postCodeDate": "2019-07-06"
+       |	}]
+       |}
      """.stripMargin
-  def paymentBeforeSuppression(baseUri: String): HttpRequestBuilder =
-    http("payment before suppression")
+  def TwoDutiesTwoPaymentsOnSameDaySuppression(baseUri: String): HttpRequestBuilder =
+    http("Suppression, 2 duties, 2 payments on same day for one of the duties")
       .post(s"$baseUri/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(ifsPaymentBeforeSuppression))
+      .body(StringBody(ifsTwoDutiesTwoPaymentsOnSameDay))
       .check(status.is(200))
 
   val ifsOpenEndedSuppression                                   =
-    s""" {\n\t\"debtItems\": [{\n\t\t\"debtID\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": " +
-       |            "\"1530\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\": \"2021-03-01\",\n\t\t\"interestRequestedTo\": " +
-       |            "\"2021-03-20\",\n\t\t\"paymentHistory\": []\n\t}],\n\n\t\"breathingSpaces\": [{\n\t\t\"debtRespiteFrom\": \"2021-03-07\",\n\t\t\"debtRespiteTo\":" +
-       |            " \"2021-03-10\"\n\t}]\n}
+    s""" {
+       |	"debtItems": [{
+       |		"debtID": "123",
+       |		"originalAmount": 500000,
+       |		"subTrans": "1000",
+       |		"mainTrans": "1535",
+       |		"dateCreated": "2020-01-01",
+       |		"interestStartDate": "2020-04-01",
+       |		"interestRequestedTo": "2020-07-06",
+       |		"paymentHistory": []
+       |	}],
+       |	"breathingSpaces": [],
+       |	"customerPostCodes": [{
+       |		"postCode": "TW3 4QQ",
+       |		"postCodeDate": "2019-07-06"
+       |	}]
+       |}
      """.stripMargin
   def openEndedSuppression(baseUri: String): HttpRequestBuilder =
     http("open ended suppression")
@@ -225,10 +285,23 @@ object SuppressionsRequests extends ServicesConfiguration {
       .check(status.is(200))
 
   val ifsInterestRateChangeADuringSuppression =
-    s""" {\n\t\"debtItems\": [{\n\t\t\"debtID\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\":
-       | \"1090\",\n\t\t\"mainTrans\": \"1520\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\":
-       | \"2021-03-01\",\n\t\t\"interestRequestedTo\": \"2021-03-08\",\n\t\t\"paymentHistory\": []\n\t}],\n\t\"breathingSpaces\": []\n}"
-       |
+    s""" {
+       |	"debtItems": [{
+       |		"debtID": "123",
+       |		"originalAmount": 500000,
+       |		"subTrans": "1000",
+       |		"mainTrans": "1535",
+       |		"dateCreated": "2020-01-01",
+       |		"interestStartDate": "2020-04-01",
+       |		"interestRequestedTo": "2020-07-06",
+       |		"paymentHistory": []
+       |	}],
+       |	"breathingSpaces": [],
+       |	"customerPostCodes": [{
+       |		"postCode": "TW3 4QQ",
+       |		"postCodeDate": "2019-07-06"
+       |	}]
+       |}
      """.stripMargin
 
   def interestRateChangeADuringSuppression(baseUri: String): HttpRequestBuilder =
@@ -271,8 +344,58 @@ object SuppressionsRequests extends ServicesConfiguration {
 
   def sunTransAppliedToSuppressionRules(baseUrl:String): HttpRequestBuilder =
     http("Suppression applied to sub trans")
-      .post(s"$baseUrl/suppression-rules/1/suppression-rule")
+      .post(s"$baseUrl/debt-calculation")
       .headers(requestHeaders)
       .body(StringBody(subTransSuppressionRules))
       .check(status.is(200))
+
+  val twoPaymentsSuppression=
+    s"""
+       |{
+       |  "debtItems": [
+       |         {
+       |          "debtID": "123",
+       |          "originalAmount": 500000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1535",
+       |          "dateCreated": "2020-01-01",
+       |          "interestStartDate": "2021-02-01",
+       |          "interestRequestedTo": "2021-07-06",
+       |          "paymentHistory": [
+       |          		         {
+       |      		  "paymentAmount": 100000,
+       |      		  "paymentDate" :"2021-04-20"
+       |      	}
+       |,        {
+       |      		  "paymentAmount": 50000,
+       |      		  "paymentDate" :"2021-04-20"
+       |      	}
+       |
+       |          ]
+       |     }
+       |
+       |  ],
+       |
+       |  "breathingSpaces": [
+       |
+       |  ],
+       |
+       |  "customerPostCodes": [
+       |          {
+       |              "postCode":"TW3 4QQ",
+       |              "postCodeDate": "2019-07-06"
+       |        }
+       |  ]
+       |
+       |}
+
+       """.stripMargin
+
+  def TwoPaymentsDuringSuppression(baseUrl:String): HttpRequestBuilder =
+    http("Suppression applied to sub trans")
+      .post(s"$baseUrl/debt-calculation")
+      .headers(requestHeaders)
+      .body(StringBody(twoPaymentsSuppression))
+      .check(status.is(200))
+
 }
