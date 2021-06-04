@@ -18,16 +18,20 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
   val solAPIRequestWithSingleDebt =
     s"""
        |{
-       |  "solType" : "CO",
-       |  "customerUniqueRef": "customer-1",
-       |  "solRequestedDate": "2021-05-18",
-       |  "debts" : [ {
-       |    "debtId" : "debt001",
-       |    "dutyIds" : [ "duty01", "duty02" ],
-       |    "interestRequestedTo": "2021-08-10"
-       |  }]
+       |	"solType": "CO",
+       |	"customerUniqueRef": "customer-1",
+       |	"solRequestedDate": "2021-05-18",
+       |	"debts": [{
+       |		"debtId": "debt001",
+       |		"dutyIds": [{
+       |			"id": "duty01"
+       |		}, {
+       |			"id": "duty02"
+       |		}],
+       |		"interestRequestedTo": "2021-08-10"
+       |	}]
        |}
-       |""".stripMargin
+       """.stripMargin
 
   def solAPIRequestWithSingleDebtRequest(baseUri: String): HttpRequestBuilder =
     http("POST Single Debt SOL Statement of Liability")
@@ -45,16 +49,16 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |  "debts": [
        |    {
        |      "debtId": "debt001",
-       |      "dutyIds": [
-       |        "duty01",
-       |        "duty02"
-       |      ],
+       |     "dutyIds": [{
+       |			"id": "duty01"
+       |		}, {
+       |			"id": "duty02"
+       |		}],
        |      "interestRequestedTo": "2021-08-10"
        |    },
        |    {
        |      "debtId": "debt004",
-       |      "dutyIds": [
-       |        "duty04"
+       |      "dutyIds": [ {"id":"duty04"}
        |      ],
        |      "interestRequestedTo": "2021-08-10"
        |    }
