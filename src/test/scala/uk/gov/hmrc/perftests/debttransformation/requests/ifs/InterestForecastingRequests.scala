@@ -16,7 +16,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   )
 
   def multipleDebtsWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
-    http("Multiple debt items with no paymentHistory and breathing space")
+    http("Multiple debt items with no paymentHistory")
       .post(s"$baseUri/debt-calculation")
       .headers(requestHeaders)
       .body(
@@ -126,31 +126,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .body(
         StringBody(
           "{\n\t\"debtItems\": [{\n\t\t\"debtID\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1090\",\n\t\t\"mainTrans\": \"1520\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\": \"2021-03-01\",\n\t\t\"interestRequestedTo\": \"2021-03-08\",\n\t\t\"paymentHistory\": []\n\t}],\n\t\"breathingSpaces\": []\n}"
-        )
-      )
-      .check(status.is(200))
-
-  def breathingSpaceAppliedToAsingleDebtWithNoPayments(baseUri: String): HttpRequestBuilder =
-    http("Breathing Space applied to a single debt")
-      .post(s"$baseUri/debt-calculation")
-      .headers(requestHeaders)
-      .body(
-        StringBody(
-          "{\n\t\"debtItems\": [{\n\t\t\"debtID\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": " +
-            "\"1530\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\": \"2021-03-01\",\n\t\t\"interestRequestedTo\": " +
-            "\"2021-03-20\",\n\t\t\"paymentHistory\": []\n\t}],\n\n\t\"breathingSpaces\": [{\n\t\t\"debtRespiteFrom\": \"2021-03-07\",\n\t\t\"debtRespiteTo\":" +
-            " \"2021-03-10\"\n\t}]\n}"
-        )
-      )
-      .check(status.is(200))
-
-  def debtItemWithOpenEndedBreathingSpace(baseUri: String): HttpRequestBuilder =
-    http("Breathing Space - open ended")
-      .post(s"$baseUri/debt-calculation")
-      .headers(requestHeaders)
-      .body(
-        StringBody(
-          "{\n\t\"debtItems\": [{\n\t\t\"debtID\": \"123\",\n\t\t\"originalAmount\": 500000,\n\t\t\"subTrans\": \"1000\",\n\t\t\"mainTrans\": \"1530\",\n\t\t\"dateCreated\": \"2021-03-01\",\n\t\t\"interestStartDate\": \"2021-03-01\",\n\t\t\"interestRequestedTo\": \"2021-03-20\",\n\t\t\"paymentHistory\": []\n\t}],\n\t\"breathingSpaces\": [{\n\t\t\"debtRespiteFrom\": \"2021-03-07\"\n\t}]\n}"
         )
       )
       .check(status.is(200))
