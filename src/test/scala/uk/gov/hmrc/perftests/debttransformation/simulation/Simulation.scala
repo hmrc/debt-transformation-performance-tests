@@ -40,13 +40,7 @@ class Simulation extends PerformanceTestRunner {
 
   setup("Multiple-debt-items-with-no-payments-breathing-space", "Multiple debt items with no payments breathing space")
     .withChainedActions(InterestForecastingRequests.multipleDebtsWithNoPaymentHistory(interestForecostingApiUrl))
-
-  setup("open-ended-breathingSpaces-for-a-single-debt-no-payments", "open ended breathingSpaces for a single debt no payments")
-    .withChainedActions(InterestForecastingRequests.debtItemWithOpenEndedBreathingSpace(interestForecostingApiUrl))
-
-  setup("breathing-space-applied-to-a-single-debt-with-no-payments", "Breathing Space applied to a single debt no payments")
-    .withChainedActions(InterestForecastingRequests.breathingSpaceAppliedToAsingleDebtWithNoPayments(interestForecostingApiUrl))
-
+  
   setup(
     "non-interest-bearing-debt-item-with-no-breathing-space",
     "non interest bearing debt item with no breathing space")
