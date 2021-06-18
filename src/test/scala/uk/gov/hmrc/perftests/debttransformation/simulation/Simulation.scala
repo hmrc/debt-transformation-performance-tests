@@ -55,34 +55,17 @@ class Simulation extends PerformanceTestRunner {
   setup("two-leap-year-debt-items-with-payment-history", "two leap year debt items with payment history")
     .withChainedActions(InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl))
 
-  setup("add-suppression-data", "add suppression data")
-    .withChainedActions(
-      SuppressionsRequests.deleteSuppressionData(interestForecostingApiUrl),
-      SuppressionsRequests.addSuppressionData(interestForecostingApiUrl),
-      SuppressionsRequests.getSuppressionData(interestForecostingApiUrl))
-
-
-  setup("add-suppression-rules", "add suppression rules")
-    .withChainedActions(
-      SuppressionsRequests.deleteSuppressionRules(interestForecostingApiUrl),
-      SuppressionsRequests.addSuppressionRules(interestForecostingApiUrl),
-      SuppressionsRequests.retrieveSuppressionRules(interestForecostingApiUrl))
-
-
   setup("debt-items-with-suppression", "debt items with suppression")
     .withChainedActions(
-      SuppressionsRequests.deleteSuppressionRules(interestForecostingApiUrl),
-      SuppressionsRequests.sunTransAppliedToSuppressionRules(interestForecostingApiUrl),
       SuppressionsRequests.twoOverlappingSuppression(interestForecostingApiUrl),
       SuppressionsRequests.TwoPaymentsDuringSuppression(interestForecostingApiUrl),
       SuppressionsRequests.interestRateChangeADuringSuppression(interestForecostingApiUrl),
       SuppressionsRequests.openEndedSuppression(interestForecostingApiUrl),
       SuppressionsRequests.TwoDutiesTwoPaymentsOnSameDaySuppression(interestForecostingApiUrl))
 
-  setup("subTrans-applied-to-suppression-rules", "sunTrans applied to suppression rules")
+  setup("mainTrans-applied-to-suppression-rules", "sunTrans applied to suppression rules")
     .withChainedActions(
-      SuppressionsRequests.deleteSuppressionRules(interestForecostingApiUrl),
-      SuppressionsRequests.sunTransAppliedToSuppressionRules(interestForecostingApiUrl))
+      SuppressionsRequests.mainTransAppliedToSuppressionRules(interestForecostingApiUrl))
 
   runSimulation()
 }

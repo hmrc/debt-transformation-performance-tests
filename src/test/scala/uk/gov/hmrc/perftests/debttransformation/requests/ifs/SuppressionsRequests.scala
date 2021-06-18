@@ -70,6 +70,10 @@ object SuppressionsRequests extends ServicesConfiguration {
        |            "ruleId": "2",
        |            "rule": "IF postCode LIKE 'SE18 6PH' -> suppression = 2, 3, 4"
        |        }
+       |         {
+       |            "ruleId": "3",
+       |            "rule": "IF mainTrans LIKE '1530' -> suppression = 1"
+       |        }
        |    ]
        |}
        """.stripMargin
@@ -311,14 +315,14 @@ object SuppressionsRequests extends ServicesConfiguration {
       .body(StringBody(ifsInterestRateChangeADuringSuppression))
       .check(status.is(200))
 
-  val subTransSuppressionRules=
+  val mainTransSuppressionRules=
   s"""
     |{
     |	"debtItems": [{
     |			"debtID": "123",
     |			"originalAmount": 500000,
     |			"subTrans": "1000",
-    |			"mainTrans": "1535",
+    |			"mainTrans": "1530",
     |			"dateCreated": "2020-01-01",
     |			"interestStartDate": "2021-02-01",
     |			"interestRequestedTo": "2021-07-06",
@@ -342,11 +346,11 @@ object SuppressionsRequests extends ServicesConfiguration {
     |}
       """.stripMargin
 
-  def sunTransAppliedToSuppressionRules(baseUrl:String): HttpRequestBuilder =
+  def mainTransAppliedToSuppressionRules(baseUrl:String): HttpRequestBuilder =
     http("Suppression applied to sub trans")
       .post(s"$baseUrl/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(subTransSuppressionRules))
+      .body(StringBody(mainTransSuppressionRules))
       .check(status.is(200))
 
   val twoPaymentsSuppression=
