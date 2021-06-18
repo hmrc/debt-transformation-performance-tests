@@ -54,10 +54,27 @@ object SuppressionsRequests extends ServicesConfiguration {
     http("delete suppression data")
       .delete(s"$baseUri/suppressions")
       .headers(requestHeaders)
-      .body(StringBody(addSuppressionRules))
+      //.body(StringBody(addSuppressionRules))
       .check(status.is(200))
 
-  val addSuppressionRules =
+  val suppressionAppliedToMainTrans =
+    s"""
+       |{
+       |    "suppressionRules":
+       |    [
+       |        {
+       |            "ruleId": "1",
+       |            "rule": "IF postCode LIKE 'TW3 4QQ' -> suppression = 1"
+       |        },
+       |        {
+       |            "ruleId": "2",
+       |            "rule": "IF postCode LIKE 'SE18 6PH' -> suppression = 2, 3, 4"
+       |        }
+       |    ]
+       |}
+       """.stripMargin
+
+  val suppressionAppliedToPostCode =
     s"""
        |{
        |    "suppressionRules":
@@ -78,7 +95,7 @@ object SuppressionsRequests extends ServicesConfiguration {
     http("add suppression rules")
       .post(s"$baseUri/suppression-rules/2/suppression-rule")
       .headers(requestHeaders)
-      .body(StringBody(addSuppressionRules))
+      .body(StringBody(suppressionAppliedToPostCode))
       .check(status.is(200))
 
   def retrieveSuppressionRules(baseUri: String): HttpRequestBuilder =

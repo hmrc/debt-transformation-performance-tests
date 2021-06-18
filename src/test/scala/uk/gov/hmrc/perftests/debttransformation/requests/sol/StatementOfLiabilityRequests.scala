@@ -32,7 +32,6 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |	}]
        |}
        """.stripMargin
-
   def solAPIRequestWithSingleDebtRequest(baseUri: String): HttpRequestBuilder =
     http("POST Single Debt SOL Statement of Liability")
       .post(s"$baseUri/sol")
