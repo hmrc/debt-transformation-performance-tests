@@ -15,14 +15,13 @@
  */
 
 package uk.gov.hmrc.perftests.debttransformation.simulation
+import scala.concurrent.duration._
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
-import uk.gov.hmrc.perftests.debttransformation.requests.ifs._
+import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{SuppressionsRequests, _}
 import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
-
-import scala.concurrent.duration._
 
 class Simulation extends PerformanceTestRunner {
 
@@ -40,11 +39,14 @@ class Simulation extends PerformanceTestRunner {
 
   setup("Multiple-debt-items-with-no-payments-breathing-space", "Multiple debt items with no payments breathing space")
     .withChainedActions(InterestForecastingRequests.multipleDebtsWithNoPaymentHistory(interestForecostingApiUrl))
-  
+
   setup(
     "non-interest-bearing-debt-item-with-no-breathing-space",
-    "non interest bearing debt item with no breathing space")
-    .withChainedActions(InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl))
+    "non interest bearing debt item with no breathing space"
+  )
+    .withChainedActions(
+      InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
+    )
 
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
     .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
@@ -53,7 +55,9 @@ class Simulation extends PerformanceTestRunner {
     .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
 
   setup("two-leap-year-debt-items-with-payment-history", "two leap year debt items with payment history")
-    .withChainedActions(InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl))
+    .withChainedActions(
+      InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl)
+    )
 
   setup("debt-items-with-suppression", "debt items with suppression")
     .withChainedActions(
@@ -61,11 +65,17 @@ class Simulation extends PerformanceTestRunner {
       SuppressionsRequests.TwoPaymentsDuringSuppression(interestForecostingApiUrl),
       SuppressionsRequests.interestRateChangeADuringSuppression(interestForecostingApiUrl),
       SuppressionsRequests.openEndedSuppression(interestForecostingApiUrl),
-      SuppressionsRequests.TwoDutiesTwoPaymentsOnSameDaySuppression(interestForecostingApiUrl))
+      SuppressionsRequests.TwoDutiesTwoPaymentsOnSameDaySuppression(interestForecostingApiUrl)
+    )
 
   setup("mainTrans-applied-to-suppression-rules", "sunTrans applied to suppression rules")
-    .withChainedActions(
-      SuppressionsRequests.mainTransAppliedToSuppressionRules(interestForecostingApiUrl))
+    .withChainedActions(SuppressionsRequests.mainTransAppliedToSuppressionRules(interestForecostingApiUrl))
 
+    before {
+    SuppressionsRequests.deleteSuppressionData()
+    SuppressionsRequests.postSuppressionData()
+    SuppressionsRequests.deleteSuppressionRules()
+    SuppressionsRequests.postSuppressionRules()
+    }
   runSimulation()
 }
