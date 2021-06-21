@@ -71,11 +71,12 @@ class Simulation extends PerformanceTestRunner {
   setup("mainTrans-applied-to-suppression-rules", "sunTrans applied to suppression rules")
     .withChainedActions(SuppressionsRequests.mainTransAppliedToSuppressionRules(interestForecostingApiUrl))
 
-    before {
+  before {
     SuppressionsRequests.deleteSuppressionData()
     SuppressionsRequests.postSuppressionData()
+    SuppressionsRequests.postOpenEndedSuppressionData()
     SuppressionsRequests.deleteSuppressionRules()
     SuppressionsRequests.postSuppressionRules()
-    }
+  }
   runSimulation()
 }
