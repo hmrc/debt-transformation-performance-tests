@@ -3,11 +3,15 @@ package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 import io.gatling.core.Predef._
 import io.gatling.http.Predef.{http, status, _}
 import io.gatling.http.request.builder.HttpRequestBuilder
+import play.api.libs.json.Json
+import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
+import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.interestForecostingApiUrl
+import uk.gov.hmrc.perftests.debttransformation.utils.WsClient
 
 object SuppressionsRequests extends ServicesConfiguration {
-  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:statement-of-liability"))
+  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",
     "Accept"        -> "application/vnd.hmrc.1.0+json",
@@ -19,17 +23,11 @@ object SuppressionsRequests extends ServicesConfiguration {
        |{
        |   "suppression":[
        |      {
-       |         "code":"code-3",
+       |         "code":"1",
        |         "reason":"Reason-1",
+       |         "description": "covid",
        |         "enabled":true,
-       |         "fromDate":"2021-01-01",
-       |         "toDate":"2022-01-01"
-       |      },
-       |      {
-       |         "code":"code-4",
-       |         "reason":"Reason-2",
-       |         "enabled":false,
-       |         "fromDate":"2021-01-01",
+       |         "fromDate":"2021-03-01",
        |         "toDate":"2022-01-01"
        |      }
        |   ]
@@ -37,25 +35,23 @@ object SuppressionsRequests extends ServicesConfiguration {
 
        """.stripMargin
 
-  def addSuppressionData(baseUri: String): HttpRequestBuilder =
-    http("add suppression data")
-      .post(s"$baseUri/suppressions/8/suppression")
-      .headers(requestHeaders)
-      .body(StringBody(suppressionData))
-      .check(status.is(200))
 
-  def getSuppressionData(baseUri: String): HttpRequestBuilder =
-    http("retrieve suppression data")
-      .get(s"$baseUri/suppressions")
-      .headers(requestHeaders)
-      .check(status.is(200))
+  val openEndedSuppressionData =
+    s"""
+       |{
+       |   "suppression":[
+       |      {
+       |         "code":"2",
+       |         "reason":"Reason-2",
+       |         "description": "open ended",
+       |         "enabled":false,
+       |         "fromDate":"2020-04-02",
+       |         "toDate":"9999-12-31"
+       |      }
+       |   ]
+       |}
 
-  def deleteSuppressionData(baseUri: String): HttpRequestBuilder =
-    http("delete suppression data")
-      .delete(s"$baseUri/suppressions")
-      .headers(requestHeaders)
-      .body(StringBody(addSuppressionRules))
-      .check(status.is(200))
+       """.stripMargin
 
   val addSuppressionRules =
     s"""
@@ -64,34 +60,70 @@ object SuppressionsRequests extends ServicesConfiguration {
        |    [
        |        {
        |            "ruleId": "1",
-       |            "rule": "IF postCode LIKE 'TW3 4QQ' -> suppression = 1"
+       |            "rule": "IF postCode LIKE 'TW3' -> suppression = 1"
        |        },
        |        {
        |            "ruleId": "2",
-       |            "rule": "IF postCode LIKE 'SE18 6PH' -> suppression = 2, 3, 4"
+       |            "rule": "IF postCode LIKE 'SE18' -> suppression = 2"
+       |        },
+       |         {
+       |            "ruleId": "3",
+       |            "rule": "IF mainTrans LIKE '1530' -> suppression = 1"
        |        }
        |    ]
        |}
        """.stripMargin
 
-  def addSuppressionRules(baseUri: String): HttpRequestBuilder =
-    http("add suppression rules")
-      .post(s"$baseUri/suppression-rules/2/suppression-rule")
-      .headers(requestHeaders)
-      .body(StringBody(addSuppressionRules))
-      .check(status.is(200))
 
-  def retrieveSuppressionRules(baseUri: String): HttpRequestBuilder =
-    http("retrieve suppression data")
-      .get(s"$baseUri/suppression-rules")
-      .headers(requestHeaders)
-      .check(status.is(200))
+  def postSuppressionData() = {
+    val baseUri = s"$interestForecostingApiUrl/suppressions/1/suppression"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.post(baseUri, headers = headers, Json.parse(suppressionData))
+  }
 
-  def deleteSuppressionRules(baseUri: String): HttpRequestBuilder =
-    http("retrieve suppression data")
-      .delete(s"$baseUri/suppression-rules")
-      .headers(requestHeaders)
-      .check(status.is(200))
+  def postOpenEndedSuppressionData() = {
+    val baseUri = s"$interestForecostingApiUrl/suppressions/2/suppression"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.post(baseUri, headers = headers, Json.parse(openEndedSuppressionData))
+  }
+
+  def deleteSuppressionData(): StandaloneWSResponse = {
+    val baseUri = s"$interestForecostingApiUrl/suppressions"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.delete(baseUri, headers = headers)
+  }
+
+  def postSuppressionRules(): StandaloneWSResponse = {
+    val baseUri = s"$interestForecostingApiUrl/suppression-rules/1/suppression-rule"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.post(baseUri, headers = headers, Json.parse(addSuppressionRules))
+  }
+
+  def deleteSuppressionRules(): StandaloneWSResponse = {
+    val baseUri = s"$interestForecostingApiUrl/suppression-rules"
+    val headers = Map(
+      "Authorization" -> s"Bearer $bearerToken",
+      "Content-Type"  -> "application/json",
+      "Accept"        -> "application/vnd.hmrc.1.0+json"
+    )
+    WsClient.delete(baseUri, headers = headers)
+  }
 
   val ifsInterestRateChangeBeforeSuppression =
     s"""
@@ -182,6 +214,7 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsInterestRateChangeBeforeSuppression))
       .check(status.is(200))
+      .check(regex("suppressionApplied").find(0))
 
   val ifsOverlappingSuppression =
     s"""{
@@ -211,8 +244,9 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsOverlappingSuppression))
       .check(status.is(200))
+      .check(regex("suppressionApplied").find(0))
 
-  val ifsTwoDutiesTwoPaymentsOnSameDay  =
+  val ifsTwoDutiesTwoPaymentsOnSameDay                                              =
     s""" {
        |	"debtItems": [{
        |			"debtID": "123",
@@ -257,6 +291,7 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsTwoDutiesTwoPaymentsOnSameDay))
       .check(status.is(200))
+      .check(regex("suppressionApplied").find(0))
 
   val ifsOpenEndedSuppression                                   =
     s""" {
@@ -272,7 +307,7 @@ object SuppressionsRequests extends ServicesConfiguration {
        |	}],
        |	"breathingSpaces": [],
        |	"customerPostCodes": [{
-       |		"postCode": "TW3 4QQ",
+       |		"postCode": "SE18 6PH",
        |		"postCodeDate": "2019-07-06"
        |	}]
        |}
@@ -283,6 +318,7 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsOpenEndedSuppression))
       .check(status.is(200))
+      .check(regex("suppressionApplied").find(0))
 
   val ifsInterestRateChangeADuringSuppression =
     s""" {
@@ -298,7 +334,7 @@ object SuppressionsRequests extends ServicesConfiguration {
        |	}],
        |	"breathingSpaces": [],
        |	"customerPostCodes": [{
-       |		"postCode": "TW3 4QQ",
+       |		"postCode": "SE18 4TQ",
        |		"postCodeDate": "2019-07-06"
        |	}]
        |}
@@ -310,15 +346,16 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsInterestRateChangeADuringSuppression))
       .check(status.is(200))
+      .check(regex("suppressionApplied").find(0))
 
-  val subTransSuppressionRules=
-  s"""
+  val mainTransSuppressionRules =
+    s"""
     |{
     |	"debtItems": [{
     |			"debtID": "123",
     |			"originalAmount": 500000,
     |			"subTrans": "1000",
-    |			"mainTrans": "1535",
+    |			"mainTrans": "1530",
     |			"dateCreated": "2020-01-01",
     |			"interestStartDate": "2021-02-01",
     |			"interestRequestedTo": "2021-07-06",
@@ -326,8 +363,6 @@ object SuppressionsRequests extends ServicesConfiguration {
     |
     |			]
     |		}
-    |
-    |
     |	],
     |
     |	"breathingSpaces": [
@@ -335,21 +370,22 @@ object SuppressionsRequests extends ServicesConfiguration {
     |	],
     |
     |	"customerPostCodes": [{
-    |		"postCode": "TW3 4QQ",
+    |		"postCode": "TW3 4UQ",
     |		"postCodeDate": "2019-07-06"
     |	}]
     |
     |}
       """.stripMargin
 
-  def sunTransAppliedToSuppressionRules(baseUrl:String): HttpRequestBuilder =
-    http("Suppression applied to sub trans")
+  def mainTransAppliedToSuppressionRules(baseUrl: String): HttpRequestBuilder =
+    http("Suppression applied to main trans")
       .post(s"$baseUrl/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(subTransSuppressionRules))
+      .body(StringBody(mainTransSuppressionRules))
       .check(status.is(200))
+      .check(regex("suppressionApplied").find(0))
 
-  val twoPaymentsSuppression=
+  val twoPaymentsSuppression =
     s"""
        |{
        |  "debtItems": [
@@ -391,11 +427,11 @@ object SuppressionsRequests extends ServicesConfiguration {
 
        """.stripMargin
 
-  def TwoPaymentsDuringSuppression(baseUrl:String): HttpRequestBuilder =
-    http("Suppression applied to sub trans")
+  def TwoPaymentsDuringSuppression(baseUrl: String): HttpRequestBuilder =
+    http("Suppression applied to postcode. Two payments during suppression")
       .post(s"$baseUrl/debt-calculation")
       .headers(requestHeaders)
       .body(StringBody(twoPaymentsSuppression))
       .check(status.is(200))
-
+      .check(regex("suppressionApplied").find(0))
 }
