@@ -11,7 +11,7 @@ import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.interestForecosti
 import uk.gov.hmrc.perftests.debttransformation.utils.WsClient
 
 object SuppressionsRequests extends ServicesConfiguration {
-  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:statement-of-liability"))
+  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",
     "Accept"        -> "application/vnd.hmrc.1.0+json",
@@ -82,7 +82,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("url ************************" + baseUri)
     WsClient.post(baseUri, headers = headers, Json.parse(suppressionData))
   }
 
@@ -93,7 +92,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("url ************************" + baseUri)
     WsClient.post(baseUri, headers = headers, Json.parse(openEndedSuppressionData))
   }
 
@@ -104,7 +102,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("url ************************" + baseUri)
     WsClient.delete(baseUri, headers = headers)
   }
 
@@ -115,7 +112,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("url ************************" + baseUri)
     WsClient.post(baseUri, headers = headers, Json.parse(addSuppressionRules))
   }
 
@@ -126,7 +122,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       "Content-Type"  -> "application/json",
       "Accept"        -> "application/vnd.hmrc.1.0+json"
     )
-    print("url ************************" + baseUri)
     WsClient.delete(baseUri, headers = headers)
   }
 
@@ -251,7 +246,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       .check(status.is(200))
       .check(regex("suppressionApplied").find(0))
 
-  println("Simulation is about to start!£££££££££££££££££££££££")
   val ifsTwoDutiesTwoPaymentsOnSameDay                                              =
     s""" {
        |	"debtItems": [{
@@ -440,5 +434,4 @@ object SuppressionsRequests extends ServicesConfiguration {
       .body(StringBody(twoPaymentsSuppression))
       .check(status.is(200))
       .check(regex("suppressionApplied").find(0))
-
 }
