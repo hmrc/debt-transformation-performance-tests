@@ -33,11 +33,11 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |}
        """.stripMargin
   def solAPIRequestWithSingleDebtRequest(baseUri: String): HttpRequestBuilder =
-    http("POST Single Debt SOL Statement of Liability")
+    exec(http("POST Single Debt SOL Statement of Liability")
       .post(s"$baseUri/sol")
       .headers(requestHeaders)
       .body(StringBody(solAPIRequestWithSingleDebt))
-      .check(status.is(200))
+      .check(status.is(200)))pause 1.5
 
   val solAPIRequestWithMultipleDebts =
     s"""
@@ -65,11 +65,14 @@ object StatementOfLiabilityRequests extends ServicesConfiguration {
        |}
        |""".stripMargin
 
-  def statementOfLiabilityRequestFormultipleDebts(baseUri: String): HttpRequestBuilder =
-    http("POST Multiple Debts SOL Statement of Liability")
+
+  def statementOfLiabilityRequestFormultipleDebts(baseUri: String) =
+    exec(http("POST Multiple Debts SOL Statement of Liability")
       .post(s"$baseUri/sol")
       .headers(requestHeaders)
       .body(StringBody(solAPIRequestWithMultipleDebts))
-      .check(status.is(200))
+      .check(status.is(200))) pause 1.5
+
+
 
 }
