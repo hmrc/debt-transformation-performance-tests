@@ -60,15 +60,18 @@ object SuppressionsRequests extends ServicesConfiguration {
        |    [
        |        {
        |            "ruleId": "1",
-       |            "rule": "IF postCode LIKE 'TW3' -> suppression = 1"
+       |            "rule": "IF postCode LIKE 'TW3' -> suppression = 1",
+       |            "enabled": true
        |        },
        |        {
        |            "ruleId": "2",
-       |            "rule": "IF postCode LIKE 'SE18' -> suppression = 2"
+       |            "rule": "IF postCode LIKE 'SE18' -> suppression = 2",
+       |            "enabled": true
        |        },
        |         {
        |            "ruleId": "3",
-       |            "rule": "IF mainTrans LIKE '1530' -> suppression = 1"
+       |            "rule": "IF mainTrans LIKE '1530' -> suppression = 1",
+       |            "enabled": true
        |        }
        |    ]
        |}
@@ -76,7 +79,7 @@ object SuppressionsRequests extends ServicesConfiguration {
 
 
   def postSuppressionData() = {
-    val baseUri = s"$interestForecostingApiUrl/suppressions/1/suppression"
+    val baseUri = s"$interestForecostingApiUrl/suppressions/1"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -86,7 +89,7 @@ object SuppressionsRequests extends ServicesConfiguration {
   }
 
   def postOpenEndedSuppressionData() = {
-    val baseUri = s"$interestForecostingApiUrl/suppressions/2/suppression"
+    val baseUri = s"$interestForecostingApiUrl/suppressions/2"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -106,7 +109,7 @@ object SuppressionsRequests extends ServicesConfiguration {
   }
 
   def postSuppressionRules(): StandaloneWSResponse = {
-    val baseUri = s"$interestForecostingApiUrl/suppression-rules/1/suppression-rule"
+    val baseUri = s"$interestForecostingApiUrl/suppression-rules"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
