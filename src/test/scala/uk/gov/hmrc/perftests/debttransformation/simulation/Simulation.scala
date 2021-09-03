@@ -26,6 +26,17 @@ import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
 class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
+  setup("payment-plan-frequency-type-single", "payment plan frequency type Single")
+    .withChainedActions(
+InterestForecastingRequests.singlePaymentFrequencyPlan(interestForecostingApiUrl)
+//      InterestForecastingRequests.twoWeeklyPaymentFrequencyPlan(interestForecostingApiUrl),
+//      InterestForecastingRequests.weeklyPaymentFrequencyPlan(interestForecostingApiUrl),
+//      InterestForecastingRequests.fourweeklyPaymentFrequencyPlan(interestForecostingApiUrl),
+//      InterestForecastingRequests.monthlyPaymentFrequencyPlan(interestForecostingApiUrl),
+//      InterestForecastingRequests.quarterlyPaymentFrequencyPlan(interestForecostingApiUrl),
+//      InterestForecastingRequests.halfYearlyPaymentFrequencyPlan(interestForecostingApiUrl),
+//      InterestForecastingRequests.annualPaymentFrequencyPlan(interestForecostingApiUrl)
+    )
 
   setup("request-Statement-of-Liability-for-single-debts", "request statement of liability for single debt")
     .withChainedActions(
