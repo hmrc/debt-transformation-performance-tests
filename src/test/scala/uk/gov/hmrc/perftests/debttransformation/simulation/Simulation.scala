@@ -20,6 +20,7 @@ import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
 import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{SuppressionsRequests, _}
 import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests
+import uk.gov.hmrc.perftests.debttransformation.requests.ttp.TimeToPayProxyRequests
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
 
@@ -27,6 +28,10 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
+  setup("request-ttp-generate-annual-frequency-quote", "request ttp generate annual frequency quote")
+    .withChainedActions(
+      TimeToPayProxyRequests.ttpGenerateAnnualFrequencyQuote(timeToPayProxyBaseUrl)
+    )
   setup("request-Statement-of-Liability-for-single-debts", "request statement of liability for single debt")
     .withChainedActions(
       StatementOfLiabilityRequests.solAPIRequestWithSingleDebtRequest(statementOfLiabilityApiBaseUrl)
