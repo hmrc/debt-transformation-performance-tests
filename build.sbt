@@ -2,10 +2,10 @@ name := "debt-transformation-performance-tests"
 
 version := "0.1"
 
-enablePlugins(GatlingPlugin)
-enablePlugins(CorePlugin)
-enablePlugins(JvmPlugin)
-enablePlugins(IvyPlugin)
+// enablePlugins(GatlingPlugin)
+// enablePlugins(CorePlugin)
+// enablePlugins(JvmPlugin)
+// enablePlugins(IvyPlugin)
 
 organization := "uk.gov.hmrc"
 
@@ -23,7 +23,7 @@ scalacOptions ++= Seq(
 )
 
 resolvers ++= Seq(
-  Resolver.bintrayRepo("hmrc", "releases"),
+  // Resolver.bintrayRepo("hmrc", "releases"),
   Resolver.typesafeRepo("releases")
 )
 libraryDependencies ++= Seq(
@@ -32,7 +32,7 @@ libraryDependencies ++= Seq(
   "io.gatling"              % "gatling-test-framework"    % gatlingDependencies,
   "io.gatling.highcharts"   % "gatling-charts-highcharts" % gatlingDependencies,
   "com.typesafe"            % "config"                    % "1.4.0",
-  "uk.gov.hmrc"            %% "performance-test-runner"   % "4.6.0",
+  "uk.gov.hmrc"            %% "performance-test-runner"   % "4.11.0",
   "com.github.mifmif"       % "generex"                   % "1.0.2",
   "com.typesafe.akka"      %% "akka-stream"               % "2.6.8" % "test",
   "org.scalaj"             %% "scalaj-http"               % "2.4.2",
