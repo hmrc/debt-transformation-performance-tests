@@ -27,5 +27,6 @@ object BaseUrls extends ServicesConfiguration {
   val strideIdpStubUrl: String               = baseUrlFor("stride-idp-stub")
   val strideAuthFrontendUrl: String          = baseUrlFor("stride-auth-frontend")
   val statementOfLiabilityApiBaseUrl: String = baseUrlFor("statement-of-liability")
+  val timeToPayProxyBaseUrl: String = baseUrlFor("time-to-pay-proxy")
   val interestForecostingApiUrl: String      = baseUrlFor("interest-forecasting")
 }
