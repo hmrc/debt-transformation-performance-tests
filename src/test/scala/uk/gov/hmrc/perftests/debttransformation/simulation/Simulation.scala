@@ -32,6 +32,22 @@ class Simulation extends PerformanceTestRunner {
     .withChainedActions(
       TimeToPayProxyRequests.ttpGenerateAnnualFrequencyQuote(timeToPayProxyBaseUrl)
     )
+
+  setup("request-ttp-update-quote-plan", "request ttp update quote plan")
+    .withChainedActions(
+      TimeToPayProxyRequests.updatePlan(timeToPayProxyBaseUrl)
+    )
+
+  setup("request-ttp-create-plan", "request ttp create plan")
+    .withChainedActions(
+      TimeToPayProxyRequests.createPlan(timeToPayProxyBaseUrl)
+    )
+
+  setup("request-ttp-view-quote-plan", "request ttp view quote plan")
+    .withChainedActions(
+      TimeToPayProxyRequests.viewQuotePlan(timeToPayProxyBaseUrl)
+    )
+
   setup("request-Statement-of-Liability-for-single-debts", "request statement of liability for single debt")
     .withChainedActions(
       StatementOfLiabilityRequests.solAPIRequestWithSingleDebtRequest(statementOfLiabilityApiBaseUrl)
