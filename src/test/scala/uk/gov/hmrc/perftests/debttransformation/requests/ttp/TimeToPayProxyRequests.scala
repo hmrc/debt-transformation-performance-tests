@@ -56,6 +56,7 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
       .body(StringBody(generateQuoteAnnually))
       .check(status.is(200))
 
+
   val createPlanRequestBody = """{
                                 |  "customerReference": "customerRef1234",
                                 |  "quoteReference":"quoteReference",
@@ -158,5 +159,4 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
       .get(s"$baseUri/quote/custReference1234/planId1234")
       .headers(requestHeaders)
       .check(status.is(200))
-
 }
