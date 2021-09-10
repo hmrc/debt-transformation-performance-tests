@@ -33,7 +33,6 @@ class Simulation extends PerformanceTestRunner {
       TimeToPayProxyRequests.ttpGenerateAnnualFrequencyQuote(timeToPayProxyBaseUrl)
     )
 
-
   setup("request-ttp-update-quote-plan", "request ttp update quote plan")
     .withChainedActions(
       TimeToPayProxyRequests.updatePlan(timeToPayProxyBaseUrl)
