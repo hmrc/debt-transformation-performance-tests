@@ -3,17 +3,79 @@ package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 import io.gatling.core.Predef._
 import io.gatling.http.Predef.{http, status, _}
 import io.gatling.http.request.builder.HttpRequestBuilder
+import org.joda.time.{DateTime, DateTimeZone}
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 
-object InterestForecastingRequests extends ServicesConfiguration {
+import java.util.Date
 
+object InterestForecastingRequests extends ServicesConfiguration {
+  val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
+  val quoteDate          = dateTime.toString("yyyy-MM-dd")
+  val instalmentDate=dateTime.plusDays(2)toString "yyyy-MM-dd"
+  val initialPaymentDate=dateTime.plusDays(1)toString "yyyy-MM-dd"
   val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",
     "Accept"        -> "application/vnd.hmrc.1.0+json",
     "Content-Type"  -> "application/json"
   )
+
+  val InitialPaymentInstalmentPlan= {
+    s"""
+       |{
+       |	"debtId": "debtId",
+       |	"debtAmount": 100000,
+       |	"instalmentAmount": 10000,
+       |	"paymentFrequency":"monthly",
+       |	"instalmentDate": "$instalmentDate",
+       |	"quoteDate": "$quoteDate",
+       |	"mainTrans": "1525",
+       |	"subTrans": "1000",
+       |	"interestAccrued": 3333,
+       |	"initialPaymentDate":"$initialPaymentDate" ,
+       |   "initialPaymentAmount": 1000
+       |}
+""".stripMargin
+  }
+
+  def instalmentPlanWithInitialPayment(baseUri: String): HttpRequestBuilder =
+    http("Single Debt Instalment Plan  : Initial Payment Date Before Instalment Date")
+      .post(s"$baseUri/payment-plan")
+      .headers(requestHeaders)
+      .body(StringBody(InitialPaymentInstalmentPlan))
+      .check(status.is(200))
+      .check(regex("totalNumberOfInstalments").find(0))
+
+  print(s"Initial Payment Instalment Plan***********"+InitialPaymentInstalmentPlan)
+
+  val noInitialPaymentInstalmentPlan= {
+    s"""
+       |{
+       |	"debtId": "debtId",
+       |	"debtAmount": 100000,
+       |	"instalmentAmount": 10000,
+       |	"paymentFrequency":"monthly",
+       |	"instalmentDate": "$instalmentDate",
+       |	"quoteDate": "$quoteDate",
+       |	"mainTrans": "1525",
+       |	"subTrans": "1000",
+       |	"interestAccrued": 3333
+       }
+""".stripMargin
+  }
+
+  def instalmentPlanWithNoInitialPayment(baseUri: String): HttpRequestBuilder =
+    http("Single Debt Instalment Plan : With No Initial payment")
+      .post(s"$baseUri/payment-plan")
+      .headers(requestHeaders)
+      .body(StringBody(noInitialPaymentInstalmentPlan))
+      .check(status.is(200))
+      .check(regex("totalNumberOfInstalments").find(0))
+
+  print(s"Initial Payment Instalment Plan***********"+InitialPaymentInstalmentPlan)
+
+
 
   def multipleDebtsWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
     http("Multiple debt items with no paymentHistory")
@@ -161,9 +223,10 @@ object InterestForecastingRequests extends ServicesConfiguration {
             " 300000,\n\t\t\t\t\"paymentDate\": \"2020-05-03\"\n\t\t\t}]\n\t\t}\n\n\t\t, {\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": " +
             "500000,\n\t\t\t\"subTrans\": \"1090\",\n\t\t\t\"mainTrans\": \"1520\",\n\t\t\t\"dateCreated\": \"2016-05-16\",\n\t\t\t\"interestStartDate\": " +
             "\"2016-05-16\",\n\t\t\t\"interestRequestedTo\": \"2019-04-14\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\t\"paymentAmount\": " +
-            "200000,\n\t\t\t\t\t\"paymentDate\": \"2016-12-03\"\n\t\t\t\t}\n\n\t\t\t]\n\t\t}\n\n\n\t],\n\n\t\"breathingSpaces\": [\n\n\t]\n\n}"
-        )
-      )
+            "200000,\n\t\t\t\t\t\"paymentDate\": \"2016-12-03\"\n\t\t\t\t}\n\n\t\t\t]\n\t\t}\n\n\n\t],\n\n\t\"breathingSpaces\": [\n\n\t]\n\n}"))
       .check(status.is(200))
+
+
+
 
 }

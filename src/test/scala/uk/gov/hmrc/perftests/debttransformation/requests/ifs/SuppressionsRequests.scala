@@ -79,7 +79,7 @@ object SuppressionsRequests extends ServicesConfiguration {
 
 
   def postSuppressionData() = {
-    val baseUri = s"$interestForecostingApiUrl/suppressions/1"
+    val baseUri = s"$interestForecostingApiUrl/test-only/suppressions/1"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -89,7 +89,7 @@ object SuppressionsRequests extends ServicesConfiguration {
   }
 
   def postOpenEndedSuppressionData() = {
-    val baseUri = s"$interestForecostingApiUrl/suppressions/2"
+    val baseUri = s"$interestForecostingApiUrl/test-only/suppressions/2"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -99,7 +99,7 @@ object SuppressionsRequests extends ServicesConfiguration {
   }
 
   def deleteSuppressionData(): StandaloneWSResponse = {
-    val baseUri = s"$interestForecostingApiUrl/suppressions"
+    val baseUri = s"$interestForecostingApiUrl/test-only/suppressions"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -109,7 +109,7 @@ object SuppressionsRequests extends ServicesConfiguration {
   }
 
   def postSuppressionRules(): StandaloneWSResponse = {
-    val baseUri = s"$interestForecostingApiUrl/suppression-rules"
+    val baseUri = s"$interestForecostingApiUrl/test-only/suppression-rules"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -119,7 +119,7 @@ object SuppressionsRequests extends ServicesConfiguration {
   }
 
   def deleteSuppressionRules(): StandaloneWSResponse = {
-    val baseUri = s"$interestForecostingApiUrl/suppression-rules"
+    val baseUri = s"$interestForecostingApiUrl/test-only/suppression-rules"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -430,7 +430,7 @@ object SuppressionsRequests extends ServicesConfiguration {
 
        """.stripMargin
 
-  def TwoPaymentsDuringSuppression(baseUrl: String): HttpRequestBuilder =
+  def twoPaymentsDuringSuppression(baseUrl: String): HttpRequestBuilder =
     http("Suppression applied to postcode. Two payments during suppression")
       .post(s"$baseUrl/debt-calculation")
       .headers(requestHeaders)
