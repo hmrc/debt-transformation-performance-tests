@@ -39,8 +39,7 @@ class Simulation extends PerformanceTestRunner {
     )
 
   setup("request-ttp-create-plan", "request ttp create plan")
-    .withChainedActions(
-      TimeToPayProxyRequests.createPlan(timeToPayProxyBaseUrl)
+    .withChainedActions(TimeToPayProxyRequests.createPlan(timeToPayProxyBaseUrl)
     )
 
   setup("request-ttp-view-quote-plan", "request ttp view quote plan")
@@ -79,11 +78,21 @@ class Simulation extends PerformanceTestRunner {
     .withChainedActions(
       InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl)
     )
+  setup("single-debt-instalment-plan-with-initial-payment", "single debt instalment plan with initial payment")
+    .withChainedActions(
+      InterestForecastingRequests.instalmentPlanWithInitialPayment(interestForecostingApiUrl)
+    )
+
+  setup("single-debt-instalment-plan-with-no-initial-payment", "single debt instalment plan with no initial payment")
+    .withChainedActions(
+      InterestForecastingRequests.instalmentPlanWithNoInitialPayment(interestForecostingApiUrl)
+    )
+
 
   setup("debt-items-with-suppression", "debt items with suppression")
     .withChainedActions(
       SuppressionsRequests.twoOverlappingSuppression(interestForecostingApiUrl),
-      SuppressionsRequests.TwoPaymentsDuringSuppression(interestForecostingApiUrl),
+      SuppressionsRequests.twoPaymentsDuringSuppression(interestForecostingApiUrl),
       SuppressionsRequests.interestRateChangeADuringSuppression(interestForecostingApiUrl),
       SuppressionsRequests.openEndedSuppression(interestForecostingApiUrl),
       SuppressionsRequests.TwoDutiesTwoPaymentsOnSameDaySuppression(interestForecostingApiUrl)
