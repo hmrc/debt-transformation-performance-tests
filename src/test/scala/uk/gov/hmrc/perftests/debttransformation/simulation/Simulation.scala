@@ -98,7 +98,7 @@ class Simulation extends PerformanceTestRunner {
       SuppressionsRequests.TwoDutiesTwoPaymentsOnSameDaySuppression(interestForecostingApiUrl)
     )
 
-  setup("mainTrans-applied-to-suppression-rules", "sunTrans applied to suppression rules")
+  setup("mainTrans-applied-to-suppression-rules", "subTrans applied to suppression rules")
     .withChainedActions(SuppressionsRequests.mainTransAppliedToSuppressionRules(interestForecostingApiUrl))
 
   before {
