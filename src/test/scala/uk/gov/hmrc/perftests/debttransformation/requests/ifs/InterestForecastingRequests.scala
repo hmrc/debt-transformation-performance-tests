@@ -47,7 +47,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .check(status.is(200))
       .check(regex("totalNumberOfInstalments").find(0))
 
-  print(s"Initial Payment Instalment Plan***********"+InitialPaymentInstalmentPlan)
 
   val noInitialPaymentInstalmentPlan= {
     s"""
@@ -72,10 +71,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .body(StringBody(noInitialPaymentInstalmentPlan))
       .check(status.is(200))
       .check(regex("totalNumberOfInstalments").find(0))
-
-  print(s"Initial Payment Instalment Plan***********"+InitialPaymentInstalmentPlan)
-
-
 
   def multipleDebtsWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
     http("Multiple debt items with no paymentHistory")

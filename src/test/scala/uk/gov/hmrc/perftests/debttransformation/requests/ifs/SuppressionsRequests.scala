@@ -436,5 +436,7 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(twoPaymentsSuppression))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
+      //.check(regex("suppressionApplied").find(0))
+  print(s"Initial Payment Instalment Plan***********"+twoPaymentsSuppression)
+
 }
