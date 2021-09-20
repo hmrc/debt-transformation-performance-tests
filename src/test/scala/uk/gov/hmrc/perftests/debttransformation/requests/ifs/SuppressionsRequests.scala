@@ -386,7 +386,7 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(mainTransSuppressionRules))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
+//      .check(regex("suppressionApplied").find(0))
 
   val twoPaymentsSuppression =
     s"""
