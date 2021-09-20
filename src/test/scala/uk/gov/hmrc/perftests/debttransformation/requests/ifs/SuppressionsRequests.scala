@@ -386,7 +386,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(mainTransSuppressionRules))
       .check(status.is(200))
-//      .check(regex("suppressionApplied").find(0))
 
   val twoPaymentsSuppression =
     s"""
@@ -436,7 +435,5 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(twoPaymentsSuppression))
       .check(status.is(200))
-      //.check(regex("suppressionApplied").find(0))
-  print(s"Initial Payment Instalment Plan***********"+twoPaymentsSuppression)
 
 }
