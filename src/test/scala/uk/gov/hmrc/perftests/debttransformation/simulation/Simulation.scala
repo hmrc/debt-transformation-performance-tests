@@ -62,10 +62,8 @@ class Simulation extends PerformanceTestRunner {
 
   setup(
     "non-interest-bearing-debt-item-with-no-breathing-space",
-    "non interest bearing debt item with no breathing space"
-  )
-    .withChainedActions(
-      InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
+    "non interest bearing debt item with no breathing space")
+    .withChainedActions(InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
     )
 
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
