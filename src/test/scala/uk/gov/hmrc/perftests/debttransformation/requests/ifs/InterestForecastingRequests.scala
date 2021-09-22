@@ -21,7 +21,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
     "Content-Type"  -> "application/json"
   )
 
-  val InitialPaymentInstalmentPlan= {
+  val InitialPaymentInstalmentPlan= 
     s"""
        |{
        |	"debtId": "debtId",
@@ -37,7 +37,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |   "initialPaymentAmount": 1000
        |}
 """.stripMargin
-  }
+  
 
   def instalmentPlanWithInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Single Debt Instalment Plan  : Initial Payment Date Before Instalment Date")
@@ -45,10 +45,11 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(InitialPaymentInstalmentPlan))
       .check(status.is(200))
-      .check(regex("totalNumberOfInstalments").find(0))
+    
 
 
-  val noInitialPaymentInstalmentPlan= {
+
+  val noInitialPaymentInstalmentPlan= 
     s"""
        |{
        |	"debtId": "debtId",
@@ -62,7 +63,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |	"interestAccrued": 3333
        }
 """.stripMargin
-  }
+  
 
   def instalmentPlanWithNoInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Single Debt Instalment Plan : With No Initial payment")
@@ -70,8 +71,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(noInitialPaymentInstalmentPlan))
       .check(status.is(200))
-      .check(regex("totalNumberOfInstalments").find(0))
-
+    
   val multipleDebts="""{
                       |	"debtItems": [{
                       |			"debtID": "123",
@@ -188,8 +188,5 @@ object InterestForecastingRequests extends ServicesConfiguration {
             "\"2016-05-16\",\n\t\t\t\"interestRequestedTo\": \"2019-04-14\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\t\"paymentAmount\": " +
             "200000,\n\t\t\t\t\t\"paymentDate\": \"2016-12-03\"\n\t\t\t\t}\n\n\t\t\t]\n\t\t}\n\n\n\t],\n\n\t\"breathingSpaces\": [\n\n\t]\n\n}"))
       .check(status.is(200))
-
-
-
 
 }
