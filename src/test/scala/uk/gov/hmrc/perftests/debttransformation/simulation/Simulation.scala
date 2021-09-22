@@ -62,10 +62,8 @@ class Simulation extends PerformanceTestRunner {
 
   setup(
     "non-interest-bearing-debt-item-with-no-breathing-space",
-    "non interest bearing debt item with no breathing space"
-  )
-    .withChainedActions(
-      InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
+    "non interest bearing debt item with no breathing space")
+    .withChainedActions(InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
     )
 
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
@@ -98,7 +96,7 @@ class Simulation extends PerformanceTestRunner {
       SuppressionsRequests.TwoDutiesTwoPaymentsOnSameDaySuppression(interestForecostingApiUrl)
     )
 
-  setup("mainTrans-applied-to-suppression-rules", "sunTrans applied to suppression rules")
+  setup("mainTrans-applied-to-suppression-rules", "subTrans applied to suppression rules")
     .withChainedActions(SuppressionsRequests.mainTransAppliedToSuppressionRules(interestForecostingApiUrl))
 
   before {

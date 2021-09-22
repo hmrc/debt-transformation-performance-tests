@@ -217,7 +217,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsInterestRateChangeBeforeSuppression))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
 
   val ifsOverlappingSuppression =
     s"""{
@@ -247,7 +246,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsOverlappingSuppression))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
 
   val ifsTwoDutiesTwoPaymentsOnSameDay                                              =
     s""" {
@@ -294,7 +292,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsTwoDutiesTwoPaymentsOnSameDay))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
 
   val ifsOpenEndedSuppression                                   =
     s""" {
@@ -321,7 +318,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsOpenEndedSuppression))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
 
   val ifsInterestRateChangeADuringSuppression =
     s""" {
@@ -349,7 +345,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(ifsInterestRateChangeADuringSuppression))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
 
   val mainTransSuppressionRules =
     s"""
@@ -386,7 +381,6 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(mainTransSuppressionRules))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
 
   val twoPaymentsSuppression =
     s"""
@@ -436,5 +430,5 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(twoPaymentsSuppression))
       .check(status.is(200))
-      .check(regex("suppressionApplied").find(0))
+
 }
