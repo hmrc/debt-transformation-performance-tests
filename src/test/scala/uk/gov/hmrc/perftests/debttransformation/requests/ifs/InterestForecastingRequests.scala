@@ -26,13 +26,13 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |{
        |	"debtId": "debtId",
        |	"debtAmount": 100000,
-       |	"instalmentAmount": 10000,
+       |	"instalmentPaymentAmount": 10000,
        |	"paymentFrequency":"monthly",
-       |	"instalmentDate": "$instalmentDate",
+       |	"instalmentPaymentDate": "$instalmentDate",
        |	"quoteDate": "$quoteDate",
        |	"mainTrans": "1525",
        |	"subTrans": "1000",
-       |	"interestAccrued": 3333,
+       |	"interestCallDueTotal": 3333,
        |	"initialPaymentDate":"$initialPaymentDate" ,
        |   "initialPaymentAmount": 1000
        |}
@@ -54,13 +54,13 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |{
        |	"debtId": "debtId",
        |	"debtAmount": 100000,
-       |	"instalmentAmount": 10000,
+       |	"instalmentPaymentAmount": 10000,
        |	"paymentFrequency":"monthly",
-       |	"instalmentDate": "$instalmentDate",
+       |	"instalmentPaymentDate": "$instalmentDate",
        |	"quoteDate": "$quoteDate",
        |	"mainTrans": "1525",
        |	"subTrans": "1000",
-       |	"interestAccrued": 3333
+       |	"interestCallDueTotal": 3333
        }
 """.stripMargin
   
