@@ -26,22 +26,22 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |{
        |	"debtId": "debtId",
        |	"debtAmount": 100000,
-       |	"instalmentAmount": 10000,
+       |	"instalmentPaymentAmount": 10000,
        |	"paymentFrequency":"monthly",
-       |	"instalmentDate": "$instalmentDate",
+       |	"instalmentPaymentDate": "$instalmentDate",
        |	"quoteDate": "$quoteDate",
        |	"mainTrans": "1525",
        |	"subTrans": "1000",
-       |	"interestAccrued": 3333,
+       |	"interestCallDueTotal": 3333,
        |	"initialPaymentDate":"$initialPaymentDate" ,
-       |   "initialPaymentAmount": 1000
+       |  "initialPaymentAmount": 1000
        |}
 """.stripMargin
   
 
   def instalmentPlanWithInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Single Debt Instalment Plan  : Initial Payment Date Before Instalment Date")
-      .post(s"$baseUri/payment-plan")
+      .post(s"$baseUri/instalment-calculation")
       .headers(requestHeaders)
       .body(StringBody(InitialPaymentInstalmentPlan))
       .check(status.is(200))
@@ -54,20 +54,20 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |{
        |	"debtId": "debtId",
        |	"debtAmount": 100000,
-       |	"instalmentAmount": 10000,
+       |	"instalmentPaymentAmount": 10000,
        |	"paymentFrequency":"monthly",
-       |	"instalmentDate": "$instalmentDate",
+       |	"instalmentPaymentDate": "$instalmentDate",
        |	"quoteDate": "$quoteDate",
        |	"mainTrans": "1525",
        |	"subTrans": "1000",
-       |	"interestAccrued": 3333
+       |	"interestCallDueTotal": 3333
        }
 """.stripMargin
   
 
   def instalmentPlanWithNoInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Single Debt Instalment Plan : With No Initial payment")
-      .post(s"$baseUri/payment-plan")
+      .post(s"$baseUri/instalment-calculation")
       .headers(requestHeaders)
       .body(StringBody(noInitialPaymentInstalmentPlan))
       .check(status.is(200))
