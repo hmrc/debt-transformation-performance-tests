@@ -34,14 +34,14 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |	"subTrans": "1000",
        |	"interestCallDueTotal": 3333,
        |	"initialPaymentDate":"$initialPaymentDate" ,
-       |   "initialPaymentAmount": 1000
+       |  "initialPaymentAmount": 1000
        |}
 """.stripMargin
   
 
   def instalmentPlanWithInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Single Debt Instalment Plan  : Initial Payment Date Before Instalment Date")
-      .post(s"$baseUri/payment-plan")
+      .post(s"$baseUri/instalment-calculation")
       .headers(requestHeaders)
       .body(StringBody(InitialPaymentInstalmentPlan))
       .check(status.is(200))
@@ -67,7 +67,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
 
   def instalmentPlanWithNoInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Single Debt Instalment Plan : With No Initial payment")
-      .post(s"$baseUri/payment-plan")
+      .post(s"$baseUri/instalment-calculation")
       .headers(requestHeaders)
       .body(StringBody(noInitialPaymentInstalmentPlan))
       .check(status.is(200))
