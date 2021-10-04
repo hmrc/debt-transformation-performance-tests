@@ -23,9 +23,12 @@ scalacOptions ++= Seq(
 )
 
 resolvers ++= Seq(
-  Resolver.bintrayRepo("hmrc", "releases"),
   Resolver.typesafeRepo("releases")
 )
+
+resolvers += "HMRC-open-artefacts-maven" at "https://open.artefacts.tax.service.gov.uk/maven2"
+resolvers += Resolver.url("HMRC-open-artefacts-ivy", url("https://open.artefacts.tax.service.gov.uk/ivy2"))(Resolver.ivyStylePatterns)
+
 libraryDependencies ++= Seq(
   "com.typesafe.play"      %% "play-ahc-ws-standalone"    % "1.1.7",
   "com.github.nscala-time" %% "nscala-time"               % "2.22.0",

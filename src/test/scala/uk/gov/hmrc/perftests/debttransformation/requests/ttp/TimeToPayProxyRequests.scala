@@ -34,9 +34,8 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
        |        "addressPostcode": "NW9 5XW",
        |        "postcodeDate": "2021-05-13"
        |    }],
-       |    "debtItems": [{
-       |        "debtItemId": "debtItemId1",
-       |        "debtItemChargeId": "debtItemChargeId1",
+       |    "debtItemCharges": [{
+       |        "debtItemChargeId": "debtItemId1",
        |        "mainTrans": "1546",
        |        "subTrans": "1090",
        |        "originalDebtAmount": 100,
@@ -78,10 +77,9 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
                                 |    "interestAccrued": 10,
                                 |    "planInterest": 10
                                 |  },
-                                |  "debtItems": [
+                                |  "debtItemCharges": [
                                 |    {
-                                |      "debtItemId": "debtItemId1",
-                                |      "debtItemChargeId": "debtItemChargeId1",
+                                |      "debtItemChargeId": "debtItemId1",
                                 |      "mainTrans": "1525",
                                 |      "subTrans": "1000",
                                 |      "originalDebtAmount": 100,
@@ -108,8 +106,7 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
                                 |  ],
                                 |  "instalments": [
                                 |  {
-                                |    "debtItemChargeId": "debtItemChargeId1",
-                                |    "debtItemId": "debtItemId1",
+                                |    "debtItemChargeId": "debtItemId1",
                                 |    "dueDate": "2021-05-13",
                                 |    "amountDue": 100,
                                 |    "expectedPayment": 100,
@@ -129,7 +126,7 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
        |	"customerReference": "customerRef1234",
        |	"planId": "planId1234",
        |	"updateType": "updateType",
-       |	"planStatus": "updated",
+       |	"planStatus": "success",
        |	"completeReason": "earlyRepayment",
        |	"cancellationReason": "",
        |	"thirdPartyBank": true,
