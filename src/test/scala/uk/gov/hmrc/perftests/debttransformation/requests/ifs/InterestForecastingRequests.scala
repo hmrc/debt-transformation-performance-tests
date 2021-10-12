@@ -45,6 +45,35 @@ object InterestForecastingRequests extends ServicesConfiguration {
      |}
      |""".stripMargin
 
+
+  val MultipleDebtInstalmentPlan: String =
+    s"""
+       |{
+       |    "debtItemCharges":
+       |    [
+       |        {
+       |            "debtId": "debtId",
+       |            "debtAmount": 100000,
+       |            "mainTrans": "1525",
+       |            "subTrans": "1000"
+       |        },
+       |        {
+       |            "debtId": "debtId2",
+       |            "debtAmount": 100000,
+       |            "mainTrans": "1545",
+       |            "subTrans": "1000"
+       |        }
+       |    ],
+       |    "quoteDate": "$quoteDate",
+       |    "instalmentPaymentDate": "$instalmentDate",
+       |    "instalmentPaymentAmount": 10000,
+       |    "paymentFrequency": "monthly",
+       |    "interestCallDueTotal": 3333,
+       |    "initialPaymentDate" : "$initialPaymentDate",
+       |    "initialPaymentAmount" : "1000"
+       |}
+       |""".stripMargin
+
   
 
   def instalmentPlanWithInitialPayment(baseUri: String): HttpRequestBuilder =
@@ -53,7 +82,13 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(InitialPaymentInstalmentPlan))
       .check(status.is(200))
-    
+
+  def instalmentPlanWithMultipleDebts(baseUri: String): HttpRequestBuilder =
+    http("Multiple Debt Instalment Plan")
+      .post(s"$baseUri/instalment-calculation")
+      .headers(requestHeaders)
+      .body(StringBody(MultipleDebtInstalmentPlan))
+      .check(status.is(200))
 
 
 
