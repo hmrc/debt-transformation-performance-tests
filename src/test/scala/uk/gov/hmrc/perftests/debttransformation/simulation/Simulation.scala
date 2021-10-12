@@ -81,6 +81,11 @@ class Simulation extends PerformanceTestRunner {
       InterestForecastingRequests.instalmentPlanWithInitialPayment(interestForecostingApiUrl)
     )
 
+  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
+    .withChainedActions(
+      InterestForecastingRequests.instalmentPlanWithMultipleDebts(interestForecostingApiUrl)
+    )
+
   setup("single-debt-instalment-plan-with-no-initial-payment", "single debt instalment plan with no initial payment")
     .withChainedActions(
       InterestForecastingRequests.instalmentPlanWithNoInitialPayment(interestForecostingApiUrl)

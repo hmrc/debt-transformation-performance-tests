@@ -7,6 +7,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 
+import java.time.LocalDate
 import java.util.Date
 
 object InterestForecastingRequests extends ServicesConfiguration {
@@ -21,22 +22,58 @@ object InterestForecastingRequests extends ServicesConfiguration {
     "Content-Type"  -> "application/json"
   )
 
-  val InitialPaymentInstalmentPlan= 
+
+  val InitialPaymentInstalmentPlan: String =
+    s"""
+     |{
+     |    "debtItemCharges":
+     |    [
+     |        {
+     |            "debtId": "debtId",
+     |            "debtAmount": 100000,
+     |            "mainTrans": "1525",
+     |            "subTrans": "1000"
+     |        }
+     |    ],
+     |    "quoteDate": "$quoteDate",
+     |    "instalmentPaymentDate": "$instalmentDate",
+     |    "instalmentPaymentAmount": 10000,
+     |    "paymentFrequency": "monthly",
+     |    "interestCallDueTotal": 3333,
+     |    "initialPaymentDate" : "$initialPaymentDate",
+     |    "initialPaymentAmount" : "1000"
+     |}
+     |""".stripMargin
+
+
+  val MultipleDebtInstalmentPlan: String =
     s"""
        |{
-       |	"debtId": "debtId",
-       |	"debtAmount": 100000,
-       |	"instalmentPaymentAmount": 10000,
-       |	"paymentFrequency":"monthly",
-       |	"instalmentPaymentDate": "$instalmentDate",
-       |	"quoteDate": "$quoteDate",
-       |	"mainTrans": "1525",
-       |	"subTrans": "1000",
-       |	"interestCallDueTotal": 3333,
-       |	"initialPaymentDate":"$initialPaymentDate" ,
-       |  "initialPaymentAmount": 1000
+       |    "debtItemCharges":
+       |    [
+       |        {
+       |            "debtId": "debtId",
+       |            "debtAmount": 100000,
+       |            "mainTrans": "1525",
+       |            "subTrans": "1000"
+       |        },
+       |        {
+       |            "debtId": "debtId2",
+       |            "debtAmount": 100000,
+       |            "mainTrans": "1545",
+       |            "subTrans": "1000"
+       |        }
+       |    ],
+       |    "quoteDate": "$quoteDate",
+       |    "instalmentPaymentDate": "$instalmentDate",
+       |    "instalmentPaymentAmount": 10000,
+       |    "paymentFrequency": "monthly",
+       |    "interestCallDueTotal": 3333,
+       |    "initialPaymentDate" : "$initialPaymentDate",
+       |    "initialPaymentAmount" : "1000"
        |}
-""".stripMargin
+       |""".stripMargin
+
   
 
   def instalmentPlanWithInitialPayment(baseUri: String): HttpRequestBuilder =
@@ -45,24 +82,36 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(InitialPaymentInstalmentPlan))
       .check(status.is(200))
-    
+
+  def instalmentPlanWithMultipleDebts(baseUri: String): HttpRequestBuilder =
+    http("Multiple Debt Instalment Plan")
+      .post(s"$baseUri/instalment-calculation")
+      .headers(requestHeaders)
+      .body(StringBody(MultipleDebtInstalmentPlan))
+      .check(status.is(200))
 
 
 
-  val noInitialPaymentInstalmentPlan= 
+  val noInitialPaymentInstalmentPlan: String =
     s"""
        |{
-       |	"debtId": "debtId",
-       |	"debtAmount": 100000,
-       |	"instalmentPaymentAmount": 10000,
-       |	"paymentFrequency":"monthly",
-       |	"instalmentPaymentDate": "$instalmentDate",
-       |	"quoteDate": "$quoteDate",
-       |	"mainTrans": "1525",
-       |	"subTrans": "1000",
-       |	"interestCallDueTotal": 3333
-       }
-""".stripMargin
+       |    "debtItemCharges":
+       |    [
+       |        {
+       |            "debtId": "debtId",
+       |            "debtAmount": 100000,
+       |            "mainTrans": "1525",
+       |            "subTrans": "1000"
+       |        }
+       |    ],
+       |    "quoteDate": "$quoteDate",
+       |    "instalmentPaymentDate": "$instalmentDate",
+       |    "instalmentPaymentAmount": 10000,
+       |    "paymentFrequency": "monthly",
+       |    "interestCallDueTotal": 3333
+       |}
+       |""".stripMargin
+
   
 
   def instalmentPlanWithNoInitialPayment(baseUri: String): HttpRequestBuilder =
