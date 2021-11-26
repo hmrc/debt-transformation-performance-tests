@@ -57,8 +57,8 @@ class Simulation extends PerformanceTestRunner {
       StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
     )
 
-  setup("Multiple-debt-items-with-no-payments-breathing-space", "Multiple debt items with no payments breathing space")
-    .withChainedActions(InterestForecastingRequests.multipleDebtsWithNoPaymentHistory(interestForecostingApiUrl))
+  setup("Multiple-debt-items-with-one-payments-no-breathing-space", "Multiple debt items with one payments breathing space")
+    .withChainedActions(InterestForecastingRequests.multipleDebtsWithOnePaymentHistory(interestForecostingApiUrl))
 
   setup(
     "non-interest-bearing-debt-item-with-no-breathing-space",
