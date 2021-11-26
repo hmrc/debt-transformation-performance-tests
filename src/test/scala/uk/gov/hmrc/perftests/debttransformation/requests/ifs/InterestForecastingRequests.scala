@@ -3,18 +3,15 @@ package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 import io.gatling.core.Predef._
 import io.gatling.http.Predef.{http, status, _}
 import io.gatling.http.request.builder.HttpRequestBuilder
-import org.joda.time.{DateTime, DateTimeZone}
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 
 import java.time.LocalDate
-import java.util.Date
 
 object InterestForecastingRequests extends ServicesConfiguration {
-  val dateTime           = new DateTime(new Date()).withZone(DateTimeZone.UTC)
-  val quoteDate          = dateTime.toString("yyyy-MM-dd")
-  val instalmentDate=dateTime.plusDays(2)toString "yyyy-MM-dd"
-  val initialPaymentDate=dateTime.plusDays(1)toString "yyyy-MM-dd"
+  var quoteDate           = LocalDate.now().toString
+  var instalmentDate = LocalDate.now().plusDays(1).toString
+  var initialPaymentDate  = LocalDate.now().plusDays(1).toString
   val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",
@@ -23,58 +20,27 @@ object InterestForecastingRequests extends ServicesConfiguration {
   )
 
 
-  val InitialPaymentInstalmentPlan: String =
-    s"""
-     |{
-     |    "debtItemCharges":
-     |    [
-     |        {
-     |            "debtId": "debtId",
-     |            "debtAmount": 100000,
-     |            "mainTrans": "1525",
-     |            "subTrans": "1000"
-     |        }
-     |    ],
-     |    "quoteDate": "$quoteDate",
-     |    "instalmentPaymentDate": "$instalmentDate",
-     |    "instalmentPaymentAmount": 10000,
-     |    "paymentFrequency": "monthly",
-     |    "interestCallDueTotal": 3333,
-     |    "initialPaymentDate" : "$initialPaymentDate",
-     |    "initialPaymentAmount" : "1000"
-     |}
-     |""".stripMargin
-
-
-  val MultipleDebtInstalmentPlan: String =
-    s"""
-       |{
-       |    "debtItemCharges":
-       |    [
-       |        {
-       |            "debtId": "debtId",
-       |            "debtAmount": 100000,
-       |            "mainTrans": "1525",
-       |            "subTrans": "1000"
-       |        },
-       |        {
-       |            "debtId": "debtId2",
-       |            "debtAmount": 100000,
-       |            "mainTrans": "1545",
-       |            "subTrans": "1000"
-       |        }
-       |    ],
-       |    "quoteDate": "$quoteDate",
-       |    "instalmentPaymentDate": "$instalmentDate",
-       |    "instalmentPaymentAmount": 10000,
-       |    "paymentFrequency": "monthly",
-       |    "interestCallDueTotal": 3333,
-       |    "initialPaymentDate" : "$initialPaymentDate",
-       |    "initialPaymentAmount" : "1000"
-       |}
-       |""".stripMargin
-
-  
+  val InitialPaymentInstalmentPlan: String =s"""{
+                                               |	"debtItemCharges": [{
+                                               |		"debtId": "1234",
+                                               |		"debtAmount": 80000,
+                                               |		"subTrans": "1000",
+                                               |		"mainTrans": "1525"
+                                               |
+                                               |	}],
+                                               |	"quoteDate": "$quoteDate",
+                                               |	"quoteType": "duration",
+                                               |	"instalmentPaymentDate": "$instalmentDate",
+                                               |	"paymentFrequency": "monthly",
+                                               |	"instalmentPaymentAmount": 10000,
+                                               |	"customerPostCodes": [
+                                               |
+                                               |	],
+                                               |	"interestCallDueTotal": 5900,
+                                               |	"initialPaymentDate": "$initialPaymentDate",
+                                               |	"initialPaymentAmount": 100
+                                               |
+                                               |}""".stripMargin
 
   def instalmentPlanWithInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Single Debt Instalment Plan  : Initial Payment Date Before Instalment Date")
@@ -82,6 +48,34 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(InitialPaymentInstalmentPlan))
       .check(status.is(200))
+
+  val  MultipleDebtInstalmentPlan:String=s"""{
+                                            |	"debtItemCharges": [{
+                                            |		"debtId": "debtId",
+                                            |		"debtAmount": 50000,
+                                            |		"subTrans": "7012",
+                                            |		"mainTrans": "5350"
+                                            |
+                                            |	}, {
+                                            |		"debtId": "debtId",
+                                            |		"debtAmount": 50000,
+                                            |		"subTrans": "7013",
+                                            |		"mainTrans": "5350"
+                                            |
+                                            |	}],
+                                            |	"quoteDate": "2021-11-26",
+                                            |	"quoteType": "duration",
+                                            |	"instalmentPaymentDate": "2021-11-27",
+                                            |	"paymentFrequency": "single",
+                                            |	"instalmentPaymentAmount": 10000,
+                                            |	"customerPostCaodes": [
+                                            |
+                                            |	],
+                                            |	"interestCallDueTotal": 1423,	"interestCallDueTotal": 0,
+                                            | 	"initialPaymentDate": "$initialPaymentDate",
+                                            | 	"initialPaymentAmount": 100
+                                            |
+                                            |}""".stripMargin
 
   def instalmentPlanWithMultipleDebts(baseUri: String): HttpRequestBuilder =
     http("Multiple Debt Instalment Plan")
@@ -91,74 +85,119 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .check(status.is(200))
 
 
+  val noInitialPaymentInstalmentPlan: String=s"""{
+                                                |	"debtItemCharges": [{
+                                                |		"debtId": "Debt1",
+                                                |		"debtAmount": 100000,
+                                                |		"subTrans": "1000",
+                                                |		"mainTrans": "1525"
+                                                |
+                                                |	}, {
+                                                |		"debtId": "Debt2",
+                                                |		"debtAmount": 150000,
+                                                |		"subTrans": "1000",
+                                                |		"mainTrans": "1530"
+                                                |
+                                                |	}],
+                                                |	"quoteDate": "$quoteDate",
+                                                |	"quoteType": "instalmentAmount",
+                                                |	"instalmentPaymentDate": "$instalmentDate",
+                                                |	"paymentFrequency": "monthly",
+                                                |	"duration": 24,
+                                                |	"customerPostCodes": [
+                                                |
+                                                |	],
+                                                |	"interestCallDueTotal": 0
+                                                |
+                                                |}""".stripMargin
 
-  val noInitialPaymentInstalmentPlan: String =
-    s"""
-       |{
-       |    "debtItemCharges":
-       |    [
-       |        {
-       |            "debtId": "debtId",
-       |            "debtAmount": 100000,
-       |            "mainTrans": "1525",
-       |            "subTrans": "1000"
-       |        }
-       |    ],
-       |    "quoteDate": "$quoteDate",
-       |    "instalmentPaymentDate": "$instalmentDate",
-       |    "instalmentPaymentAmount": 10000,
-       |    "paymentFrequency": "monthly",
-       |    "interestCallDueTotal": 3333
-       |}
-       |""".stripMargin
 
-  
 
   def instalmentPlanWithNoInitialPayment(baseUri: String): HttpRequestBuilder =
-    http("Single Debt Instalment Plan : With No Initial payment")
+    http("Instalment Plan For Multiple Debts - With No Initial payment")
       .post(s"$baseUri/instalment-calculation")
       .headers(requestHeaders)
       .body(StringBody(noInitialPaymentInstalmentPlan))
       .check(status.is(200))
-    
-  val multipleDebts="""{
-                      |	"debtItems": [{
-                      |			"debtID": "123",
-                      |			"originalAmount": 500000,
-                      |			"subTrans": "1000",
-                      |			"mainTrans": "1525",
-                      |			"interestStartDate": "2018-12-16",
-                      |			"interestRequestedTo": "2019-04-14",
-                      |			"paymentHistory": [{
-                      |				"paymentDate": "2021-05-13",
-                      |				"paymentAmount": 100
-                      |			}]
-                      |		},
-                      |		{
-                      |			"debtID": "123",
-                      |			"originalAmount": 500000,
-                      |			"subTrans": "1000",
-                      |			"mainTrans": "1525",
-                      |			"interestStartDate": "2018-12-16",
-                      |			"interestRequestedTo": "2019-04-14",
-                      |			"paymentHistory": [{
-                      |					"paymentDate": "2021-05-13",
-                      |					"paymentAmount": 100
-                      |				}
-                      |
-                      |			]
-                      |		}
-                      |	],
-                      |	"breathingSpaces": [],
-                      |	"customerPostCodes": []
-                      |}""".stripMargin
 
+  val multipleDebtsWithOnePaymentHistory=s"""
+                                            |{
+                                            |	"debtItems": [{
+                                            |			"debtID": "123",
+                                            |			"originalAmount": 500000,
+                                            |			"subTrans": "1000",
+                                            |			"mainTrans": "1525",
+                                            |
+                                            |			"interestStartDate": "2018-12-16",
+                                            |			"interestRequestedTo": "2019-04-14",
+                                            |
+                                            |			"paymentHistory": [{
+                                            |					"paymentAmount": 100000,
+                                            |					"paymentDate": "2019-02-03"
+                                            |				}
+                                            |
+                                            |			]
+                                            |		}
+                                            |
+                                            |		, {
+                                            |			"debtID": "123",
+                                            |			"originalAmount": 500000,
+                                            |			"subTrans": "1000",
+                                            |			"mainTrans": "1525",
+                                            |
+                                            |			"interestStartDate": "2018-12-16",
+                                            |			"interestRequestedTo": "2019-04-14",
+                                            |
+                                            |			"paymentHistory": [
+                                            |
+                                            |			]
+                                            |		}
+                                            |
+                                            |
+                                            |	],
+                                            |
+                                            |	"breathingSpaces": [
+                                            |
+                                            |	],
+                                            |
+                                            |	"customerPostCodes": [
+                                            |
+                                            |	]
+                                            |
+                                            |}
+                                             """.stripMargin
 
-  def multipleDebtsWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
-    http("Multiple debt items with no paymentHistory")
+  val multipleDebtsNonInterestingBearing=s"""{
+                                            |      "debtItemCharges":[    {
+                                            |          "debtId": "debtId",
+                                            |          "debtAmount": 50000,
+                                            |          "subTrans": "7012",
+                                            |          "mainTrans": "5350"
+                                            |
+                                            |    },    {
+                                            |          "debtId": "debtId",
+                                            |          "debtAmount": 50000,
+                                            |          "subTrans": "7013",
+                                            |          "mainTrans": "5350"
+                                            |
+                                            |    }],
+                                            |      "quoteDate": "2021-11-25",
+                                            |      "quoteType": "duration",
+                                            |      "instalmentPaymentDate": "2021-11-26",
+                                            |      "paymentFrequency":"single",
+                                            |       "instalmentPaymentAmount":10000 ,
+                                            |      "customerPostCodes": [
+                                            |
+                                            |        ],
+                                            |	    "interestCallDueTotal": 1423
+                                            |
+                                            |    }""".stripMargin
+
+  def multipleDebtsWithOnePaymentHistory(baseUri: String): HttpRequestBuilder =
+    http("Multiple debt items with one payment history")
       .post(s"$baseUri/debt-calculation")
       .headers(requestHeaders)
-      .body(StringBody(multipleDebts))
+      .body(StringBody(multipleDebtsWithOnePaymentHistory))
       .check(status.is(200))
 
   def TwoDebtItemsWithLeapYearPaymentHistory(baseUri: String): HttpRequestBuilder =
@@ -212,16 +251,16 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .post(s"$baseUri/debt-calculation")
       .headers(requestHeaders)
       .body(StringBody(
-          "{\n\t\"debtItems\": [{\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": 1000000,\n\t\t\t\"subTrans\": " +
-            "\"1000\",\n\t\t\t\"mainTrans\": \"1525\",\n\t\t\t\"dateCreated\": \"2018-12-16\",\n\t\t\t\"interestStartDate\":" +
-            " \"2018-12-16\",\n\t\t\t\"interestRequestedTo\": \"2019-04-14\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\"paymentAmount\": " +
-            "100000,\n\t\t\t\t\"paymentDate\": \"2019-02-03\"\n\t\t\t}, {\n\t\t\t\t\"paymentAmount\": 200000,\n\t\t\t\t\"paymentDate\": " +
-            "\"2019-02-03\"\n\t\t\t}, {\n\t\t\t\t\"paymentAmount\": 100000,\n\t\t\t\t\"paymentDate\": \"2019-02-13\"\n\t\t\t}, {\n\t\t\t\t\"paymentAmount\": " +
-            "100000,\n\t\t\t\t\"paymentDate\": \"2019-02-06\"\n\t\t\t}, {\n\t\t\t\t\"paymentAmount\": 100000,\n\t\t\t\t\"paymentDate\":" +
-            " \"2019-02-13\"\n\t\t\t}]\n\t\t}\n\n\t\t, {\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": 500000,\n\t\t\t\"subTrans\": " +
-            "\"1000\",\n\t\t\t\"mainTrans\": \"1525\",\n\t\t\t\"dateCreated\": \"2018-12-16\",\n\t\t\t\"interestStartDate\": " +
-            "\"2018-12-16\",\n\t\t\t\"interestRequestedTo\": \"2019-04-14\",\n\t\t\t\"paymentHistory\": []\n\t\t}\n\t],\n\n\t\"breathingSpaces\": []\n\n}"
-        ))
+        "{\n\t\"debtItems\": [{\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": 1000000,\n\t\t\t\"subTrans\": " +
+          "\"1000\",\n\t\t\t\"mainTrans\": \"1525\",\n\t\t\t\"dateCreated\": \"2018-12-16\",\n\t\t\t\"interestStartDate\":" +
+          " \"2018-12-16\",\n\t\t\t\"interestRequestedTo\": \"2019-04-14\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\"paymentAmount\": " +
+          "100000,\n\t\t\t\t\"paymentDate\": \"2019-02-03\"\n\t\t\t}, {\n\t\t\t\t\"paymentAmount\": 200000,\n\t\t\t\t\"paymentDate\": " +
+          "\"2019-02-03\"\n\t\t\t}, {\n\t\t\t\t\"paymentAmount\": 100000,\n\t\t\t\t\"paymentDate\": \"2019-02-13\"\n\t\t\t}, {\n\t\t\t\t\"paymentAmount\": " +
+          "100000,\n\t\t\t\t\"paymentDate\": \"2019-02-06\"\n\t\t\t}, {\n\t\t\t\t\"paymentAmount\": 100000,\n\t\t\t\t\"paymentDate\":" +
+          " \"2019-02-13\"\n\t\t\t}]\n\t\t}\n\n\t\t, {\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": 500000,\n\t\t\t\"subTrans\": " +
+          "\"1000\",\n\t\t\t\"mainTrans\": \"1525\",\n\t\t\t\"dateCreated\": \"2018-12-16\",\n\t\t\t\"interestStartDate\": " +
+          "\"2018-12-16\",\n\t\t\t\"interestRequestedTo\": \"2019-04-14\",\n\t\t\t\"paymentHistory\": []\n\t\t}\n\t],\n\n\t\"breathingSpaces\": []\n\n}"
+      ))
       .check(status.is(200))
 
   def LeapYearsdebtItemsWithPaymentHistory(baseUri: String): HttpRequestBuilder =
@@ -229,13 +268,13 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .post(s"$baseUri/debt-calculation")
       .headers(requestHeaders)
       .body(StringBody(
-          "{\n\t\"debtItems\": [{\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": 500000,\n\t\t\t\"subTrans\": " +
-            "\"1000\",\n\t\t\t\"mainTrans\": \"1525\",\n\t\t\t\"dateCreated\": \"2020-02-02\",\n\t\t\t\"interestStartDate\":" +
-            " \"2020-02-02\",\n\t\t\t\"interestRequestedTo\": \"2021-05-01\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\"paymentAmount\":" +
-            " 300000,\n\t\t\t\t\"paymentDate\": \"2020-05-03\"\n\t\t\t}]\n\t\t}\n\n\t\t, {\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": " +
-            "500000,\n\t\t\t\"subTrans\": \"1090\",\n\t\t\t\"mainTrans\": \"1520\",\n\t\t\t\"dateCreated\": \"2016-05-16\",\n\t\t\t\"interestStartDate\": " +
-            "\"2016-05-16\",\n\t\t\t\"interestRequestedTo\": \"2019-04-14\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\t\"paymentAmount\": " +
-            "200000,\n\t\t\t\t\t\"paymentDate\": \"2016-12-03\"\n\t\t\t\t}\n\n\t\t\t]\n\t\t}\n\n\n\t],\n\n\t\"breathingSpaces\": [\n\n\t]\n\n}"))
+        "{\n\t\"debtItems\": [{\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": 500000,\n\t\t\t\"subTrans\": " +
+          "\"1000\",\n\t\t\t\"mainTrans\": \"1525\",\n\t\t\t\"dateCreated\": \"2020-02-02\",\n\t\t\t\"interestStartDate\":" +
+          " \"2020-02-02\",\n\t\t\t\"interestRequestedTo\": \"2021-05-01\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\"paymentAmount\":" +
+          " 300000,\n\t\t\t\t\"paymentDate\": \"2020-05-03\"\n\t\t\t}]\n\t\t}\n\n\t\t, {\n\t\t\t\"debtID\": \"123\",\n\t\t\t\"originalAmount\": " +
+          "500000,\n\t\t\t\"subTrans\": \"1090\",\n\t\t\t\"mainTrans\": \"1520\",\n\t\t\t\"dateCreated\": \"2016-05-16\",\n\t\t\t\"interestStartDate\": " +
+          "\"2016-05-16\",\n\t\t\t\"interestRequestedTo\": \"2019-04-14\",\n\t\t\t\"paymentHistory\": [{\n\t\t\t\t\t\"paymentAmount\": " +
+          "200000,\n\t\t\t\t\t\"paymentDate\": \"2016-12-03\"\n\t\t\t\t}\n\n\t\t\t]\n\t\t}\n\n\n\t],\n\n\t\"breathingSpaces\": [\n\n\t]\n\n}"))
       .check(status.is(200))
 
 }
