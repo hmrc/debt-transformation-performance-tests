@@ -18,6 +18,7 @@ package uk.gov.hmrc.perftests.debttransformation.simulation
 import scala.concurrent.duration._
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
+import uk.gov.hmrc.perftests.debttransformation.requests.fcifs.FieldCollection_InterestForecastingRequests
 import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{SuppressionsRequests, _}
 import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests
 import uk.gov.hmrc.perftests.debttransformation.requests.ttp.TimeToPayProxyRequests
@@ -64,6 +65,54 @@ class Simulation extends PerformanceTestRunner {
     "non-interest-bearing-debt-item-with-no-breathing-space",
     "non interest bearing debt item with no breathing space")
     .withChainedActions(InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
+    )
+
+  setup(
+    "single-debt-item-with-payment-history",
+    "single debt item with single payment history")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.singleDebtItem(interestForecostingApiUrl)
+    )
+
+  setup(
+    "multiple-debt-item-with-multiple-payment-history",
+    "multiple debt item with multiple payment history")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItems(interestForecostingApiUrl)
+    )
+
+  setup(
+    "multiple-debt-item-with-single-payment-history",
+    "multiple debt item with single payment history")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItemsWithSinglePaymentHistory(interestForecostingApiUrl)
+    )
+
+  setup(
+    "single-debt-item-with-no-interest-indicator",
+    "single debt item with no interest indicator")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.singleDebtItemWithNoInterestIndicator(interestForecostingApiUrl)
+    )
+
+  setup(
+    "single-debt-item-with-no-payment-history",
+    "single debt item with no payment history")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.singleDebtItemWithNoPaymentHistory(interestForecostingApiUrl)
+    )
+
+  setup(
+    "multiple-debt-item-with-leap-year-payment-history",
+    "multiple debt item with single leap year payment history")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItemWithLeapYearPaymentHistory(interestForecostingApiUrl)
+    )
+
+  setup(
+    "multiple-debt-item-with-all-fields-happy-path",
+    "multiple debt item with all fields in the request")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.happyPathmultipleDebtItemWithAllFields(interestForecostingApiUrl)
+    )
+
+  setup(
+    "multiple-debt-item-with-missing-interest-start-date",
+    "multiple debt item with missing interest start date")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItemWithMissingInterestStartDate(interestForecostingApiUrl)
     )
 
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
