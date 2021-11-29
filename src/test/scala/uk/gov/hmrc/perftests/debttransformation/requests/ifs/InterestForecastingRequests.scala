@@ -63,9 +63,12 @@ object InterestForecastingRequests extends ServicesConfiguration {
                                             |		"mainTrans": "5350"
                                             |
                                             |	}],
+
                                             |	"quoteDate": "$quoteDate",
                                             |	"quoteType": "duration",
                                             |	"instalmentPaymentDate": "$instalmentDate",
+
+
                                             |	"paymentFrequency": "single",
                                             |	"instalmentPaymentAmount": 10000,
                                             |	"customerPostCaodes": [
@@ -181,6 +184,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
                                             |          "mainTrans": "5350"
                                             |
                                             |    }],
+
                                             |      "quoteDate": "$quoteDate",
                                             |      "quoteType": "duration",
                                             |      "instalmentPaymentDate": "$instalmentDate",
