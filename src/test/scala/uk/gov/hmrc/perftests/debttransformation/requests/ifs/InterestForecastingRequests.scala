@@ -63,9 +63,9 @@ object InterestForecastingRequests extends ServicesConfiguration {
                                             |		"mainTrans": "5350"
                                             |
                                             |	}],
-                                            |	"quoteDate": "2021-11-26",
+                                            |	"quoteDate": "$quoteDate",
                                             |	"quoteType": "duration",
-                                            |	"instalmentPaymentDate": "2021-11-27",
+                                            |	"instalmentPaymentDate": "$instalmentDate",
                                             |	"paymentFrequency": "single",
                                             |	"instalmentPaymentAmount": 10000,
                                             |	"customerPostCaodes": [
@@ -181,9 +181,9 @@ object InterestForecastingRequests extends ServicesConfiguration {
                                             |          "mainTrans": "5350"
                                             |
                                             |    }],
-                                            |      "quoteDate": "2021-11-25",
+                                            |      "quoteDate": "$quoteDate",
                                             |      "quoteType": "duration",
-                                            |      "instalmentPaymentDate": "2021-11-26",
+                                            |      "instalmentPaymentDate": "$instalmentDate",
                                             |      "paymentFrequency":"single",
                                             |       "instalmentPaymentAmount":10000 ,
                                             |      "customerPostCodes": [
