@@ -6,7 +6,7 @@ object Dependencies {
 
   val test = Seq(
     "com.typesafe"          % "config"                    % "1.4.0"        % Test,
-    "uk.gov.hmrc"          %% "performance-test-runner"   % "4.6.0"        % Test,
+    "uk.gov.hmrc"          %% "performance-test-runner"   % "4.11.0"        % Test,
     "io.gatling"            % "gatling-test-framework"    % gatlingVersion % Test,
     "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion % Test
   )

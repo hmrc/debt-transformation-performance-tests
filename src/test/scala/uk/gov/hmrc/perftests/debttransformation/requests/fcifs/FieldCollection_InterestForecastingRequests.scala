@@ -304,7 +304,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |""".stripMargin
 
   def multipleDebtItemWithLeapYearPaymentHistory(baseUri: String): HttpRequestBuilder =
-    http("Single Debt Item with No Payment History")
+    http("Multiple debt items with leap year payment history")
       .post(s"$baseUri/fc-debt-calculation")
       .headers(requestHeaders)
       .body(StringBody(MultipleDebtItemsWithLeapYearPaymentHistory))
@@ -362,7 +362,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |}""".stripMargin
 
   def happyPathmultipleDebtItemWithAllFields(baseUri: String): HttpRequestBuilder =
-    http("Single Debt Item with No Payment History")
+    http("multiple debt items happy path json request")
       .post(s"$baseUri/fc-debt-calculation")
       .headers(requestHeaders)
       .body(StringBody(MultipleDebtItemsWithAllFieldsHappyPathTest))
@@ -418,7 +418,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |}""".stripMargin
 
   def multipleDebtItemWithMissingInterestStartDate(baseUri: String): HttpRequestBuilder =
-    http("Single Debt Item with No Payment History")
+    http("multiple Debt items with missing interest start date")
       .post(s"$baseUri/fc-debt-calculation")
       .headers(requestHeaders)
       .body(StringBody(MultipleDebtItemsWithMissingInterestStartDate))
