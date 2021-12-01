@@ -18,8 +18,7 @@ package uk.gov.hmrc.perftests.debttransformation.simulation
 import scala.concurrent.duration._
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
-import uk.gov.hmrc.perftests.debttransformation.requests.fcifs.FieldCollection_InterestForecastingRequests
-import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{SuppressionsRequests, _}
+import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{FieldCollection_InterestForecastingRequests, SuppressionsRequests, _}
 import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests
 import uk.gov.hmrc.perftests.debttransformation.requests.ttp.TimeToPayProxyRequests
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._

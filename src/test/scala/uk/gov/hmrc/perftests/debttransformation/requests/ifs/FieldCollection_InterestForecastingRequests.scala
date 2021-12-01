@@ -1,12 +1,12 @@
-package uk.gov.hmrc.perftests.debttransformation.requests.fcifs
-
-import java.time.LocalDate
+package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef.{http, status, _}
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
+
+import java.time.LocalDate
 
 object FieldCollection_InterestForecastingRequests extends ServicesConfiguration {
   var quoteDate = LocalDate.now().toString
