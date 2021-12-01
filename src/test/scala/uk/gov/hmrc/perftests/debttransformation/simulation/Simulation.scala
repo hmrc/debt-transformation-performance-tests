@@ -108,12 +108,6 @@ class Simulation extends PerformanceTestRunner {
     .withChainedActions(FieldCollection_InterestForecastingRequests.happyPathmultipleDebtItemWithAllFields(interestForecostingApiUrl)
     )
 
-  setup(
-    "multiple-debt-item-with-missing-interest-start-date",
-    "multiple debt item with missing interest start date")
-    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItemWithMissingInterestStartDate(interestForecostingApiUrl)
-    )
-
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
     .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
 
