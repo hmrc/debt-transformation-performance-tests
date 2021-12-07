@@ -108,6 +108,30 @@ class Simulation extends PerformanceTestRunner {
     .withChainedActions(FieldCollection_InterestForecastingRequests.happyPathmultipleDebtItemWithAllFields(interestForecostingApiUrl)
     )
 
+  setup(
+    "single-vat-debt-item-with-single-payment",
+    "Single Vat Debt Item with single payment")
+    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.singleDebtItem(interestForecostingApiUrl)
+    )
+
+  setup(
+    "multiple-vat-debt-item-with-payment-history",
+    "Multiple Vat Debt Item with Payment History")
+    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.multipleDebtItems(interestForecostingApiUrl)
+    )
+
+  setup(
+    "multiple-vat-debt-item-with-single-payment-history",
+    "Multiple VAT Debt Item with Single Payment History")
+    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.multipleDebtItemsWithSinglePaymentHistory(interestForecostingApiUrl)
+    )
+
+  setup(
+    "single-vat-debt-item-with-payment-history-and-no-interest-indicator",
+    "Single Vat Debt Item with Payment History and No interest indicator")
+    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.singleVatDebtItemWithNoInterestIndicator(interestForecostingApiUrl)
+    )
+
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
     .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
 
