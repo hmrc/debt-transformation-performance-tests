@@ -28,21 +28,21 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
-  setup("request-ttp-generate-annual-frequency-quote", "request ttp generate annual frequency quote")
+  setup("ttp-proxy-generate-annual-frequency-quote", "ttp proxy generate annual frequency quote")
     .withChainedActions(
       TimeToPayProxyRequests.ttpGenerateAnnualFrequencyQuote(timeToPayProxyBaseUrl)
     )
 
-  setup("request-ttp-update-quote-plan", "request ttp update quote plan")
+  setup("ttp-proxy-update-quote-plan", "ttp proxy update quote plan")
     .withChainedActions(
       TimeToPayProxyRequests.updatePlan(timeToPayProxyBaseUrl)
     )
 
-  setup("request-ttp-create-plan", "request ttp create plan")
+  setup("ttp-proxy-create-plan", "ttp proxy create plan")
     .withChainedActions(TimeToPayProxyRequests.createPlan(timeToPayProxyBaseUrl)
     )
 
-  setup("request-ttp-view-quote-plan", "request ttp view quote plan")
+  setup("ttp-proxy-view-quote-plan", "ttp-proxy view quote plan")
     .withChainedActions(
       TimeToPayProxyRequests.viewQuotePlan(timeToPayProxyBaseUrl)
     )
