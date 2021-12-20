@@ -9,16 +9,15 @@ import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 import java.time.LocalDate
 
 object FieldCollection_InterestForecastingRequests extends ServicesConfiguration {
-  var quoteDate = LocalDate.now().toString
-  var instalmentDate = LocalDate.now().plusDays(1).toString
+  var quoteDate          = LocalDate.now().toString
+  var instalmentDate     = LocalDate.now().plusDays(1).toString
   var initialPaymentDate = LocalDate.now().plusDays(1).toString
-  val bearerToken = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
-  val requestHeaders = Map(
+  val bearerToken        = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
+  val requestHeaders     = Map(
     "Authorization" -> s"Bearer $bearerToken",
-    "Accept" -> "application/vnd.hmrc.1.0+json",
-    "Content-Type" -> "application/json"
+    "Accept"        -> "application/vnd.hmrc.1.0+json",
+    "Content-Type"  -> "application/json"
   )
-
 
   val SingleDebtItemWithPaymentHistory: String =
     s"""{
@@ -26,12 +25,10 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |         {
        |          "debtItemChargeId": "123",
        |          "originalAmount": 500000,
-       |          "workItemType": "1520",
-       |          "subType": "1090",
        |          "interestIndicator": "Y",
        |          "interestStartDate": "2020-12-16",
        |          "interestRequestedTo": "2021-04-14",
-       |
+       |          "periodEnd": "2020-12-16",
        |          "paymentHistory": [
        |          		         {
        |      		  "paymentAmount": 500000,
@@ -42,15 +39,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |     }
        |
        |
-       |  ],
-       |
-       |  "customerPostcodes": [
-       |
-       |  ],
-       |
-       |   "breathingSpaces": [
-       |
-       |    ]
+       |  ]
        |}""".stripMargin
 
   def singleDebtItem(baseUri: String): HttpRequestBuilder =
@@ -67,12 +56,10 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |         {
        |          "debtItemChargeId": "123",
        |          "originalAmount": 500000,
-       |          "workItemType": "1520",
-       |          "subType": "1090",
        |          "interestIndicator": "Y",
        |          "interestStartDate": "2020-12-16",
        |          "interestRequestedTo": "2021-04-14",
-       |
+       |          "periodEnd": "2020-12-16",
        |          "paymentHistory": [
        |          		         {
        |      		  "paymentAmount": 200000,
@@ -84,9 +71,8 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |     {
        |          "debtItemChargeId": "456",
        |          "originalAmount": 100000,
-       |          "workItemType": "1520",
-       |          "subType": "1090",
        |          "interestIndicator": "Y",
+       |          "periodEnd": "2020-12-16",
        |          "interestStartDate": "2020-12-16",
        |          "interestRequestedTo": "2021-04-14",
        |
@@ -100,15 +86,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |     }
        |
        |
-       |  ],
-       |
-       |  "customerPostcodes": [
-       |
-       |  ],
-       |
-       |   "breathingSpaces": [
-       |
-       |    ]
+       |  ]
        |
        |}
        |
@@ -128,8 +106,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |         {
        |          "debtItemChargeId": "123",
        |          "originalAmount": 500000,
-       |          "workItemType": "1520",
-       |          "subType": "1090",
+       |          "periodEnd": "2020-12-16",
        |          "interestIndicator": "Y",
        |          "interestStartDate": "2020-12-16",
        |          "interestRequestedTo": "2021-04-14",
@@ -145,8 +122,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |     {
        |          "debtItemChargeId": "456",
        |          "originalAmount": 100000,
-       |          "workItemType": "1520",
-       |          "subType": "1090",
+       |          "periodEnd": "2020-12-16",
        |          "interestIndicator": "Y",
        |          "interestStartDate": "2020-12-16",
        |          "interestRequestedTo": "2021-04-14",
@@ -178,16 +154,15 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
       .body(StringBody(MultipleDebtItemWithSinglePaymentHistory))
       .check(status.is(200))
 
-
   val SingleDebtItemWithNoInterestIndicator: String =
     s"""{
        |  "debtItems": [
        |         {
        |          "debtItemChargeId": "123",
        |          "originalAmount": 500000,
-       |          "workItemType": "1520",
-       |          "subType": "1090",
+       |          "periodEnd": "2020-12-16",
        |          "interestIndicator": "N",
+       |          "interestStartDate":"2020-04-14",
        |          "interestRequestedTo": "2021-04-14",
        |
        |          "paymentHistory": [
@@ -224,30 +199,18 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |         {
        |          "debtItemChargeId": "123",
        |          "originalAmount": 500000,
-       |          "workItemType": "1520",
-       |          "subType": "1090",
-       |          "interestIndicator": "N",
+       |          "periodEnd": "2020-12-16",
+       |          "interestIndicator": "Y",
+       |          "interestStartDate":"2018-04-14",
        |          "interestRequestedTo": "2021-04-14",
-       |
        |          "paymentHistory": [
-       |          		         {
-       |      		  "paymentAmount": 500000,
-       |      		  "paymentDate" :"2019-02-03"
-       |      	}
+       |
        |
        |          ]
        |     }
        |
        |
-       |  ],
-       |
-       |  "customerPostcodes": [
-       |
-       |  ],
-       |
-       |   "breathingSpaces": [
-       |
-       |    ]
+       |  ]
        |}""".stripMargin
 
   def singleDebtItemWithNoPaymentHistory(baseUri: String): HttpRequestBuilder =
@@ -257,7 +220,6 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
       .body(StringBody(SingleDebtItemWithNoPaymentHistory))
       .check(status.is(200))
 
-
   val MultipleDebtItemsWithLeapYearPaymentHistory: String =
     s"""
        |{
@@ -265,8 +227,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |      {
        |         "debtItemChargeId":"123",
        |         "originalAmount":500000,
-       |         "workItemType":"1520",
-       |         "subType":"1090",
+       |         "periodEnd": "2020-12-16",
        |         "interestIndicator":"Y",
        |         "interestStartDate":"2018-06-01",
        |         "interestRequestedTo":"2021-03-31",
@@ -284,8 +245,7 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |      {
        |         "debtItemChargeId":"123",
        |         "originalAmount":500000,
-       |         "workItemType":"1520",
-       |         "subType":"1090",
+       |         "periodEnd": "2020-12-16",
        |         "interestIndicator":"Y",
        |         "interestStartDate":"2009-01-01",
        |         "interestRequestedTo":"2010-01-01",
@@ -293,12 +253,6 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |
        |         ]
        |      }
-       |   ],
-       |   "customerPostcodes":[
-       |
-       |   ],
-       |   "breathingSpaces":[
-       |
        |   ]
        |}
        |""".stripMargin
@@ -310,7 +264,6 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
       .body(StringBody(MultipleDebtItemsWithLeapYearPaymentHistory))
       .check(status.is(200))
 
-
   val MultipleDebtItemsWithAllFieldsHappyPathTest: String =
     s"""
       {
@@ -318,9 +271,8 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |      {
        |         "debtItemChargeId":"123",
        |         "originalAmount":500000,
-       |         "workItemType":"1520",
-       |         "subType":"1090",
        |         "interestIndicator":"Y",
+       |         "periodEnd": "2020-06-01",
        |         "interestStartDate":"2018-06-01",
        |         "interestRequestedTo":"2021-03-31",
        |         "paymentHistory":[
@@ -337,20 +289,13 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
        |      {
        |         "debtItemChargeId":"123",
        |         "originalAmount":500000,
-       |         "workItemType":"1520",
-       |         "subType":"1090",
        |         "interestIndicator":"Y",
+       |         "periodEnd": "2020-06-01",
        |         "interestStartDate":"2009-01-01",
        |         "interestRequestedTo":"2010-01-01",
        |         "paymentHistory":[
        |
        |         ]
-       |      }
-       |   ],
-       |   "customerPostCodes":[
-       |      {
-       |         "addressPostcode":"NW9 5XW",
-       |         "postcodeDate":"2021-04-06"
        |      }
        |   ],
        |   "breathingSpaces":[
@@ -367,6 +312,5 @@ object FieldCollection_InterestForecastingRequests extends ServicesConfiguration
       .headers(requestHeaders)
       .body(StringBody(MultipleDebtItemsWithAllFieldsHappyPathTest))
       .check(status.is(200))
-
 
 }
