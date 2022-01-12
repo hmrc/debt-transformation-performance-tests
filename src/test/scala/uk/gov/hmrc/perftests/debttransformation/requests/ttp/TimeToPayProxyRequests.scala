@@ -14,7 +14,8 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
     "Content-Type"  -> "application/json"
   )
 
-  val generateQuoteAnnually:String= s"""{
+  val generateQuoteAnnually:String= s"""
+                                       |{
                                        |    "customerReference":"uniqRef1234",
                                        |    "channelIdentifier":"selfService",
                                        |    "plan": {
@@ -47,7 +48,8 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
                                        |
                                        |         ]}
                                        |]
-                                       |}""".stripMargin
+                                       |}
+                                       """.stripMargin
 
   def ttpGenerateAnnualFrequencyQuote(baseUri: String): HttpRequestBuilder =
 
@@ -132,22 +134,21 @@ object TimeToPayProxyRequests extends ServicesConfiguration {
   val updatePlanRequestBody =
     s"""
        |{
-       |	"customerReference": "customerRef1234",
-       |	"planId": "planId1234",
-       |	"updateType": "updateType",
-       |	"planStatus": "success",
-       |	"completeReason": "earlyRepayment",
-       |	"cancellationReason": "",
-       |	"thirdPartyBank": true,
-       |	"paymentMethod": "BACS",
-       |    "paymentReference": "paymentRef123"
-       |
+       |  "customerReference": "customerRef1234",
+       |  "planId": "planId1234",
+       |  "updateType": "updateType",
+       |  "planStatus":"success",
+       |  "completeReason":"earlyRepayment",
+       |  "cancellationReason": "some reason",
+       |  "thirdPartyBank": true,
+       |  "paymentMethod": "BACS",
+       |  "paymentReference": "paymentRef123"
        |}
        """.stripMargin
 
   def updatePlan(baseUri: String): HttpRequestBuilder =
-    http("PUT to update quote plan")
-      .put(s"$baseUri/quote/custReference1234/planId1234")
+    http("Update quote plan")
+      .put(s"$baseUri/quote/customerRef1234/planId1234")
       .headers(requestHeaders)
       .body(StringBody(updatePlanRequestBody))
       .check(status.is(200))
