@@ -28,7 +28,7 @@ class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
 
-  setup("ttp-proxy-generate-annual-frequency-quote", "ttp proxy generate annual frequency quote")
+  setup("ttp-proxy-generate-quote", "ttp proxy generate quote")
     .withChainedActions(
       TimeToPayProxyRequests.ttpGenerateAnnualFrequencyQuote(timeToPayProxyBaseUrl)
     )
