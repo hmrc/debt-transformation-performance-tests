@@ -138,10 +138,6 @@ class Simulation extends PerformanceTestRunner {
   setup("debt-items-with-five-payments-on-one-debt", "debt items with payments one one debt")
     .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))
 
-  setup("two-leap-year-debt-items-with-payment-history", "two leap year debt items with payment history")
-    .withChainedActions(
-      InterestForecastingRequests.LeapYearsdebtItemsWithPaymentHistory(interestForecostingApiUrl)
-    )
   setup("single-debt-instalment-plan-with-initial-payment", "single debt instalment plan with initial payment")
     .withChainedActions(
       InterestForecastingRequests.instalmentPlanWithInitialPayment(interestForecostingApiUrl)
