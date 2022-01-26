@@ -39,8 +39,7 @@ class Simulation extends PerformanceTestRunner {
     )
 
   setup("ttp-proxy-create-plan", "ttp proxy create plan")
-    .withChainedActions(TimeToPayProxyRequests.createPlan(timeToPayProxyBaseUrl)
-    )
+    .withChainedActions(TimeToPayProxyRequests.createPlan(timeToPayProxyBaseUrl))
 
   setup("ttp-proxy-view-quote-plan", "ttp-proxy view quote plan")
     .withChainedActions(
@@ -57,92 +56,88 @@ class Simulation extends PerformanceTestRunner {
       StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
     )
 
-  setup("request-fc-sol-for-single-debts", "request statement of liability for single debt")
+  setup("request-fc-sol-for-single-debts", "request FC statement of liability for single debt")
     .withChainedActions(
       FCStatementOfLiabilityRequests.fcSolAPIRequestWithSingleDebtRequest(statementOfLiabilityApiBaseUrl)
     )
-  setup("request-fc-sol-for-multiple-debts", "request statement of liability for multiple debt")
+  setup("request-fc-sol-for-multiple-debts", "request FC statement of liability for multiple debt")
     .withChainedActions(
       FCStatementOfLiabilityRequests.fcSolRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
     )
-  setup("request-fc-sol-for-single-debt-with-no-payment-history", "request statement of liability for single debt with no payment history")
+  setup(
+    "request-fc-sol-for-single-debt-with-no-payment-history",
+    "request FC statement of liability for single debt with no payment history"
+  )
     .withChainedActions(
       FCStatementOfLiabilityRequests.fcSolAPIRequestWithNoPaymentHistory(statementOfLiabilityApiBaseUrl)
     )
 
-  setup("Multiple-debt-items-with-one-payments-no-breathing-space", "Multiple debt items with one payments breathing space")
+  setup(
+    "Multiple-debt-items-with-one-payments-no-breathing-space",
+    "Multiple debt items with one payments breathing space"
+  )
     .withChainedActions(InterestForecastingRequests.multipleDebtsWithOnePaymentHistory(interestForecostingApiUrl))
 
   setup(
     "non-interest-bearing-debt-item-with-no-breathing-space",
-    "non interest bearing debt item with no breathing space")
-    .withChainedActions(InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
+    "non interest bearing debt item with no breathing space"
+  )
+    .withChainedActions(
+      InterestForecastingRequests.nonInterestBearingDebtItemWithNoBreathingSpace(interestForecostingApiUrl)
     )
 
-  setup(
-    "single-debt-item-with-payment-history",
-    "single debt item with single payment history")
-    .withChainedActions(FieldCollection_InterestForecastingRequests.singleDebtItem(interestForecostingApiUrl)
+  setup("single-debt-item-with-payment-history", "single debt item with single payment history")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.singleDebtItem(interestForecostingApiUrl))
+
+  setup("multiple-debt-item-with-multiple-payment-history", "multiple debt item with multiple payment history")
+    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItems(interestForecostingApiUrl))
+
+  setup("multiple-debt-item-with-single-payment-history", "multiple debt item with single payment history")
+    .withChainedActions(
+      FieldCollection_InterestForecastingRequests.multipleDebtItemsWithSinglePaymentHistory(interestForecostingApiUrl)
     )
 
-  setup(
-    "multiple-debt-item-with-multiple-payment-history",
-    "multiple debt item with multiple payment history")
-    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItems(interestForecostingApiUrl)
+  setup("single-debt-item-with-no-interest-indicator", "single debt item with no interest indicator")
+    .withChainedActions(
+      FieldCollection_InterestForecastingRequests.singleDebtItemWithNoInterestIndicator(interestForecostingApiUrl)
     )
 
-  setup(
-    "multiple-debt-item-with-single-payment-history",
-    "multiple debt item with single payment history")
-    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItemsWithSinglePaymentHistory(interestForecostingApiUrl)
+  setup("single-debt-item-with-no-payment-history", "single debt item with no payment history")
+    .withChainedActions(
+      FieldCollection_InterestForecastingRequests.singleDebtItemWithNoPaymentHistory(interestForecostingApiUrl)
     )
 
-  setup(
-    "single-debt-item-with-no-interest-indicator",
-    "single debt item with no interest indicator")
-    .withChainedActions(FieldCollection_InterestForecastingRequests.singleDebtItemWithNoInterestIndicator(interestForecostingApiUrl)
+  setup("multiple-debt-item-with-leap-year-payment-history", "multiple debt item with single leap year payment history")
+    .withChainedActions(
+      FieldCollection_InterestForecastingRequests.multipleDebtItemWithLeapYearPaymentHistory(interestForecostingApiUrl)
     )
 
-  setup(
-    "single-debt-item-with-no-payment-history",
-    "single debt item with no payment history")
-    .withChainedActions(FieldCollection_InterestForecastingRequests.singleDebtItemWithNoPaymentHistory(interestForecostingApiUrl)
+  setup("multiple-debt-item-with-all-fields-happy-path", "multiple debt item with all fields in the request")
+    .withChainedActions(
+      FieldCollection_InterestForecastingRequests.happyPathmultipleDebtItemWithAllFields(interestForecostingApiUrl)
     )
 
-  setup(
-    "multiple-debt-item-with-leap-year-payment-history",
-    "multiple debt item with single leap year payment history")
-    .withChainedActions(FieldCollection_InterestForecastingRequests.multipleDebtItemWithLeapYearPaymentHistory(interestForecostingApiUrl)
-    )
+  setup("single-vat-debt-item-with-single-payment", "Single Vat Debt Item with single payment")
+    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.singleDebtItem(interestForecostingApiUrl))
 
-  setup(
-    "multiple-debt-item-with-all-fields-happy-path",
-    "multiple debt item with all fields in the request")
-    .withChainedActions(FieldCollection_InterestForecastingRequests.happyPathmultipleDebtItemWithAllFields(interestForecostingApiUrl)
-    )
+  setup("multiple-vat-debt-item-with-payment-history", "Multiple Vat Debt Item with Payment History")
+    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.multipleDebtItems(interestForecostingApiUrl))
 
-  setup(
-    "single-vat-debt-item-with-single-payment",
-    "Single Vat Debt Item with single payment")
-    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.singleDebtItem(interestForecostingApiUrl)
-    )
-
-  setup(
-    "multiple-vat-debt-item-with-payment-history",
-    "Multiple Vat Debt Item with Payment History")
-    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.multipleDebtItems(interestForecostingApiUrl)
-    )
-
-  setup(
-    "multiple-vat-debt-item-with-single-payment-history",
-    "Multiple VAT Debt Item with Single Payment History")
-    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.multipleDebtItemsWithSinglePaymentHistory(interestForecostingApiUrl)
+  setup("multiple-vat-debt-item-with-single-payment-history", "Multiple VAT Debt Item with Single Payment History")
+    .withChainedActions(
+      FieldCollection_Vat_InterestForecastingRequests.multipleDebtItemsWithSinglePaymentHistory(
+        interestForecostingApiUrl
+      )
     )
 
   setup(
     "single-vat-debt-item-with-payment-history-and-no-interest-indicator",
-    "Single Vat Debt Item with Payment History and No interest indicator")
-    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.singleVatDebtItemWithNoInterestIndicator(interestForecostingApiUrl)
+    "Single Vat Debt Item with Payment History and No interest indicator"
+  )
+    .withChainedActions(
+      FieldCollection_Vat_InterestForecastingRequests.singleVatDebtItemWithNoInterestIndicator(
+        interestForecostingApiUrl
+      )
     )
 
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
@@ -165,7 +160,6 @@ class Simulation extends PerformanceTestRunner {
     .withChainedActions(
       InterestForecastingRequests.instalmentPlanWithNoInitialPayment(interestForecostingApiUrl)
     )
-
 
   setup("debt-items-with-suppression", "debt items with suppression")
     .withChainedActions(
