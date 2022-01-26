@@ -19,7 +19,7 @@ import scala.concurrent.duration._
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
 import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{FieldCollection_InterestForecastingRequests, SuppressionsRequests, _}
-import uk.gov.hmrc.perftests.debttransformation.requests.sol.StatementOfLiabilityRequests
+import uk.gov.hmrc.perftests.debttransformation.requests.sol.{FCStatementOfLiabilityRequests, StatementOfLiabilityRequests}
 import uk.gov.hmrc.perftests.debttransformation.requests.ttp.TimeToPayProxyRequests
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
@@ -55,6 +55,19 @@ class Simulation extends PerformanceTestRunner {
   setup("request-Statement-of-Liability-for-multiple-debts", "request statement of liability for multiple debts")
     .withChainedActions(
       StatementOfLiabilityRequests.statementOfLiabilityRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
+    )
+
+  setup("request-fc-sol-for-single-debts", "request statement of liability for single debt")
+    .withChainedActions(
+      FCStatementOfLiabilityRequests.fcSolAPIRequestWithSingleDebtRequest(statementOfLiabilityApiBaseUrl)
+    )
+  setup("request-fc-sol-for-multiple-debts", "request statement of liability for multiple debt")
+    .withChainedActions(
+      FCStatementOfLiabilityRequests.fcSolRequestFormultipleDebts(statementOfLiabilityApiBaseUrl)
+    )
+  setup("request-fc-sol-for-single-debt-with-no-payment-history", "request statement of liability for single debt with no payment history")
+    .withChainedActions(
+      FCStatementOfLiabilityRequests.fcSolAPIRequestWithNoPaymentHistory(statementOfLiabilityApiBaseUrl)
     )
 
   setup("Multiple-debt-items-with-one-payments-no-breathing-space", "Multiple debt items with one payments breathing space")
