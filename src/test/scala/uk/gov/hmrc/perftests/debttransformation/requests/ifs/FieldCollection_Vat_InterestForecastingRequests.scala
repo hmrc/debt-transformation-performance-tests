@@ -162,5 +162,89 @@ object FieldCollection_Vat_InterestForecastingRequests extends ServicesConfigura
       .body(StringBody(SingleVatDebtItemWithNoInterestIndicator))
       .check(status.is(200))
 
+  val multipleDebtsWithMultipleBreathingSpaces:String =
+    """
+      |{
+      |	"debtItems": [
+      |
+      |		{
+      |			"debtItemChargeId": "123",
+      |			"originalAmount": 500000,
+      |			"interestIndicator": "Y",
+      |			"interestRequestedTo": "2022-02-07",
+      |			"periodEnd": "2022-04-01",
+      |			"paymentHistory": [{
+      |				"paymentAmount": 100000,
+      |				"paymentDate": "2021-06-01"
+      |			}],
+      |			"breathingSpaces": [{
+      |				"debtRespiteFrom": "2022-01-30",
+      |				"debtRespiteTo": "2022-02-28"
+      |			}, {
+      |				"debtRespiteFrom": "2021-08-16",
+      |				"debtRespiteTo": "2021-08-18"
+      |			}]
+      |		},
+      |		{
+      |			"debtItemChargeId": "debtItemChargeId1",
+      |			"originalAmount": 500000,
+      |			"interestIndicator": "Y",
+      |			"interestRequestedTo": "2021-03-14",
+      |			"periodEnd": "2022-04-01",
+      |			"paymentHistory": [{
+      |				"paymentAmount": 50000,
+      |				"paymentDate": "2021-10-01"
+      |			}],
+      |
+      |			"breathingSpaces": [{
+      |				"debtRespiteFrom": "2021-01-04",
+      |				"debtRespiteTo": "2021-02-14"
+      |			}]
+      |
+      |		}
+      |	]
+      |}
 
+      |""".stripMargin
+
+ def fcVatFoMultipleDebtsWithMultipleBreathingSpaces(baseUri: String): HttpRequestBuilder =
+  http("Multiple debts with multiple breathing spaces")
+    .post(s"$baseUri/fc-vat-debt-calculation")
+    .headers(requestHeaders)
+    .body(StringBody(multipleDebtsWithMultipleBreathingSpaces))
+    .check(status.is(200))
+
+  val singDebtWithBreathingSpace: String=
+    """
+      |{
+      |	"debtItems": [
+      |
+      |		{
+      |			"debtItemChargeId": "123",
+      |			"originalAmount": 500000,
+      |			"interestIndicator": "Y",
+      |			"interestRequestedTo": "2021-11-15",
+      |			"periodEnd": "2022-04-01",
+      |			"paymentHistory": [{
+      |				"paymentAmount": 100000,
+      |				"paymentDate": "2021-06-01"
+      |			}],
+      |
+      |			"breathingSpaces": [{
+      |				"debtRespiteFrom": "2021-11-01",
+      |				"debtRespiteTo": "2021-12-01"
+      |			}]
+      |
+      |		}
+      |	]
+      |}
+      |""".stripMargin
+
+
+   def fcVatForSingleDebtWithBreathingSpace(baseUri: String): HttpRequestBuilder =
+     http("Single debt with breathing space and payment history")
+       .post(s"$baseUri/fc-vat-debt-calculation")
+       .headers(requestHeaders)
+       .body(StringBody(singDebtWithBreathingSpace))
+       .check(status.is(200))
 }
