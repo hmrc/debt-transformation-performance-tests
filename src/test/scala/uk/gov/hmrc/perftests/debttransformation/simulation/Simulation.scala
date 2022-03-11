@@ -20,31 +20,12 @@ import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.debttransformation.requests._
 import uk.gov.hmrc.perftests.debttransformation.requests.ifs.{FieldCollection_InterestForecastingRequests, SuppressionsRequests, _}
 import uk.gov.hmrc.perftests.debttransformation.requests.sol.{FCStatementOfLiabilityRequests, StatementOfLiabilityRequests}
-import uk.gov.hmrc.perftests.debttransformation.requests.ttp.TimeToPayProxyRequests
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls._
 import uk.gov.hmrc.perftests.debttransformation.utils.FutureAwaits._
 
 class Simulation extends PerformanceTestRunner {
 
   implicit val patience: Patience = Patience(15.minutes)
-
-  setup("ttp-proxy-generate-quote", "ttp proxy generate quote")
-    .withChainedActions(
-      TimeToPayProxyRequests.ttpGenerateAnnualFrequencyQuote(timeToPayProxyBaseUrl)
-    )
-
-  setup("ttp-proxy-update-quote-plan", "ttp proxy update quote plan")
-    .withChainedActions(
-      TimeToPayProxyRequests.updatePlan(timeToPayProxyBaseUrl)
-    )
-
-  setup("ttp-proxy-create-plan", "ttp proxy create plan")
-    .withChainedActions(TimeToPayProxyRequests.createPlan(timeToPayProxyBaseUrl))
-
-  setup("ttp-proxy-view-quote-plan", "ttp-proxy view quote plan")
-    .withChainedActions(
-      TimeToPayProxyRequests.viewQuotePlan(timeToPayProxyBaseUrl)
-    )
 
   setup("request-Statement-of-Liability-for-single-debts", "request statement of liability for single debt")
     .withChainedActions(
