@@ -276,4 +276,21 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(noInterestBearing))
       .check(status.is(200))
-}
+
+
+val interestType: String =s"""[
+                             |    {
+                             |        "mainTrans": "2000",
+                             |        "subTrans": "1000"
+                             |    }
+                             |]""".stripMargin
+
+
+  def debtInterestTypeRequest(baseUri: String): HttpRequestBuilder =
+    http("debt Interest Type")
+      .post(s"$baseUri/debt-interest-type")
+      .headers(requestHeaders)
+      .body(StringBody(interestType))
+      .check(status.is(200))
+
+  }

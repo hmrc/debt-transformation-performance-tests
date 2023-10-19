@@ -146,6 +146,8 @@ class Simulation extends PerformanceTestRunner {
     .withChainedActions(
       InterestForecastingRequests.instalmentPlanWithNoInitialPayment(interestForecostingApiUrl)
     )
+  setup("debt-interest-type", "debt interest type")
+    .withChainedActions(InterestForecastingRequests.debtInterestTypeRequest(interestForecostingApiUrl))
 
   setup("debt-items-with-suppression", "debt items with suppression")
     .withChainedActions(
