@@ -1,6 +1,7 @@
 import sbt._
 
 object Dependencies {
+  private val gatlingVersion = "3.6.1"
 
   val test = Seq(
     "com.typesafe"            % "config"                    % "1.4.2"        % Test,
@@ -21,5 +22,4 @@ object Dependencies {
     "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
     "org.slf4j"               % "slf4j-api"                % "1.7.30"
   )
-  private val gatlingVersion = "3.6.1"
 }
