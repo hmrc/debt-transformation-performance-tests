@@ -29,16 +29,17 @@ object BaseRequests extends RandomValues {
     implicit val system: ActorSystem = ActorSystem()
     StandaloneAhcWSClient()
   }
-    def creatAuthorizationBearerToken(
+  def creatAuthorizationBearerToken(
     enrolments: Seq[String] = Seq(),
     userType: String = getRandomAffinityGroup,
-    utr: String = "123456789012"): String = {
-      val json =
-        Json.obj(
-          "affinityGroup" -> userType,
-          "excludeGnapToken" -> true,
-          "credentialStrength" -> "strong",
-          "confidenceLevel" -> 50,
+    utr: String = "123456789012"
+  ): String = {
+    val json   =
+      Json.obj(
+        "affinityGroup"      -> userType,
+        "excludeGnapToken"   -> true,
+        "credentialStrength" -> "strong",
+        "confidenceLevel"    -> 50,
         "affinityGroup"      -> userType,
         "credentialStrength" -> "strong",
         "confidenceLevel"    -> 50,
@@ -56,20 +57,21 @@ object BaseRequests extends RandomValues {
           )
         )
       )
-      val client = asyncClient
+    val client = asyncClient
 
-      val request = client.url(s"$authLoginApiUri/government-gateway/session/login")
-      val response = Await.result(
-        request.withHttpHeaders("Content-Type" -> "application/json")
-          .withFollowRedirects(false)
-          .post(json),
-        timeout
-      )
+    val request  = client.url(s"$authLoginApiUri/government-gateway/session/login")
+    val response = Await.result(
+      request
+        .withHttpHeaders("Content-Type" -> "application/json")
+        .withFollowRedirects(false)
+        .post(json),
+      timeout
+    )
 
-      response.headers
-        .filter(header => header._1.equalsIgnoreCase("Authorization"))
-        .values
-        .flatMap(_.collect { case s if s.contains("Bearer") => s.replace("Bearer ", "") })
-        .head
-    }
+    response.headers
+      .filter(header => header._1.equalsIgnoreCase("Authorization"))
+      .values
+      .flatMap(_.collect { case s if s.contains("Bearer") => s.replace("Bearer ", "") })
+      .head
   }
+}
