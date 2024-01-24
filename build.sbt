@@ -9,42 +9,23 @@ enablePlugins(IvyPlugin)
 
 organization := "uk.gov.hmrc"
 
-val gatlingDependencies = "3.4.2"
+organization := "uk.gov.hmrc"
+scalaVersion := "2.13.12"
+Test / testOptions := Seq.empty
+
 scalacOptions ++= Seq(
-  "-unchecked",
-  "-deprecation",
-  "-Xlint",
-  "-language:_",
-  "-target:jvm-1.8",
-  "-Xmax-classfile-name",
-  "100",
-  "-encoding",
-  "UTF-8"
+  "-feature",
+  "-language:implicitConversions",
+  "-language:postfixOps"
 )
 
-resolvers ++= Seq(
-  Resolver.typesafeRepo("releases")
-)
+resolvers ++= Seq(Resolver.typesafeRepo("releases"))
 
-resolvers += "HMRC-open-artefacts-maven" at "https://open.artefacts.tax.service.gov.uk/maven2"
-resolvers += Resolver.url("HMRC-open-artefacts-ivy", url("https://open.artefacts.tax.service.gov.uk/ivy2"))(Resolver.ivyStylePatterns)
-
-libraryDependencies ++= Seq(
-  "com.typesafe.play"      %% "play-ahc-ws-standalone"    % "1.1.7",
-  "com.github.nscala-time" %% "nscala-time"               % "2.22.0",
-  "io.gatling"              % "gatling-test-framework"    % gatlingDependencies,
-  "io.gatling.highcharts"   % "gatling-charts-highcharts" % gatlingDependencies,
-  "com.typesafe"            % "config"                    % "1.4.0",
-  "uk.gov.hmrc"            %% "performance-test-runner"   % "5.1.0",
-  "com.github.mifmif"       % "generex"                   % "1.0.2",
-  "com.typesafe.akka"      %% "akka-stream"               % "2.6.8" % "test",
-  "org.scalaj"             %% "scalaj-http"               % "2.4.2",
-  "io.circe"               %% "circe-core"                % "0.11.2",
-  "io.circe"               %% "circe-generic"             % "0.11.2",
-  "io.circe"               %% "circe-parser"              % "0.11.2"
-)
+libraryDependencies ++= Dependencies.test
+dependencyOverrides ++= Dependencies.dependencyOverrides
 
 retrieveManaged := true
 initialCommands in console := "import uk.gov.hmrc._"
 parallelExecution in Test := false
 publishArtifact in Test := true
+

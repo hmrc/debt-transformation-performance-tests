@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,34 @@
  */
 
 package uk.gov.hmrc.perftests.debttransformation.requests
-
-import play.api.libs.json.Json
-import scalaj.http.Http
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.util.ByteString
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.{BodyWritable, InMemoryBody}
+import play.api.libs.ws.ahc.StandaloneAhcWSClient
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.authLoginApiUri
 import uk.gov.hmrc.perftests.debttransformation.utils.RandomValues
+import uk.gov.hmrc.perftests.debttransformation.utils.WsClient.timeout
+
+import scala.concurrent.Await
 
 object BaseRequests extends RandomValues {
-
-  def creatAuthorizationBearerToken(
+  implicit val bodyWrites: BodyWritable[JsValue] =
+    BodyWritable(a => InMemoryBody(ByteString.fromArrayUnsafe(Json.toBytes(a))), "application/json")
+  private val asyncClient: StandaloneAhcWSClient = {
+    implicit val system: ActorSystem = ActorSystem()
+    StandaloneAhcWSClient()
+  }
+    def creatAuthorizationBearerToken(
     enrolments: Seq[String] = Seq(),
     userType: String = getRandomAffinityGroup,
-    utr: String = "123456789012"
-  ): String = {
-    val json     =
-      Json.obj(
+    utr: String = "123456789012"): String = {
+      val json =
+        Json.obj(
+          "affinityGroup" -> userType,
+          "excludeGnapToken" -> true,
+          "credentialStrength" -> "strong",
+          "confidenceLevel" -> 50,
         "affinityGroup"      -> userType,
         "credentialStrength" -> "strong",
         "confidenceLevel"    -> 50,
@@ -47,15 +60,20 @@ object BaseRequests extends RandomValues {
           )
         )
       )
-    val response = Http(s"$authLoginApiUri/government-gateway/session/login")
-      .header("Content-Type", "application/json")
-      .postData(Json.stringify(json))
-      .execute()
-    response.headers
-      .filter(header => header._1.equalsIgnoreCase("Authorization"))
-      .values
-      .flatMap(_.collect { case s if s.contains("Bearer") => s.replace("Bearer ", "") })
-      .head
-  }
+      val client = asyncClient
 
-}
+      val request = client.url(s"$authLoginApiUri/government-gateway/session/login")
+      val response = Await.result(
+        request.withHttpHeaders("Content-Type" -> "application/json")
+          .withFollowRedirects(false)
+          .post(json),
+        timeout
+      )
+
+      response.headers
+        .filter(header => header._1.equalsIgnoreCase("Authorization"))
+        .values
+        .flatMap(_.collect { case s if s.contains("Bearer") => s.replace("Bearer ", "") })
+        .head
+    }
+  }
