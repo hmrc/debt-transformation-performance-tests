@@ -16,19 +16,15 @@
 
 package uk.gov.hmrc.perftests.debttransformation.requests
 import org.apache.pekko.actor.ActorSystem
-import org.apache.pekko.util.ByteString
-import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.{BodyWritable, InMemoryBody}
+import play.api.libs.json.Json
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
 import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.authLoginApiUri
 import uk.gov.hmrc.perftests.debttransformation.utils.RandomValues
-import uk.gov.hmrc.perftests.debttransformation.utils.WsClient.timeout
+import uk.gov.hmrc.perftests.debttransformation.utils.WsClient._
 
 import scala.concurrent.Await
 
 object BaseRequests extends RandomValues {
-  implicit val bodyWrites: BodyWritable[JsValue] =
-    BodyWritable(a => InMemoryBody(ByteString.fromArrayUnsafe(Json.toBytes(a))), "application/json")
   private val asyncClient: StandaloneAhcWSClient = {
     implicit val system: ActorSystem = ActorSystem()
     StandaloneAhcWSClient()
