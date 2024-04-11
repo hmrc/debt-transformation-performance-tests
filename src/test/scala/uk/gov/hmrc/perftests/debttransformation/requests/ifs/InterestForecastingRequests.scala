@@ -298,6 +298,68 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .body(StringBody(noInterestBearing))
       .check(status.is(200))
 
+  val multipleSAdebtsWithPaymentsAndBreathingSpaces: String =
+    s"""{
+       |    "debtItems": [
+       |        {
+       |            "debtID": "1233",
+       |            "originalAmount": 50000,
+       |            "subTrans": "1553",
+       |            "mainTrans": "4920",
+       |            "interestStartDate": "2022-01-31",
+       |            "interestRequestedTo": "2023-06-17",
+       |            "breathingSpaces": [
+       |                {
+       |                    "debtRespiteFrom": "2022-03-01",
+       |                    "debtRespiteTo": "2022-04-29"
+       |                },
+       |                {
+       |                    "debtRespiteFrom": "2023-04-01",
+       |                    "debtRespiteTo": "2034-06-17"
+       |                }
+       |            ],
+       |            "paymentHistory": [
+       |                {
+       |                    "paymentAmount": 25000,
+       |                    "paymentDate": "2022-05-30"
+       |                }
+       |            ]
+       |        },
+       |        {
+       |            "debtID": "1234",
+       |            "originalAmount": 1500,
+       |            "subTrans": "1090",
+       |            "mainTrans": "1520",
+       |            "interestStartDate": "2034-11-12",
+       |            "interestRequestedTo": "2022-06-10",
+       |            "breathingSpaces": [],
+       |            "paymentHistory": []
+       |        },
+       |        {
+       |            "debtID": "1235",
+       |            "originalAmount": 50000,
+       |            "subTrans": "1553",
+       |            "mainTrans": "4920",
+       |            "interestStartDate": "2022-07-30",
+       |            "interestRequestedTo": "2023-03-31",
+       |            "breathingSpaces": [
+       |                {
+       |                    "debtRespiteFrom": "2023-04-01",
+       |                    "debtRespiteTo": "2034-06-17"
+       |                }
+       |            ],
+       |            "paymentHistory": []
+       |        }
+       |    ],
+       |    "customerPostCodes": []
+       |}""".stripMargin
+
+  def multipleDebtItemsWithPaymentsAndBreathingSpaces(baseUri: String): HttpRequestBuilder =
+    http("Multiple SA debt items with payments and breathing spaces")
+      .post(s"$baseUri/debt-calculation")
+      .headers(requestHeaders)
+      .body(StringBody(multipleSAdebtsWithPaymentsAndBreathingSpaces))
+      .check(status.is(200))
 
   val interestType: String =
     s"""[

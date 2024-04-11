@@ -78,6 +78,11 @@ class Simulation extends PerformanceTestRunner {
       FieldCollection_InterestForecastingRequests.multipleDebtItemsWithSinglePaymentHistory(interestForecostingApiUrl)
     )
 
+  setup("multiple-sa-debt-items-with-payments-and-breathing-spaces", "multiple SA debt item with payments and breathing spaces")
+    .withChainedActions(
+      InterestForecastingRequests.multipleDebtItemsWithPaymentsAndBreathingSpaces(interestForecostingApiUrl)
+    )
+
   setup("single-debt-item-with-no-interest-indicator", "single debt item with no interest indicator")
     .withChainedActions(
       FieldCollection_InterestForecastingRequests.singleDebtItemWithNoInterestIndicator(interestForecostingApiUrl)
@@ -119,6 +124,11 @@ class Simulation extends PerformanceTestRunner {
       FieldCollection_Vat_InterestForecastingRequests.singleVatDebtItemWithNoInterestIndicator(
         interestForecostingApiUrl
       )
+    )
+
+  setup("multiple-sa-debt-items-with-payments-and-breathing-spaces", "multiple sa debt item with payments and breathing spaces")
+    .withChainedActions(
+      InterestForecastingRequests.multipleDebtItemsWithPaymentsAndBreathingSpaces(interestForecostingApiUrl)
     )
   setup("multiple-debts-with-multiple-breathing-spaces","multiple debts with multiple breathing spaces")
     .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.fcVatFoMultipleDebtsWithMultipleBreathingSpaces(interestForecostingApiUrl))
