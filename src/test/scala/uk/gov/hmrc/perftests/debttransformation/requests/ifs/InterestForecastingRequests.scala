@@ -77,128 +77,66 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |
        |    },    {
        |          "debtId": "Debt2",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt3",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt4",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt5",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt6",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt7",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt8",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt9",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt10",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1530"
-       |
-       |    },    {
-       |          "debtId": "Debt11",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1525"
-       |
-       |    },    {
-       |          "debtId": "Debt12",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1530"
-       |
-       |    },    {
-       |          "debtId": "Debt13",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1525"
-       |
-       |    },    {
-       |          "debtId": "Debt14",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1530"
-       |
-       |    },    {
-       |          "debtId": "Debt15",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1525"
-       |
-       |    },    {
-       |          "debtId": "Debt16",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1530"
-       |
-       |    },    {
-       |          "debtId": "Debt17",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1525"
-       |
-       |    },    {
-       |          "debtId": "Debt18",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1530"
-       |
-       |    },    {
-       |          "debtId": "Debt19",
-       |          "debtAmount": 50000,
-       |          "subTrans": "1000",
-       |          "mainTrans": "1525"
-       |
-       |    },    {
-       |          "debtId": "Debt20",
-       |          "debtAmount": 50000,
+       |          "debtAmount": 100000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    }],
-
        |	"quoteDate": "$quoteDate",
-       |	"quoteType": "duration",
+       |    "quoteType": "instalmentAmount",
        |	"instalmentPaymentDate": "$instalmentDate",
 
-       |	"paymentFrequency": "single",
-       |	"instalmentPaymentAmount": 10000,
+       |	"paymentFrequency": "monthly",
+       |	"duration":6 ,
        |	"customerPostCaodes": [
-       |
        |	],
        |	"interestCallDueTotal": 1423,	"interestCallDueTotal": 0,
        | 	"initialPaymentDate": "$initialPaymentDate",
