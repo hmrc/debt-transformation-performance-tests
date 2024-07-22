@@ -188,6 +188,66 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |            "debtAmount": 150032,
        |            "subTrans": "1000",
        |            "mainTrans": "1530"
+       |        },
+       |        {
+       |            "debtId": "Debt21",
+       |            "debtAmount": 150034,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1525"
+       |        },
+       |        {
+       |            "debtId": "Debt22",
+       |            "debtAmount": 150036,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1530"
+       |        },
+       |        {
+       |            "debtId": "Debt23",
+       |            "debtAmount": 150038,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1525"
+       |        },
+       |        {
+       |            "debtId": "Debt24",
+       |            "debtAmount": 150040,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1530"
+       |        },
+       |        {
+       |            "debtId": "Debt25",
+       |            "debtAmount": 150042,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1525"
+       |        },
+       |        {
+       |            "debtId": "Debt26",
+       |            "debtAmount": 150044,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1530"
+       |        },
+       |        {
+       |            "debtId": "Debt27",
+       |            "debtAmount": 150046,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1525"
+       |        },
+       |        {
+       |            "debtId": "Debt28",
+       |            "debtAmount": 150048,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1530"
+       |        },
+       |        {
+       |            "debtId": "Debt29",
+       |            "debtAmount": 150050,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1525"
+       |        },
+       |        {
+       |            "debtId": "Debt30",
+       |            "debtAmount": 150052,
+       |            "subTrans": "1000",
+       |            "mainTrans": "1530"
        |        }],
 
        |	"quoteDate": "$quoteDate",
