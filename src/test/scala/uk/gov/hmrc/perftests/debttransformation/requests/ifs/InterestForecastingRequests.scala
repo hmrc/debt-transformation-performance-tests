@@ -71,301 +71,601 @@ object InterestForecastingRequests extends ServicesConfiguration {
     s"""{
        |	"debtItemCharges": [{
        |          "debtId": "Debt1",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt2",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt3",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt4",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt5",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt6",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt7",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt8",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt9",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt10",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt11",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt12",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt13",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt14",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt15",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt16",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt17",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt18",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt19",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt20",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt21",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt22",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt23",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt24",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt25",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt26",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt27",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt28",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt29",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt30",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt31",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt32",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt33",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt34",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt35",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt36",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt37",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt38",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt39",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt40",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt41",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt42",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt43",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt44",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt45",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt46",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt47",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt48",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
        |    },    {
        |          "debtId": "Debt49",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1525"
        |
        |    },    {
        |          "debtId": "Debt50",
-       |          "debtAmount": 20000,
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt51",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt52",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt53",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt54",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt55",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt56",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt57",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt58",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt59",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt60",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt61",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt62",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt63",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt64",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt65",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt66",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt67",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt68",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt69",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt70",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt71",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt72",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt73",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt74",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt75",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt76",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt77",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt78",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt79",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt80",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt81",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt82",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt83",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt84",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt85",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt86",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt87",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt88",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt89",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt90",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt91",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt92",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt93",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt94",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt95",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt96",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt97",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt98",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1530"
+       |
+       |    },    {
+       |          "debtId": "Debt99",
+       |          "debtAmount": 10000,
+       |          "subTrans": "1000",
+       |          "mainTrans": "1525"
+       |
+       |    },    {
+       |          "debtId": "Debt100",
+       |          "debtAmount": 10000,
        |          "subTrans": "1000",
        |          "mainTrans": "1530"
        |
