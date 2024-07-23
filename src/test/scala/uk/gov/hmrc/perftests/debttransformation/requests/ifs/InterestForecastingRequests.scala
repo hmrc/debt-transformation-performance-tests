@@ -1238,7 +1238,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
        |    }""".stripMargin
 
   var debtItemCharges400500: String =
-    s""",    ,    {
+    s""",    {
        |          "debtId": "Debt400",
        |          "debtAmount": 1667,
        |          "subTrans": "1000",
