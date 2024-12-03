@@ -1584,6 +1584,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
 
   val MultipleDebtInstalmentPlan: String =
     s"""{
+       |	"debtItemCharges": [{
        |          "debtId": "Debt1",
        |          "debtAmount": 4000,
        |          "subTrans": "1000",
