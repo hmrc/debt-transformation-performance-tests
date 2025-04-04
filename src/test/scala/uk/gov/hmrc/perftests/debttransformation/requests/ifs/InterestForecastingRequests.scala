@@ -25,16 +25,15 @@ import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 import java.time.LocalDate
 
 object InterestForecastingRequests extends ServicesConfiguration {
-  var quoteDate = LocalDate.now().toString
-  var instalmentDate = LocalDate.now().plusDays(1).toString
+  var quoteDate          = LocalDate.now().toString
+  var instalmentDate     = LocalDate.now().plusDays(1).toString
   var initialPaymentDate = LocalDate.now().plusDays(1).toString
-  val bearerToken = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
-  val requestHeaders = Map(
+  val bearerToken        = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
+  val requestHeaders     = Map(
     "Authorization" -> s"Bearer $bearerToken",
-    "Accept" -> "application/vnd.hmrc.1.0+json",
-    "Content-Type" -> "application/json"
+    "Accept"        -> "application/vnd.hmrc.1.0+json",
+    "Content-Type"  -> "application/json"
   )
-
 
   val InitialPaymentInstalmentPlan: String =
     s"""{
@@ -65,7 +64,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(InitialPaymentInstalmentPlan))
       .check(status.is(200))
-
 
   val MultipleDebtInstalmentPlan: String =
     s"""{
@@ -105,7 +103,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .body(StringBody(MultipleDebtInstalmentPlan))
       .check(status.is(200))
 
-
   val noInitialPaymentInstalmentPlan: String =
     s"""{
        |	"debtItemCharges": [{
@@ -139,7 +136,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(noInitialPaymentInstalmentPlan))
       .check(status.is(200))
-
 
   val multipleDebtsWithOnePaymentHistory =
     s"""
@@ -224,7 +220,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .body(StringBody(multipleDebtsWithOnePaymentHistory))
       .check(status.is(200))
 
-
   val twoDebtsWithLeapYear =
     s"""
        |{
@@ -265,7 +260,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(twoDebtsWithLeapYear))
       .check(status.is(200))
-
 
   val noInterestBearing =
     """{
