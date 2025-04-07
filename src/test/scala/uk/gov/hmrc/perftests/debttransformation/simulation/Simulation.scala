@@ -78,7 +78,10 @@ class Simulation extends PerformanceTestRunner {
       FieldCollection_InterestForecastingRequests.multipleDebtItemsWithSinglePaymentHistory(interestForecostingApiUrl)
     )
 
-  setup("multiple-sa-debt-items-with-payments-and-breathing-spaces", "multiple SA debt item with payments and breathing spaces")
+  setup(
+    "multiple-sa-debt-items-with-payments-and-breathing-spaces",
+    "multiple SA debt item with payments and breathing spaces"
+  )
     .withChainedActions(
       InterestForecastingRequests.multipleDebtItemsWithPaymentsAndBreathingSpaces(interestForecostingApiUrl)
     )
@@ -126,15 +129,24 @@ class Simulation extends PerformanceTestRunner {
       )
     )
 
-  setup("multiple-sa-debt-items-with-payments-and-breathing-spaces", "multiple sa debt item with payments and breathing spaces")
+  setup(
+    "multiple-sa-debt-items-with-payments-and-breathing-spaces",
+    "multiple sa debt item with payments and breathing spaces"
+  )
     .withChainedActions(
       InterestForecastingRequests.multipleDebtItemsWithPaymentsAndBreathingSpaces(interestForecostingApiUrl)
     )
-  setup("multiple-debts-with-multiple-breathing-spaces","multiple debts with multiple breathing spaces")
-    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.fcVatFoMultipleDebtsWithMultipleBreathingSpaces(interestForecostingApiUrl))
+  setup("multiple-debts-with-multiple-breathing-spaces", "multiple debts with multiple breathing spaces")
+    .withChainedActions(
+      FieldCollection_Vat_InterestForecastingRequests.fcVatFoMultipleDebtsWithMultipleBreathingSpaces(
+        interestForecostingApiUrl
+      )
+    )
 
-  setup("Single-debt-with-breathing-space-and-payment-history","Single debt with breathing space and payment history")
-    .withChainedActions(FieldCollection_Vat_InterestForecastingRequests.fcVatForSingleDebtWithBreathingSpace(interestForecostingApiUrl))
+  setup("Single-debt-with-breathing-space-and-payment-history", "Single debt with breathing space and payment history")
+    .withChainedActions(
+      FieldCollection_Vat_InterestForecastingRequests.fcVatForSingleDebtWithBreathingSpace(interestForecostingApiUrl)
+    )
 
   setup("two-debt-items-with-Leap-year-payment-history", "debt Items With Leap Year PaymentHistory")
     .withChainedActions(InterestForecastingRequests.TwoDebtItemsWithLeapYearPaymentHistory(interestForecostingApiUrl))

@@ -51,7 +51,6 @@ object SuppressionsRequests extends ServicesConfiguration {
 
        """.stripMargin
 
-
   val openEndedSuppressionData =
     s"""
        |{
@@ -92,7 +91,6 @@ object SuppressionsRequests extends ServicesConfiguration {
        |    ]
        |}
        """.stripMargin
-
 
   def postSuppressionData() = {
     val baseUri = s"$interestForecostingApiUrl/test-only/suppressions/1"

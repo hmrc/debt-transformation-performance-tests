@@ -25,16 +25,15 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 
 object FieldCollection_Vat_InterestForecastingRequests extends ServicesConfiguration {
-  var quoteDate = LocalDate.now().toString
-  var instalmentDate = LocalDate.now().plusDays(1).toString
+  var quoteDate          = LocalDate.now().toString
+  var instalmentDate     = LocalDate.now().plusDays(1).toString
   var initialPaymentDate = LocalDate.now().plusDays(1).toString
-  val bearerToken = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
-  val requestHeaders = Map(
+  val bearerToken        = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
+  val requestHeaders     = Map(
     "Authorization" -> s"Bearer $bearerToken",
-    "Accept" -> "application/vnd.hmrc.1.0+json",
-    "Content-Type" -> "application/json"
+    "Accept"        -> "application/vnd.hmrc.1.0+json",
+    "Content-Type"  -> "application/json"
   )
-
 
   val SingleVatDebtItemWithPaymentHistory: String =
     s"""|{
@@ -148,7 +147,6 @@ object FieldCollection_Vat_InterestForecastingRequests extends ServicesConfigura
       .body(StringBody(MultipleVatDebtItemWithSinglePaymentHistory))
       .check(status.is(200))
 
-
   val SingleVatDebtItemWithNoInterestIndicator: String =
     s"""|{
         |  "debtItems": [
@@ -178,7 +176,7 @@ object FieldCollection_Vat_InterestForecastingRequests extends ServicesConfigura
       .body(StringBody(SingleVatDebtItemWithNoInterestIndicator))
       .check(status.is(200))
 
-  val multipleDebtsWithMultipleBreathingSpaces:String =
+  val multipleDebtsWithMultipleBreathingSpaces: String =
     """
       |{
       |	"debtItems": [
@@ -223,14 +221,14 @@ object FieldCollection_Vat_InterestForecastingRequests extends ServicesConfigura
 
       |""".stripMargin
 
- def fcVatFoMultipleDebtsWithMultipleBreathingSpaces(baseUri: String): HttpRequestBuilder =
-  http("Multiple debts with multiple breathing spaces")
-    .post(s"$baseUri/fc-vat-debt-calculation")
-    .headers(requestHeaders)
-    .body(StringBody(multipleDebtsWithMultipleBreathingSpaces))
-    .check(status.is(200))
+  def fcVatFoMultipleDebtsWithMultipleBreathingSpaces(baseUri: String): HttpRequestBuilder =
+    http("Multiple debts with multiple breathing spaces")
+      .post(s"$baseUri/fc-vat-debt-calculation")
+      .headers(requestHeaders)
+      .body(StringBody(multipleDebtsWithMultipleBreathingSpaces))
+      .check(status.is(200))
 
-  val singDebtWithBreathingSpace: String=
+  val singDebtWithBreathingSpace: String =
     """
       |{
       |	"debtItems": [
@@ -256,11 +254,10 @@ object FieldCollection_Vat_InterestForecastingRequests extends ServicesConfigura
       |}
       |""".stripMargin
 
-
-   def fcVatForSingleDebtWithBreathingSpace(baseUri: String): HttpRequestBuilder =
-     http("Single debt with breathing space and payment history")
-       .post(s"$baseUri/fc-vat-debt-calculation")
-       .headers(requestHeaders)
-       .body(StringBody(singDebtWithBreathingSpace))
-       .check(status.is(200))
+  def fcVatForSingleDebtWithBreathingSpace(baseUri: String): HttpRequestBuilder =
+    http("Single debt with breathing space and payment history")
+      .post(s"$baseUri/fc-vat-debt-calculation")
+      .headers(requestHeaders)
+      .body(StringBody(singDebtWithBreathingSpace))
+      .check(status.is(200))
 }

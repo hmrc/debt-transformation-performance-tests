@@ -24,5 +24,7 @@ dist
 target
 lib_managed
 src_managed/
-project/project
+project/project/*
 project/target
+
+!/project/project/*.sbt
