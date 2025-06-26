@@ -52,7 +52,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
            |  "initialPaymentAmount": 100
            |}""".stripMargin
 
-      http("Instalment Plan with max number of debt items - Unique debtId's")
+      http("Many Unique debtId's")
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
@@ -74,7 +74,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
            |  "initialPaymentAmount": 100
            |}""".stripMargin
 
-      http("Instalment Plan with max number of debt items - Non unique debtId's")
+      http("Many Non unique debtId's")
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
@@ -96,7 +96,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
          |  "initialPaymentAmount": 100
          |}""".stripMargin
 
-      http("Instalment Plan with max number of debt items - Unique main and subTrans")
+      http("Many unique main and subTrans")
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
@@ -121,7 +121,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
          |  "initialPaymentAmount": 100
          |}""".stripMargin
 
-      http("Instalment Plan with many instalments - 8000 instalments")
+      http("8000 instalments")
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
@@ -168,8 +168,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
 
     private def manyUngroupableChargesForDistinctIfsRules: JsArray = {
       val approxTotalAmount: Int = 1000
-
-      // TODO DTD-3479: This needs to have many, many more pairs of mainTrans and subTrans.
       val mainTransAndSubTrans: IndexedSeq[(String, String)] =
         IndexedSeq(
           ("1530", "1000"),

@@ -160,22 +160,22 @@ class Simulation extends PerformanceTestRunner {
       InterestForecastingRequests.instalmentPlanWithInitialPayment(interestForecostingApiUrl)
     )
 
-//  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
-//    .withChainedActions(
-//      InterestForecastingRequests.DataForMemoryLoadTests.requestRelyingOnManyIfsRules(interestForecostingApiUrl)
-//    )
-//
-//  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
-//    .withChainedActions(
-//      InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyUngroupedCharges(interestForecostingApiUrl)
-//    )
-//
-//  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
-//    .withChainedActions(
-//      InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyGroupedCharges(interestForecostingApiUrl)
-//    )
+  setup("instalment-calculation-relying-on-many-ifs-rules", "Many ifs rules")
+    .withChainedActions(
+      InterestForecastingRequests.DataForMemoryLoadTests.requestRelyingOnManyIfsRules(interestForecostingApiUrl)
+    )
 
-  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
+  setup("instalment-calculation-many-ungrouped-charges", "Many ungrouped charges")
+    .withChainedActions(
+      InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyUngroupedCharges(interestForecostingApiUrl)
+    )
+
+  setup("instalment-calculation-many-grouped-charges", "Many grouped charges")
+    .withChainedActions(
+      InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyGroupedCharges(interestForecostingApiUrl)
+    )
+
+  setup("instalment-calculation-many-instalments", "8000 instalments")
     .withChainedActions(
       InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyInstalments(interestForecostingApiUrl)
     )
