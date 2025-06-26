@@ -52,8 +52,8 @@ object InterestForecastingRequests extends ServicesConfiguration {
            |  "initialPaymentAmount": 100
            |}""".stripMargin
 
-      http("Memory Load Test: ") // TODO DTD-3479: Rename this to something more meaningful
-        .get(s"$baseUri/instalment-calculation")
+      http("Instalment Plan with max number of debt items - Unique debtId's")
+        .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
         .check(status.is(200))
@@ -74,7 +74,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
            |  "initialPaymentAmount": 100
            |}""".stripMargin
 
-      http("TODO") // TODO DTD-3479: Rename this to something more meaningful
+      http("Instalment Plan with max number of debt items - Non unique debtId's")
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
@@ -96,16 +96,16 @@ object InterestForecastingRequests extends ServicesConfiguration {
          |  "initialPaymentAmount": 100
          |}""".stripMargin
 
-      http("TODO") // TODO DTD-3479: Rename this to something more meaningful
+      http("Instalment Plan with max number of debt items - Unique main and subTrans")
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
-        .check(status.is(700))
+        .check(status.is(200))
     }
 
     def requestWithManyInstalments(baseUri: String): HttpRequestBuilder = {
       val instalmentAmount: BigDecimal = 100
-      val charges = chargesCausingManyInstalments(instalmentAmountPence = instalmentAmount)
+      val charges                      = chargesCausingManyInstalments(instalmentAmountPence = instalmentAmount)
 
       val rawRequest =
         s"""{
@@ -170,10 +170,11 @@ object InterestForecastingRequests extends ServicesConfiguration {
       val approxTotalAmount: Int = 1000
 
       // TODO DTD-3479: This needs to have many, many more pairs of mainTrans and subTrans.
-      val mainTransAndSubTranses: IndexedSeq[(String, String)] = IndexedSeq(("1530", "1000"))
-      val numberOfCharges                                      = mainTransAndSubTranses.size
+      val mainTransAndSubTrans: IndexedSeq[(String, String)] =
+        IndexedSeq(("1530", "1000"), ("1525", "1000"), ("1535", "1000"), ("1540", "1000"), ("1545", "1000"))
+      val numberOfCharges                                    = mainTransAndSubTrans.size
 
-      val charges: IndexedSeq[JsObject] = mainTransAndSubTranses.map { case (mainTrans, subTrans) =>
+      val charges: IndexedSeq[JsObject] = mainTransAndSubTrans.map { case (mainTrans, subTrans) =>
         Json.obj(
           "debtId"     -> s"debt_for_${mainTrans}_$subTrans",
           "debtAmount" -> approxTotalAmount / numberOfCharges,
