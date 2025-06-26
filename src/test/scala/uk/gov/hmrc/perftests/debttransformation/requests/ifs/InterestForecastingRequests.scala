@@ -121,7 +121,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
          |  "initialPaymentAmount": 100
          |}""".stripMargin
 
-      http("Instalment Plan with many instalments - 1000 instalments")
+      http("Instalment Plan with many instalments - 5000 instalments")
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
@@ -329,7 +329,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
       val mainTrans: String = "1530"
       val subTrans: String  = "1000"
 
-      val totalAmount: BigDecimal = instalmentAmountPence * 440 // 200 instalments
+      val totalAmount: BigDecimal = instalmentAmountPence * 1170 // 5000 instalments
 
       Json.arr(
         Json.obj(
