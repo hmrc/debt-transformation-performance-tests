@@ -160,9 +160,24 @@ class Simulation extends PerformanceTestRunner {
       InterestForecastingRequests.instalmentPlanWithInitialPayment(interestForecostingApiUrl)
     )
 
+//  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
+//    .withChainedActions(
+//      InterestForecastingRequests.DataForMemoryLoadTests.requestRelyingOnManyIfsRules(interestForecostingApiUrl)
+//    )
+//
+//  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
+//    .withChainedActions(
+//      InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyUngroupedCharges(interestForecostingApiUrl)
+//    )
+//
+//  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
+//    .withChainedActions(
+//      InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyGroupedCharges(interestForecostingApiUrl)
+//    )
+
   setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
     .withChainedActions(
-      InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyGroupedCharges(interestForecostingApiUrl)
+      InterestForecastingRequests.DataForMemoryLoadTests.requestWithManyInstalments(interestForecostingApiUrl)
     )
 
 //  setup("multiple-debt-instalment-plan", "Multiple debt instalment plan")
