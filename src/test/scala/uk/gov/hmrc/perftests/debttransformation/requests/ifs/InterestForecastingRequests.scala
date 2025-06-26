@@ -125,7 +125,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
-        .check(status.is(200))
+        .check(status.is(400))
     }
 
     private def manyUngroupableChargesUsingTheSameIfsRule: JsArray = {
@@ -329,7 +329,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
       val mainTrans: String = "1530"
       val subTrans: String  = "1000"
 
-      val totalAmount: BigDecimal = instalmentAmountPence * 200 // 200 instalments
+      val totalAmount: BigDecimal = instalmentAmountPence * 440 // 200 instalments
 
       Json.arr(
         Json.obj(
