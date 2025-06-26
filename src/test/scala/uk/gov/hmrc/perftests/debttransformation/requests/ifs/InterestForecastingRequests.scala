@@ -121,11 +121,11 @@ object InterestForecastingRequests extends ServicesConfiguration {
          |  "initialPaymentAmount": 100
          |}""".stripMargin
 
-      http("Instalment Plan with many instalments - 200 instalments")
+      http("Instalment Plan with many instalments - 1000 instalments")
         .post(s"$baseUri/instalment-calculation")
         .headers(requestHeaders)
         .body(StringBody(rawRequest))
-        .check(status.is(400))
+        .check(status.is(200))
     }
 
     private def manyUngroupableChargesUsingTheSameIfsRule: JsArray = {
