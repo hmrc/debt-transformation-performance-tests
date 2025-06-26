@@ -19,6 +19,7 @@ package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 import io.gatling.core.Predef._
 import io.gatling.http.Predef.{http, status, _}
 import io.gatling.http.request.builder.HttpRequestBuilder
+import play.api.libs.json.{JsArray, JsNumber, JsObject, Json}
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 
@@ -34,6 +35,173 @@ object InterestForecastingRequests extends ServicesConfiguration {
     "Accept"        -> "application/vnd.hmrc.1.0+json",
     "Content-Type"  -> "application/json"
   )
+
+  object DataForMemoryLoadTests {
+    def requestWithManyUngroupedCharges(baseUri: String): HttpRequestBuilder = {
+      val rawRequest =
+        s"""{
+           |  "debtItemCharges": ${Json.prettyPrint(manyUngroupableChargesUsingTheSameIfsRule)},
+           |  "quoteDate": "$quoteDate",
+           |  "quoteType": "duration",
+           |  "instalmentPaymentDate": "$instalmentDate",
+           |  "paymentFrequency": "monthly",
+           |  "instalmentPaymentAmount": 10000,
+           |  "customerPostCodes": [],
+           |  "interestCallDueTotal": 5900,
+           |  "initialPaymentDate": "$initialPaymentDate",
+           |  "initialPaymentAmount": 100
+           |}""".stripMargin
+
+      http("Memory Load Test: ") // TODO DTD-3479: Rename this to something more meaningful
+        .get(s"$baseUri/instalment-calculation")
+        .headers(requestHeaders)
+        .body(StringBody(rawRequest))
+        .check(status.is(200))
+    }
+
+    def requestWithManyGroupedCharges(baseUri: String): HttpRequestBuilder = {
+      val rawRequest =
+        s"""{
+           |  "debtItemCharges": ${Json.prettyPrint(manyIdenticalCharges)},
+           |  "quoteDate": "$quoteDate",
+           |  "quoteType": "duration",
+           |  "instalmentPaymentDate": "$instalmentDate",
+           |  "paymentFrequency": "monthly",
+           |  "instalmentPaymentAmount": 10000,
+           |  "customerPostCodes": [],
+           |  "interestCallDueTotal": 5900,
+           |  "initialPaymentDate": "$initialPaymentDate",
+           |  "initialPaymentAmount": 100
+           |}""".stripMargin
+
+      http("TODO") // TODO DTD-3479: Rename this to something more meaningful
+        .post(s"$baseUri/instalment-calculation")
+        .headers(requestHeaders)
+        .body(StringBody(rawRequest))
+        .check(status.is(200))
+    }
+
+    def requestRelyingOnManyIfsRules(baseUri: String): HttpRequestBuilder = {
+      val rawRequest =
+        s"""{
+         |  "debtItemCharges": ${Json.prettyPrint(manyUngroupableChargesForDistinctIfsRules)},
+         |  "quoteDate": "$quoteDate",
+         |  "quoteType": "duration",
+         |  "instalmentPaymentDate": "$instalmentDate",
+         |  "paymentFrequency": "monthly",
+         |  "instalmentPaymentAmount": 10000,
+         |  "customerPostCodes": [],
+         |  "interestCallDueTotal": 5900,
+         |  "initialPaymentDate": "$initialPaymentDate",
+         |  "initialPaymentAmount": 100
+         |}""".stripMargin
+
+      http("TODO") // TODO DTD-3479: Rename this to something more meaningful
+        .post(s"$baseUri/instalment-calculation")
+        .headers(requestHeaders)
+        .body(StringBody(rawRequest))
+        .check(status.is(700))
+    }
+
+    def requestWithManyInstalments(baseUri: String): HttpRequestBuilder = {
+      val instalmentAmount: BigDecimal = 100
+      val charges = chargesCausingManyInstalments(instalmentAmountPence = instalmentAmount)
+
+      val rawRequest =
+        s"""{
+         |  "debtItemCharges": ${Json.prettyPrint(charges)},
+         |  "quoteDate": "$quoteDate",
+         |  "quoteType": "duration",
+         |  "instalmentPaymentDate": "$instalmentDate",
+         |  "paymentFrequency": "monthly",
+         |  "instalmentPaymentAmount": ${JsNumber(instalmentAmount)},
+         |  "customerPostCodes": [],
+         |  "interestCallDueTotal": 5900,
+         |  "initialPaymentDate": "$initialPaymentDate",
+         |  "initialPaymentAmount": 100
+         |}""".stripMargin
+
+      http("TODO") // TODO DTD-3479: Rename this to something more meaningful
+        .post(s"$baseUri/instalment-calculation")
+        .headers(requestHeaders)
+        .body(StringBody(rawRequest))
+        .check(status.is(200))
+    }
+
+    private def manyUngroupableChargesUsingTheSameIfsRule: JsArray = {
+      val mainTrans: String      = "1530"
+      val subTrans: String       = "1000"
+      val numberOfCharges        = 500
+      val approxTotalAmount: Int = 1000
+
+      val chargeReferences: IndexedSeq[String] = (1 to numberOfCharges).map(index => s"ChargeRef$index")
+
+      val charges: IndexedSeq[JsObject] = chargeReferences.map { chargeRef =>
+        Json.obj(
+          "debtId"     -> s"Debt$chargeRef",
+          "debtAmount" -> approxTotalAmount / numberOfCharges,
+          "subTrans"   -> subTrans,
+          "mainTrans"  -> mainTrans
+        )
+      }
+
+      JsArray(charges)
+    }
+
+    private def manyIdenticalCharges: JsArray = {
+      val mainTrans: String      = "1530"
+      val subTrans: String       = "1000"
+      val numberOfCharges        = 900
+      val approxTotalAmount: Int = 1000
+
+      val charges: IndexedSeq[JsObject] = (1 to numberOfCharges).map { _ =>
+        Json.obj(
+          "debtId"     -> s"SharedChargeRef",
+          "debtAmount" -> approxTotalAmount / numberOfCharges,
+          "subTrans"   -> subTrans,
+          "mainTrans"  -> mainTrans
+        )
+      }
+
+      JsArray(charges)
+    }
+
+    private def manyUngroupableChargesForDistinctIfsRules: JsArray = {
+      val approxTotalAmount: Int = 1000
+
+      // TODO DTD-3479: This needs to have many, many more pairs of mainTrans and subTrans.
+      val mainTransAndSubTranses: IndexedSeq[(String, String)] = IndexedSeq(("1530", "1000"))
+      val numberOfCharges                                      = mainTransAndSubTranses.size
+
+      val charges: IndexedSeq[JsObject] = mainTransAndSubTranses.map { case (mainTrans, subTrans) =>
+        Json.obj(
+          "debtId"     -> s"debt_for_${mainTrans}_$subTrans",
+          "debtAmount" -> approxTotalAmount / numberOfCharges,
+          "subTrans"   -> subTrans,
+          "mainTrans"  -> mainTrans
+        )
+      }
+
+      JsArray(charges)
+    }
+
+    private def chargesCausingManyInstalments(instalmentAmountPence: BigDecimal): JsArray = {
+      val mainTrans: String = "1530"
+      val subTrans: String  = "1000"
+
+      val totalAmount: BigDecimal = instalmentAmountPence * 20000
+
+      Json.arr(
+        Json.obj(
+          "debtId"     -> s"IdForLargeDebt",
+          "debtAmount" -> totalAmount,
+          "subTrans"   -> subTrans,
+          "mainTrans"  -> mainTrans
+        )
+      )
+    }
+
+  }
 
   val InitialPaymentInstalmentPlan: String =
     s"""{
@@ -353,7 +521,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .post(s"$baseUri/debt-calculation")
       .headers(requestHeaders)
       .body(StringBody(multipleSAdebtsWithPaymentsAndBreathingSpaces))
-      .check(status.is(200))
+      .check(status.is(400))
 
   val interestType: String =
     s"""[
@@ -368,6 +536,6 @@ object InterestForecastingRequests extends ServicesConfiguration {
       .post(s"$baseUri/debt-interest-type")
       .headers(requestHeaders)
       .body(StringBody(interestType))
-      .check(status.is(200))
+      .check(status.is(400))
 
 }
