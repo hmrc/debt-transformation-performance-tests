@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   val test = Seq(
-    "uk.gov.hmrc"            %% "performance-test-runner"   % "6.1.0"        % Test,
+    "uk.gov.hmrc"            %% "performance-test-runner"   % "6.3.0"        % Test,
     "org.playframework"      %% "play-ahc-ws-standalone"    % "3.0.10",
     "com.github.nscala-time" %% "nscala-time"               % "3.0.0",
     "org.scalaj"             %% "scalaj-http"               % "2.4.2",
