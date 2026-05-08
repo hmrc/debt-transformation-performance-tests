@@ -10,7 +10,7 @@ enablePlugins(IvyPlugin)
 organization := "uk.gov.hmrc"
 
 organization := "uk.gov.hmrc"
-scalaVersion := "2.13.12"
+scalaVersion := "2.13.18"
 Test / testOptions := Seq.empty
 
 scalacOptions ++= Seq(
