@@ -25,7 +25,7 @@ libraryDependencies ++= Dependencies.test
 dependencyOverrides ++= Dependencies.dependencyOverrides
 
 retrieveManaged := true
-initialCommands in console := "import uk.gov.hmrc._"
-parallelExecution in Test := false
-publishArtifact in Test := true
+console / initialCommands := "import uk.gov.hmrc._"
+Test / parallelExecution := false
+Test / publishArtifact := true
 
