@@ -30,7 +30,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   var initialPaymentDate       = LocalDate.now().plusDays(1).toString
   val enrolmentAuthBearerToken =
     BaseRequests.createAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
-  val internalAuthBearerToken  = sys.env("INTERNAL_AUTH_TOKEN")
+  val internalAuthBearerToken  = sys.env.getOrElse("INTERNAL_AUTH_TOKEN", sys.error("INTERNAL_AUTH_TOKEN is not set"))
 
   val enrolmentAuthRequestHeaders = Map(
     "Authorization" -> s"Bearer $enrolmentAuthBearerToken",

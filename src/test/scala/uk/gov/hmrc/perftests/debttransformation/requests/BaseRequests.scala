@@ -77,7 +77,7 @@ object BaseRequests extends RandomValues {
 
   def createLocalInternalAuthToken(): Unit = {
     val tokenUrl: String = "/test-only/token"
-    val token: String    = sys.env("INTERNAL_AUTH_TOKEN")
+    val token: String    = sys.env.getOrElse("INTERNAL_AUTH_TOKEN", sys.error("INTERNAL_AUTH_TOKEN is not set"))
 
     val json =
       Json.obj(
