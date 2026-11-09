@@ -29,6 +29,6 @@ package object requests extends Configuration {
   implicit def convertActionToSeq(act: ActionBuilder): Seq[ActionBuilder] = Seq(act)
 
   implicit class AugmentJourneyParts(j: JourneyPart) {
-    def withChainedActions(builders: Seq[ActionBuilder]*): JourneyPart = j.withActions(builders.flatten*)
+    def withChainedActions(builders: Seq[ActionBuilder]*): JourneyPart = j.withActions(builders.flatten *)
   }
 }

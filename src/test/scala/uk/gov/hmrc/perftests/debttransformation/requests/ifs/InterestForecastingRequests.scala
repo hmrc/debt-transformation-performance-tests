@@ -17,7 +17,7 @@
 package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 
 import io.gatling.core.Predef.*
-import io.gatling.http.Predef.{http, status, *}
+import io.gatling.http.Predef.*
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
@@ -28,15 +28,16 @@ object InterestForecastingRequests extends ServicesConfiguration {
   var quoteDate                = LocalDate.now().toString
   var instalmentDate           = LocalDate.now().plusDays(1).toString
   var initialPaymentDate       = LocalDate.now().plusDays(1).toString
-  val enrolmentAuthBearerToken = BaseRequests.createAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
+  val enrolmentAuthBearerToken =
+    BaseRequests.createAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val internalAuthBearerToken  = sys.env("INTERNAL_AUTH_TOKEN")
-  
-  val enrolmentAuthRequestHeaders     = Map(
+
+  val enrolmentAuthRequestHeaders = Map(
     "Authorization" -> s"Bearer $enrolmentAuthBearerToken",
     "Accept"        -> "application/vnd.hmrc.1.0+json",
     "Content-Type"  -> "application/json"
-  )  
-  
+  )
+
   val internalAuthRequestHeaders = Map(
     "Authorization" -> internalAuthBearerToken,
     "Accept"        -> "application/vnd.hmrc.1.0+json",

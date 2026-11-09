@@ -18,7 +18,7 @@ package uk.gov.hmrc.perftests.debttransformation.requests
 import org.apache.pekko.actor.ActorSystem
 import play.api.libs.json.Json
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
-import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.{ authLoginApiUri, internalAuthUrl }
+import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.{authLoginApiUri, internalAuthUrl}
 import uk.gov.hmrc.perftests.debttransformation.utils.{RandomValues, WsClient}
 import uk.gov.hmrc.perftests.debttransformation.utils.WsClient.*
 
@@ -75,20 +75,19 @@ object BaseRequests extends RandomValues {
       .head
   }
 
-
   def createLocalInternalAuthToken(): Unit = {
     val tokenUrl: String = "/test-only/token"
-    val token: String = sys.env("INTERNAL_AUTH_TOKEN")
-    
+    val token: String    = sys.env("INTERNAL_AUTH_TOKEN")
+
     val json =
       Json.obj(
-        "token" -> token,
-        "principal" -> "object-store",
+        "token"       -> token,
+        "principal"   -> "object-store",
         "permissions" -> Json.arr(
           Json.obj(
-            "resourceType" -> "interest-forecasting",
+            "resourceType"     -> "interest-forecasting",
             "resourceLocation" -> "*",
-            "actions" -> Json.arr("*")
+            "actions"          -> Json.arr("*")
           )
         )
       )
