@@ -27,7 +27,7 @@ import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.interestForecosti
 import uk.gov.hmrc.perftests.debttransformation.utils.WsClient
 
 object SuppressionsRequests extends ServicesConfiguration {
-  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
+  val bearerToken    = BaseRequests.createAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",
     "Accept"        -> "application/vnd.hmrc.1.0+json",

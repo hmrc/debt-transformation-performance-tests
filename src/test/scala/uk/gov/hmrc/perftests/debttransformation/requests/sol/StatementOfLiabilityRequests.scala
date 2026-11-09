@@ -23,7 +23,7 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 
 object StatementOfLiabilityRequests extends ServicesConfiguration {
-  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:statement-of-liability"))
+  val bearerToken    = BaseRequests.createAuthorizationBearerToken(enrolments = Seq("read:statement-of-liability"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",
     "Accept"        -> "application/vnd.hmrc.1.0+json",

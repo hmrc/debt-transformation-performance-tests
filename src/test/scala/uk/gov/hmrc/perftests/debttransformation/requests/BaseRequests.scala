@@ -18,8 +18,8 @@ package uk.gov.hmrc.perftests.debttransformation.requests
 import org.apache.pekko.actor.ActorSystem
 import play.api.libs.json.Json
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
-import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.authLoginApiUri
-import uk.gov.hmrc.perftests.debttransformation.utils.RandomValues
+import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.{ authLoginApiUri, internalAuthUrl }
+import uk.gov.hmrc.perftests.debttransformation.utils.{RandomValues, WsClient}
 import uk.gov.hmrc.perftests.debttransformation.utils.WsClient.*
 
 import scala.concurrent.Await
@@ -29,7 +29,7 @@ object BaseRequests extends RandomValues {
     implicit val system: ActorSystem = ActorSystem()
     StandaloneAhcWSClient()
   }
-  def creatAuthorizationBearerToken(
+  def createAuthorizationBearerToken(
     enrolments: Seq[String] = Seq(),
     userType: String = getRandomAffinityGroup,
     utr: String = "123456789012"
@@ -73,5 +73,26 @@ object BaseRequests extends RandomValues {
       .values
       .flatMap(_.collect { case s if s.contains("Bearer") => s.replace("Bearer ", "") })
       .head
+  }
+
+
+  def createLocalInternalAuthToken(): Unit = {
+    val tokenUrl: String = "/test-only/token"
+    val token: String = sys.env("INTERNAL_AUTH_TOKEN")
+    
+    val json =
+      Json.obj(
+        "token" -> token,
+        "principal" -> "object-store",
+        "permissions" -> Json.arr(
+          Json.obj(
+            "resourceType" -> "interest-forecasting",
+            "resourceLocation" -> "*",
+            "actions" -> Json.arr("*")
+          )
+        )
+      )
+
+    WsClient.post(s"$internalAuthUrl$tokenUrl", Map("Content-Type" -> "application/json"), json)
   }
 }
