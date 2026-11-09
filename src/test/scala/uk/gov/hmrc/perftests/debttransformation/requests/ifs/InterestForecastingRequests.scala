@@ -17,7 +17,7 @@
 package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 
 import io.gatling.core.Predef.*
-import io.gatling.http.Predef.{http, status, *}
+import io.gatling.http.Predef.*
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
@@ -25,12 +25,21 @@ import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
 import java.time.LocalDate
 
 object InterestForecastingRequests extends ServicesConfiguration {
-  var quoteDate          = LocalDate.now().toString
-  var instalmentDate     = LocalDate.now().plusDays(1).toString
-  var initialPaymentDate = LocalDate.now().plusDays(1).toString
-  val bearerToken        = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
-  val requestHeaders     = Map(
-    "Authorization" -> s"Bearer $bearerToken",
+  var quoteDate                = LocalDate.now().toString
+  var instalmentDate           = LocalDate.now().plusDays(1).toString
+  var initialPaymentDate       = LocalDate.now().plusDays(1).toString
+  val enrolmentAuthBearerToken =
+    BaseRequests.createAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
+  val internalAuthBearerToken  = sys.env.getOrElse("INTERNAL_AUTH_TOKEN", sys.error("INTERNAL_AUTH_TOKEN is not set"))
+
+  val enrolmentAuthRequestHeaders = Map(
+    "Authorization" -> s"Bearer $enrolmentAuthBearerToken",
+    "Accept"        -> "application/vnd.hmrc.1.0+json",
+    "Content-Type"  -> "application/json"
+  )
+
+  val internalAuthRequestHeaders = Map(
+    "Authorization" -> internalAuthBearerToken,
     "Accept"        -> "application/vnd.hmrc.1.0+json",
     "Content-Type"  -> "application/json"
   )
@@ -61,7 +70,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   def instalmentPlanWithInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Single Debt Instalment Plan  : Initial Payment Date Before Instalment Date")
       .post(s"$baseUri/instalment-calculation")
-      .headers(requestHeaders)
+      .headers(enrolmentAuthRequestHeaders)
       .body(StringBody(InitialPaymentInstalmentPlan))
       .check(status.is(200))
 
@@ -99,7 +108,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   def instalmentPlanWithMultipleDebts(baseUri: String): HttpRequestBuilder =
     http("Multiple Debt Instalment Plan")
       .post(s"$baseUri/instalment-calculation")
-      .headers(requestHeaders)
+      .headers(enrolmentAuthRequestHeaders)
       .body(StringBody(MultipleDebtInstalmentPlan))
       .check(status.is(200))
 
@@ -133,7 +142,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   def instalmentPlanWithNoInitialPayment(baseUri: String): HttpRequestBuilder =
     http("Instalment Plan For Multiple Debts - With No Initial payment")
       .post(s"$baseUri/instalment-calculation")
-      .headers(requestHeaders)
+      .headers(enrolmentAuthRequestHeaders)
       .body(StringBody(noInitialPaymentInstalmentPlan))
       .check(status.is(200))
 
@@ -216,7 +225,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   def multipleDebtsWithOnePaymentHistory(baseUri: String): HttpRequestBuilder =
     http("Multiple debt items with one payment history")
       .post(s"$baseUri/debt-calculation")
-      .headers(requestHeaders)
+      .headers(enrolmentAuthRequestHeaders)
       .body(StringBody(multipleDebtsWithOnePaymentHistory))
       .check(status.is(200))
 
@@ -257,7 +266,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   def TwoDebtItemsWithLeapYearPaymentHistory(baseUri: String): HttpRequestBuilder =
     http("2 debts with Interest rate changes and leap year payment history")
       .post(s"$baseUri/debt-calculation")
-      .headers(requestHeaders)
+      .headers(enrolmentAuthRequestHeaders)
       .body(StringBody(twoDebtsWithLeapYear))
       .check(status.is(200))
 
@@ -288,7 +297,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   def nonInterestBearingDebtItemWithNoBreathingSpace(baseUri: String): HttpRequestBuilder =
     http("Non Interest Bearing TPSS MainTrans 1525 debt")
       .post(s"$baseUri/debt-calculation")
-      .headers(requestHeaders)
+      .headers(enrolmentAuthRequestHeaders)
       .body(StringBody(noInterestBearing))
       .check(status.is(200))
 
@@ -351,7 +360,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   def multipleDebtItemsWithPaymentsAndBreathingSpaces(baseUri: String): HttpRequestBuilder =
     http("Multiple SA debt items with payments and breathing spaces")
       .post(s"$baseUri/debt-calculation")
-      .headers(requestHeaders)
+      .headers(enrolmentAuthRequestHeaders)
       .body(StringBody(multipleSAdebtsWithPaymentsAndBreathingSpaces))
       .check(status.is(200))
 
@@ -366,7 +375,7 @@ object InterestForecastingRequests extends ServicesConfiguration {
   def debtInterestTypeRequest(baseUri: String): HttpRequestBuilder =
     http("debt Interest Type")
       .post(s"$baseUri/debt-interest-type")
-      .headers(requestHeaders)
+      .headers(internalAuthRequestHeaders)
       .body(StringBody(interestType))
       .check(status.is(200))
 

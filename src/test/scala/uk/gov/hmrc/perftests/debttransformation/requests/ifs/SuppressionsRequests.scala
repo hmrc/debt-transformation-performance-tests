@@ -17,7 +17,7 @@
 package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 
 import io.gatling.core.Predef.*
-import io.gatling.http.Predef.{http, status, *}
+import io.gatling.http.Predef.*
 import io.gatling.http.request.builder.HttpRequestBuilder
 import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
@@ -27,7 +27,7 @@ import uk.gov.hmrc.perftests.debttransformation.utils.BaseUrls.interestForecosti
 import uk.gov.hmrc.perftests.debttransformation.utils.WsClient
 
 object SuppressionsRequests extends ServicesConfiguration {
-  val bearerToken    = BaseRequests.creatAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
+  val bearerToken    = BaseRequests.createAuthorizationBearerToken(enrolments = Seq("read:interest-forecasting"))
   val requestHeaders = Map(
     "Authorization" -> s"Bearer $bearerToken",
     "Accept"        -> "application/vnd.hmrc.1.0+json",

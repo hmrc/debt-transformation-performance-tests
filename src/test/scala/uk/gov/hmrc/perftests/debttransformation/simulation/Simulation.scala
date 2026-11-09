@@ -26,6 +26,12 @@ import scala.concurrent.duration.DurationInt
 
 class Simulation extends PerformanceTestRunner {
 
+  if (runLocal) {
+    before(
+      BaseRequests.createLocalInternalAuthToken()
+    )
+  }
+
   implicit val patience: Patience = Patience(15.minutes)
 
   setup("request-Statement-of-Liability-for-single-debts", "request statement of liability for single debt")

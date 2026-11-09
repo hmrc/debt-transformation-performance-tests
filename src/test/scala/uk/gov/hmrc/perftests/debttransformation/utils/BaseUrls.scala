@@ -22,6 +22,7 @@ object BaseUrls extends ServicesConfiguration {
   val authLoginApiUri: String                = baseUrlFor("auth-login-api")
   val auth: String                           = baseUrlFor("auth")
   val authLoginStubUri: String               = baseUrlFor("auth-login-stub")
+  val internalAuthUrl: String                = baseUrlFor("internal-auth")
   val apiSubscriptionFieldsUri: String       = baseUrlFor("api-subscription-fields")
   val pushPullNotificationsUri: String       = baseUrlFor("push-pull-notifications-api")
   val strideIdpStubUrl: String               = baseUrlFor("stride-idp-stub")
