@@ -19,7 +19,6 @@ package uk.gov.hmrc.perftests.debttransformation.requests.ifs
 import io.gatling.core.Predef.*
 import io.gatling.http.Predef.*
 import io.gatling.http.request.builder.HttpRequestBuilder
-import play.api.libs.json.Json
 import play.api.libs.ws.StandaloneWSResponse
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.debttransformation.requests.BaseRequests
@@ -68,72 +67,8 @@ object SuppressionsRequests extends ServicesConfiguration {
 
        """.stripMargin
 
-  val addSuppressionRules =
-    s"""
-       |{
-       |    "suppressionRules":
-       |    [
-       |        {
-       |            "ruleId": "1",
-       |            "rule": "IF postCode LIKE 'TW3' -> suppression = 1",
-       |            "enabled": true
-       |        },
-       |        {
-       |            "ruleId": "2",
-       |            "rule": "IF postCode LIKE 'SE18' -> suppression = 2",
-       |            "enabled": true
-       |        },
-       |         {
-       |            "ruleId": "3",
-       |            "rule": "IF mainTrans LIKE '1530' -> suppression = 1",
-       |            "enabled": true
-       |        }
-       |    ]
-       |}
-       """.stripMargin
-
-  def postSuppressionData() = {
-    val baseUri = s"$interestForecostingApiUrl/test-only/suppressions/1"
-    val headers = Map(
-      "Authorization" -> s"Bearer $bearerToken",
-      "Content-Type"  -> "application/json",
-      "Accept"        -> "application/vnd.hmrc.1.0+json"
-    )
-    WsClient.post(baseUri, headers = headers, Json.parse(suppressionData))
-  }
-
-  def postOpenEndedSuppressionData() = {
-    val baseUri = s"$interestForecostingApiUrl/test-only/suppressions/2"
-    val headers = Map(
-      "Authorization" -> s"Bearer $bearerToken",
-      "Content-Type"  -> "application/json",
-      "Accept"        -> "application/vnd.hmrc.1.0+json"
-    )
-    WsClient.post(baseUri, headers = headers, Json.parse(openEndedSuppressionData))
-  }
-
   def deleteSuppressionData(): StandaloneWSResponse = {
     val baseUri = s"$interestForecostingApiUrl/test-only/suppressions"
-    val headers = Map(
-      "Authorization" -> s"Bearer $bearerToken",
-      "Content-Type"  -> "application/json",
-      "Accept"        -> "application/vnd.hmrc.1.0+json"
-    )
-    WsClient.delete(baseUri, headers = headers)
-  }
-
-  def postSuppressionRules(): StandaloneWSResponse = {
-    val baseUri = s"$interestForecostingApiUrl/test-only/suppression-rules"
-    val headers = Map(
-      "Authorization" -> s"Bearer $bearerToken",
-      "Content-Type"  -> "application/json",
-      "Accept"        -> "application/vnd.hmrc.1.0+json"
-    )
-    WsClient.post(baseUri, headers = headers, Json.parse(addSuppressionRules))
-  }
-
-  def deleteSuppressionRules(): StandaloneWSResponse = {
-    val baseUri = s"$interestForecostingApiUrl/test-only/suppression-rules"
     val headers = Map(
       "Authorization" -> s"Bearer $bearerToken",
       "Content-Type"  -> "application/json",
@@ -248,7 +183,7 @@ object SuppressionsRequests extends ServicesConfiguration {
        |	"breathingSpaces": [],
        |
        |	"customerPostCodes": [{
-       |		"postCode": "TW3 4QQ",
+       |		"postCode": "AA1 1AA",
        |		"postCodeDate": "2019-07-06"
        |	}]
        |
@@ -295,11 +230,12 @@ object SuppressionsRequests extends ServicesConfiguration {
        |	"breathingSpaces": [],
        |
        |	"customerPostCodes": [{
-       |		"postCode": "TW3 4QQ",
+       |		"postCode": "AA1 1AA",
        |		"postCodeDate": "2019-07-06"
        |	}]
        |}
      """.stripMargin
+
   def TwoDutiesTwoPaymentsOnSameDaySuppression(baseUri: String): HttpRequestBuilder =
     http("Suppression, 2 duties, 2 payments on same day for one of the duties")
       .post(s"$baseUri/debt-calculation")
@@ -321,11 +257,12 @@ object SuppressionsRequests extends ServicesConfiguration {
        |	}],
        |	"breathingSpaces": [],
        |	"customerPostCodes": [{
-       |		"postCode": "SE18 6PH",
+       |		"postCode": "AA1 1AA",
        |		"postCodeDate": "2019-07-06"
        |	}]
        |}
      """.stripMargin
+
   def openEndedSuppression(baseUri: String): HttpRequestBuilder =
     http("open ended suppression")
       .post(s"$baseUri/debt-calculation")
@@ -347,7 +284,7 @@ object SuppressionsRequests extends ServicesConfiguration {
        |	}],
        |	"breathingSpaces": [],
        |	"customerPostCodes": [{
-       |		"postCode": "SE18 4TQ",
+       |		"postCode": "AA1 1AA",
        |		"postCodeDate": "2019-07-06"
        |	}]
        |}
@@ -382,7 +319,7 @@ object SuppressionsRequests extends ServicesConfiguration {
     |	],
     |
     |	"customerPostCodes": [{
-    |		"postCode": "TW3 4UQ",
+    |		"postCode": "AA1 1AA",
     |		"postCodeDate": "2019-07-06"
     |	}]
     |
@@ -429,7 +366,7 @@ object SuppressionsRequests extends ServicesConfiguration {
        |
        |  "customerPostCodes": [
        |          {
-       |              "postCode":"TW3 4QQ",
+       |              "postCode":"AA1 1AA",
        |              "postCodeDate": "2019-07-06"
        |        }
        |  ]
@@ -444,5 +381,4 @@ object SuppressionsRequests extends ServicesConfiguration {
       .headers(requestHeaders)
       .body(StringBody(twoPaymentsSuppression))
       .check(status.is(200))
-
 }
