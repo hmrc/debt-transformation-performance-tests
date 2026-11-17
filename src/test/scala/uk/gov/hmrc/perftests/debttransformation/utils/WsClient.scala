@@ -27,7 +27,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration.*
 
 object WsClient {
-  private val logger = LoggerFactory.getLogger(getClass)
+  private val logger          = LoggerFactory.getLogger(getClass)
   val timeout: FiniteDuration = 60 seconds
 
   implicit val bodyWrites: BodyWritable[JsValue] =
@@ -47,7 +47,7 @@ object WsClient {
     val request  = client.url(uri)
     val response = Await.result(
       request
-        .withHttpHeaders(headers.toSeq*)
+        .withHttpHeaders(headers.toSeq *)
         .withFollowRedirects(false)
         .post(json),
       timeout
@@ -70,7 +70,7 @@ object WsClient {
     val request  = client.url(uri)
     val response = Await.result(
       request
-        .withHttpHeaders(headers.toSeq*)
+        .withHttpHeaders(headers.toSeq *)
         .withFollowRedirects(false)
         .delete(),
       timeout
