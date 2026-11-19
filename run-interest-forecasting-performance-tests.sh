@@ -14,4 +14,11 @@ fi
 
 echo "*** Running locally: $isLocal. Smoke-test mode: $isSmokeTest ***"
 
+if $isLocal == "true";
+then
+    export INTERNAL_AUTH_TOKEN="valid-auth-token"
+fi
+
+echo "Internal Auth Token: $INTERNAL_AUTH_TOKEN"
+
 sbt -DrunLocal=true -Dperftest.runSmokeTest=$isSmokeTest -Dperftest.labels=interest-forecasting clean "Gatling/test"
