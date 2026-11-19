@@ -10,10 +10,11 @@ organization := "uk.gov.hmrc"
 
 organization := "uk.gov.hmrc"
 scalaVersion := "3.3.7"
-val scalaOptionSettings = Seq("-no-indent", "-Yretain-trees", "-source:future-migration","-feature", "-language:postfixOps")
+val scalaOptionSettings =
+  Seq("-no-indent", "-Yretain-trees", "-source:future-migration", "-feature", "-language:postfixOps")
 Test / testOptions := Seq.empty
 
-scalacOptions ++=scalaOptionSettings
+scalacOptions ++= scalaOptionSettings
 
 resolvers ++= Seq(Resolver.typesafeRepo("releases"))
 
@@ -24,4 +25,3 @@ retrieveManaged := true
 initialCommands in console := "import uk.gov.hmrc.*"
 parallelExecution in Test := false
 publishArtifact in Test := true
-
