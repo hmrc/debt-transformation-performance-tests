@@ -41,7 +41,8 @@ object InterestForecastingRequests extends ServicesConfiguration {
   val internalAuthRequestHeaders = Map(
     "Authorization" -> internalAuthBearerToken,
     "Accept"        -> "application/vnd.hmrc.1.0+json",
-    "Content-Type"  -> "application/json"
+    "Content-Type"  -> "application/json",
+    "Originator"    -> "sol"
   )
 
   val InitialPaymentInstalmentPlan: String =
