@@ -19,6 +19,4 @@ then
     export INTERNAL_AUTH_TOKEN="valid-auth-token"
 fi
 
-echo "Internal Auth Token: $INTERNAL_AUTH_TOKEN"
-
 sbt -DrunLocal=$isLocal -Dperftest.runSmokeTest=$isSmokeTest -Dperftest.labels=statement-of-liability clean "Gatling/test"
