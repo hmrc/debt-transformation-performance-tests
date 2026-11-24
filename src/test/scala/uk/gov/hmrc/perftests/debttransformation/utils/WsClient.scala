@@ -38,8 +38,7 @@ object WsClient {
   }
 
   def post(uri: String, headers: Map[String, String], json: JsValue): StandaloneWSResponse = {
-    logger.info("")
-    logger.info(s"POST request URI: $uri")
+    logger.info(s"\nPOST request URI: $uri")
     logger.debug(s"POST request headers: $headers")
     logger.debug(s"POST request body: $json")
 
@@ -53,8 +52,7 @@ object WsClient {
       timeout
     )
 
-    logger.info("")
-    logger.debug(s"POST response status: ${response.status}")
+    logger.debug(s"\nPOST response status: ${response.status}")
     logger.debug(s"POST response headers: ${response.headers}")
     logger.debug(s"POST response body: ${response.body}")
 
@@ -62,8 +60,7 @@ object WsClient {
   }
 
   def delete(uri: String, headers: Map[String, String]): StandaloneWSResponse = {
-    logger.info("")
-    logger.info(s"DELETE request URI: $uri")
+    logger.info(s"\nDELETE request URI: $uri")
     logger.debug(s"DELETE request headers: $headers")
 
     val client   = asyncClient
@@ -76,8 +73,7 @@ object WsClient {
       timeout
     )
 
-    logger.info("")
-    logger.debug(s"DELETE response status: ${response.status}")
+    logger.debug(s"\nDELETE response status: ${response.status}")
     logger.debug(s"DELETE response headers: ${response.headers}")
     logger.debug(s"DELETE response body: ${response.body}")
 
